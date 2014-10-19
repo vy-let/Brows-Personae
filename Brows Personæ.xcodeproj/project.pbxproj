@@ -1,0 +1,575 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9C0C53C019F2EEA6003E0984 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CF8CF8C19F21F0E00B62C65 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9C0C53C119F2EEA6003E0984 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CF8CF9019F21F0E00B62C65 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9C0C53C219F2EEAA003E0984 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF8CF8C19F21F0E00B62C65 /* ReactiveCocoa.framework */; };
+		9C0C53C619F38DC3003E0984 /* Texpert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C0C53C519F38DC3003E0984 /* Texpert.xib */; };
+		9CDF343819EB2F4C0040AA0F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF343719EB2F4C0040AA0F /* AppDelegate.m */; };
+		9CDF343A19EB2F4C0040AA0F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF343919EB2F4C0040AA0F /* main.m */; };
+		9CDF343F19EB2F4C0040AA0F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CDF343D19EB2F4C0040AA0F /* MainMenu.xib */; };
+		9CDF344B19EB2F4C0040AA0F /* Brows_Person_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF344A19EB2F4C0040AA0F /* Brows_Person_Tests.m */; };
+		9CDF345719EB30640040AA0F /* BrowsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF345519EB30640040AA0F /* BrowsWindow.m */; };
+		9CDF345819EB30640040AA0F /* BrowsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CDF345619EB30640040AA0F /* BrowsWindow.xib */; };
+		9CDF345C19EB53F40040AA0F /* BrowsTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF345B19EB53F40040AA0F /* BrowsTab.m */; };
+		9CDF346219EB94950040AA0F /* BrowsingSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF346119EB94950040AA0F /* BrowsingSession.m */; };
+		9CDF346519EB94DF0040AA0F /* SiteProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF346419EB94DF0040AA0F /* SiteProfile.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9C0C53C319F2EEB5003E0984 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D04725E919E49ED7006002AA;
+			remoteInfo = "ReactiveCocoa-Mac";
+		};
+		9CDF344519EB2F4C0040AA0F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9CDF342919EB2F4C0040AA0F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9CDF343019EB2F4C0040AA0F;
+			remoteInfo = "Brows Personæ";
+		};
+		9CF8CF8B19F21F0E00B62C65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D04725EA19E49ED7006002AA;
+			remoteInfo = "ReactiveCocoa-Mac";
+		};
+		9CF8CF8D19F21F0E00B62C65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D04725F519E49ED7006002AA;
+			remoteInfo = "ReactiveCocoa-MacTests";
+		};
+		9CF8CF8F19F21F0E00B62C65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D047260C19E49F82006002AA;
+			remoteInfo = "ReactiveCocoa-iOS";
+		};
+		9CF8CF9119F21F0E00B62C65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D047261619E49F82006002AA;
+			remoteInfo = "ReactiveCocoa-iOSTests";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9CF8CF9419F21F9600B62C65 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9C0C53C019F2EEA6003E0984 /* ReactiveCocoa.framework in CopyFiles */,
+				9C0C53C119F2EEA6003E0984 /* ReactiveCocoa.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9C0C53C519F38DC3003E0984 /* Texpert.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Texpert.xib; sourceTree = "<group>"; };
+		9CDF343119EB2F4C0040AA0F /* Brows Personæ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brows Personæ.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CDF343519EB2F4C0040AA0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CDF343619EB2F4C0040AA0F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9CDF343719EB2F4C0040AA0F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9CDF343919EB2F4C0040AA0F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9CDF343E19EB2F4C0040AA0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9CDF344419EB2F4C0040AA0F /* Brows PersonæTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Brows PersonæTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CDF344919EB2F4C0040AA0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CDF344A19EB2F4C0040AA0F /* Brows_Person_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Brows_Person_Tests.m; sourceTree = "<group>"; };
+		9CDF345419EB30640040AA0F /* BrowsWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsWindow.h; sourceTree = "<group>"; };
+		9CDF345519EB30640040AA0F /* BrowsWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsWindow.m; sourceTree = "<group>"; };
+		9CDF345619EB30640040AA0F /* BrowsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowsWindow.xib; sourceTree = "<group>"; };
+		9CDF345919EB4D0D0040AA0F /* Brows Personæ.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Brows Personæ.entitlements"; sourceTree = "<group>"; };
+		9CDF345A19EB53F40040AA0F /* BrowsTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsTab.h; sourceTree = "<group>"; };
+		9CDF345B19EB53F40040AA0F /* BrowsTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTab.m; sourceTree = "<group>"; };
+		9CDF346019EB94950040AA0F /* BrowsingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsingSession.h; sourceTree = "<group>"; };
+		9CDF346119EB94950040AA0F /* BrowsingSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsingSession.m; sourceTree = "<group>"; };
+		9CDF346319EB94DF0040AA0F /* SiteProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteProfile.h; sourceTree = "<group>"; };
+		9CDF346419EB94DF0040AA0F /* SiteProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteProfile.m; sourceTree = "<group>"; };
+		9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactiveCocoa.xcodeproj; path = ../../../Git/ReactiveCocoa/ReactiveCocoa.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9CDF342E19EB2F4C0040AA0F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C0C53C219F2EEAA003E0984 /* ReactiveCocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CDF344119EB2F4C0040AA0F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9CDF342819EB2F4C0040AA0F = {
+			isa = PBXGroup;
+			children = (
+				9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */,
+				9CDF343319EB2F4C0040AA0F /* Brows Personæ */,
+				9CDF344719EB2F4C0040AA0F /* Brows PersonæTests */,
+				9CDF343219EB2F4C0040AA0F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9CDF343219EB2F4C0040AA0F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9CDF343119EB2F4C0040AA0F /* Brows Personæ.app */,
+				9CDF344419EB2F4C0040AA0F /* Brows PersonæTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9CDF343319EB2F4C0040AA0F /* Brows Personæ */ = {
+			isa = PBXGroup;
+			children = (
+				9CDF345919EB4D0D0040AA0F /* Brows Personæ.entitlements */,
+				9CDF343619EB2F4C0040AA0F /* AppDelegate.h */,
+				9CDF343719EB2F4C0040AA0F /* AppDelegate.m */,
+				9CDF343D19EB2F4C0040AA0F /* MainMenu.xib */,
+				9CDF345419EB30640040AA0F /* BrowsWindow.h */,
+				9CDF345519EB30640040AA0F /* BrowsWindow.m */,
+				9CDF345619EB30640040AA0F /* BrowsWindow.xib */,
+				9CDF345A19EB53F40040AA0F /* BrowsTab.h */,
+				9CDF345B19EB53F40040AA0F /* BrowsTab.m */,
+				9CDF346019EB94950040AA0F /* BrowsingSession.h */,
+				9CDF346119EB94950040AA0F /* BrowsingSession.m */,
+				9CDF346319EB94DF0040AA0F /* SiteProfile.h */,
+				9CDF346419EB94DF0040AA0F /* SiteProfile.m */,
+				9C0C53C519F38DC3003E0984 /* Texpert.xib */,
+				9CDF343419EB2F4C0040AA0F /* Supporting Files */,
+			);
+			path = "Brows Personæ";
+			sourceTree = "<group>";
+		};
+		9CDF343419EB2F4C0040AA0F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9CDF343519EB2F4C0040AA0F /* Info.plist */,
+				9CDF343919EB2F4C0040AA0F /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9CDF344719EB2F4C0040AA0F /* Brows PersonæTests */ = {
+			isa = PBXGroup;
+			children = (
+				9CDF344A19EB2F4C0040AA0F /* Brows_Person_Tests.m */,
+				9CDF344819EB2F4C0040AA0F /* Supporting Files */,
+			);
+			path = "Brows PersonæTests";
+			sourceTree = "<group>";
+		};
+		9CDF344819EB2F4C0040AA0F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9CDF344919EB2F4C0040AA0F /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9CF8CF8519F21F0E00B62C65 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9CF8CF8C19F21F0E00B62C65 /* ReactiveCocoa.framework */,
+				9CF8CF8E19F21F0E00B62C65 /* ReactiveCocoa-MacTests.xctest */,
+				9CF8CF9019F21F0E00B62C65 /* ReactiveCocoa.framework */,
+				9CF8CF9219F21F0E00B62C65 /* ReactiveCocoa-iOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9CDF343019EB2F4C0040AA0F /* Brows Personæ */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9CDF344E19EB2F4C0040AA0F /* Build configuration list for PBXNativeTarget "Brows Personæ" */;
+			buildPhases = (
+				9CDF342D19EB2F4C0040AA0F /* Sources */,
+				9CDF342E19EB2F4C0040AA0F /* Frameworks */,
+				9CDF342F19EB2F4C0040AA0F /* Resources */,
+				9CF8CF9419F21F9600B62C65 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9C0C53C419F2EEB5003E0984 /* PBXTargetDependency */,
+			);
+			name = "Brows Personæ";
+			productName = "Brows Personæ";
+			productReference = 9CDF343119EB2F4C0040AA0F /* Brows Personæ.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9CDF344319EB2F4C0040AA0F /* Brows PersonæTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9CDF345119EB2F4C0040AA0F /* Build configuration list for PBXNativeTarget "Brows PersonæTests" */;
+			buildPhases = (
+				9CDF344019EB2F4C0040AA0F /* Sources */,
+				9CDF344119EB2F4C0040AA0F /* Frameworks */,
+				9CDF344219EB2F4C0040AA0F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9CDF344619EB2F4C0040AA0F /* PBXTargetDependency */,
+			);
+			name = "Brows PersonæTests";
+			productName = "Brows PersonæTests";
+			productReference = 9CDF344419EB2F4C0040AA0F /* Brows PersonæTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9CDF342919EB2F4C0040AA0F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = Eightt;
+				TargetAttributes = {
+					9CDF343019EB2F4C0040AA0F = {
+						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = LFE44QS95K;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
+					};
+					9CDF344319EB2F4C0040AA0F = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = 9CDF343019EB2F4C0040AA0F;
+					};
+				};
+			};
+			buildConfigurationList = 9CDF342C19EB2F4C0040AA0F /* Build configuration list for PBXProject "Brows Personæ" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9CDF342819EB2F4C0040AA0F;
+			productRefGroup = 9CDF343219EB2F4C0040AA0F /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9CF8CF8519F21F0E00B62C65 /* Products */;
+					ProjectRef = 9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				9CDF343019EB2F4C0040AA0F /* Brows Personæ */,
+				9CDF344319EB2F4C0040AA0F /* Brows PersonæTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9CF8CF8C19F21F0E00B62C65 /* ReactiveCocoa.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ReactiveCocoa.framework;
+			remoteRef = 9CF8CF8B19F21F0E00B62C65 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9CF8CF8E19F21F0E00B62C65 /* ReactiveCocoa-MacTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "ReactiveCocoa-MacTests.xctest";
+			remoteRef = 9CF8CF8D19F21F0E00B62C65 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9CF8CF9019F21F0E00B62C65 /* ReactiveCocoa.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ReactiveCocoa.framework;
+			remoteRef = 9CF8CF8F19F21F0E00B62C65 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9CF8CF9219F21F0E00B62C65 /* ReactiveCocoa-iOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "ReactiveCocoa-iOSTests.xctest";
+			remoteRef = 9CF8CF9119F21F0E00B62C65 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9CDF342F19EB2F4C0040AA0F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CDF345819EB30640040AA0F /* BrowsWindow.xib in Resources */,
+				9C0C53C619F38DC3003E0984 /* Texpert.xib in Resources */,
+				9CDF343F19EB2F4C0040AA0F /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CDF344219EB2F4C0040AA0F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9CDF342D19EB2F4C0040AA0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CDF345719EB30640040AA0F /* BrowsWindow.m in Sources */,
+				9CDF345C19EB53F40040AA0F /* BrowsTab.m in Sources */,
+				9CDF343A19EB2F4C0040AA0F /* main.m in Sources */,
+				9CDF346219EB94950040AA0F /* BrowsingSession.m in Sources */,
+				9CDF346519EB94DF0040AA0F /* SiteProfile.m in Sources */,
+				9CDF343819EB2F4C0040AA0F /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CDF344019EB2F4C0040AA0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CDF344B19EB2F4C0040AA0F /* Brows_Person_Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9C0C53C419F2EEB5003E0984 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "ReactiveCocoa-Mac";
+			targetProxy = 9C0C53C319F2EEB5003E0984 /* PBXContainerItemProxy */;
+		};
+		9CDF344619EB2F4C0040AA0F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9CDF343019EB2F4C0040AA0F /* Brows Personæ */;
+			targetProxy = 9CDF344519EB2F4C0040AA0F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9CDF343D19EB2F4C0040AA0F /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9CDF343E19EB2F4C0040AA0F /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9CDF344C19EB2F4C0040AA0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9CDF344D19EB2F4C0040AA0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		9CDF344F19EB2F4C0040AA0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Applications/Xcode-Beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
+					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include",
+				);
+				INFOPLIST_FILE = "Brows Personæ/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9CDF345019EB2F4C0040AA0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Applications/Xcode-Beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
+					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include",
+				);
+				INFOPLIST_FILE = "Brows Personæ/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		9CDF345219EB2F4C0040AA0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Brows PersonæTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Brows Personæ.app/Contents/MacOS/Brows Personæ";
+			};
+			name = Debug;
+		};
+		9CDF345319EB2F4C0040AA0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Brows PersonæTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Brows Personæ.app/Contents/MacOS/Brows Personæ";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9CDF342C19EB2F4C0040AA0F /* Build configuration list for PBXProject "Brows Personæ" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CDF344C19EB2F4C0040AA0F /* Debug */,
+				9CDF344D19EB2F4C0040AA0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9CDF344E19EB2F4C0040AA0F /* Build configuration list for PBXNativeTarget "Brows Personæ" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CDF344F19EB2F4C0040AA0F /* Debug */,
+				9CDF345019EB2F4C0040AA0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9CDF345119EB2F4C0040AA0F /* Build configuration list for PBXNativeTarget "Brows PersonæTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CDF345219EB2F4C0040AA0F /* Debug */,
+				9CDF345319EB2F4C0040AA0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9CDF342919EB2F4C0040AA0F /* Project object */;
+}
