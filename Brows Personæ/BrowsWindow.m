@@ -35,8 +35,10 @@
     [super windowDidLoad];
     
     [[self window] setStyleMask:[[self window] styleMask] | NSFullSizeContentViewWindowMask];  // Set here for easier layout in nib.
-    [[self window] setTitleVisibility:NSWindowTitleHidden];
+//    [[self window] setTitleVisibility:NSWindowTitleHidden];
+    [[self window] setTitlebarAppearsTransparent:YES];
     
+
     [self iDoDeclare];
     
 }

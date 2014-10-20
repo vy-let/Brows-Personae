@@ -12,6 +12,7 @@
 @interface BrowsWindow : NSWindowController {
     IBOutlet NSComboBox *locationBox;
     IBOutlet NSComboBox *profileSelectrix;
+//    IBOutlet NSProgressIndicator *spinny;
 }
 
 

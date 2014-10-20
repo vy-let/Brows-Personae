@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Eightt. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
-@interface BrowsTab : NSObject
+@interface BrowsTab : NSViewController
 
 @end

@@ -11,6 +11,7 @@
 		9C0C53C119F2EEA6003E0984 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CF8CF9019F21F0E00B62C65 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C0C53C219F2EEAA003E0984 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF8CF8C19F21F0E00B62C65 /* ReactiveCocoa.framework */; };
 		9C0C53C619F38DC3003E0984 /* Texpert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C0C53C519F38DC3003E0984 /* Texpert.xib */; };
+		9C0C53C819F480A3003E0984 /* BrowsTab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C0C53C719F480A3003E0984 /* BrowsTab.xib */; };
 		9CDF343819EB2F4C0040AA0F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF343719EB2F4C0040AA0F /* AppDelegate.m */; };
 		9CDF343A19EB2F4C0040AA0F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF343919EB2F4C0040AA0F /* main.m */; };
 		9CDF343F19EB2F4C0040AA0F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CDF343D19EB2F4C0040AA0F /* MainMenu.xib */; };
@@ -83,6 +84,7 @@
 
 /* Begin PBXFileReference section */
 		9C0C53C519F38DC3003E0984 /* Texpert.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Texpert.xib; sourceTree = "<group>"; };
+		9C0C53C719F480A3003E0984 /* BrowsTab.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowsTab.xib; sourceTree = "<group>"; };
 		9CDF343119EB2F4C0040AA0F /* Brows Personæ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brows Personæ.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CDF343519EB2F4C0040AA0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CDF343619EB2F4C0040AA0F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				9CDF345619EB30640040AA0F /* BrowsWindow.xib */,
 				9CDF345A19EB53F40040AA0F /* BrowsTab.h */,
 				9CDF345B19EB53F40040AA0F /* BrowsTab.m */,
+				9C0C53C719F480A3003E0984 /* BrowsTab.xib */,
 				9CDF346019EB94950040AA0F /* BrowsingSession.h */,
 				9CDF346119EB94950040AA0F /* BrowsingSession.m */,
 				9CDF346319EB94DF0040AA0F /* SiteProfile.h */,
@@ -328,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CDF345819EB30640040AA0F /* BrowsWindow.xib in Resources */,
+				9C0C53C819F480A3003E0984 /* BrowsTab.xib in Resources */,
 				9C0C53C619F38DC3003E0984 /* Texpert.xib in Resources */,
 				9CDF343F19EB2F4C0040AA0F /* MainMenu.xib in Resources */,
 			);
