@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9C0C53C019F2EEA6003E0984 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CF8CF8C19F21F0E00B62C65 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9C0C53C119F2EEA6003E0984 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CF8CF9019F21F0E00B62C65 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C0C53C219F2EEAA003E0984 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF8CF8C19F21F0E00B62C65 /* ReactiveCocoa.framework */; };
 		9C0C53C619F38DC3003E0984 /* Texpert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C0C53C519F38DC3003E0984 /* Texpert.xib */; };
 		9C0C53C819F480A3003E0984 /* BrowsTab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C0C53C719F480A3003E0984 /* BrowsTab.xib */; };
@@ -76,7 +75,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				9C0C53C019F2EEA6003E0984 /* ReactiveCocoa.framework in CopyFiles */,
-				9C0C53C119F2EEA6003E0984 /* ReactiveCocoa.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

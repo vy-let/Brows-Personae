@@ -10,4 +10,6 @@
 
 @interface BrowsTab : NSViewController
 
++ (instancetype)nilTab;
+
 @end

@@ -19,6 +19,18 @@
 
 @end
 
+
+
 @implementation BrowsTab
+
+- (id)init {
+    if (!(self = [super initWithNibName:@"BrowsTab" bundle:nil])) return nil;
+    
+    // something
+    
+    return self;
+}
+
+
 
 @end

@@ -9,13 +9,24 @@
 
 #import "BrowsWindow.h"
 
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "BrowsTab.h"
 
+
+
+
+
 @interface BrowsWindow () {
-    
+    NSMutableArray *tabs;
+    RACSignal *frontTab;
+    __weak id<RACSubscriber> tabChanger;
 }
 
 @end
+
+
+
+
 
 @implementation BrowsWindow
 
@@ -24,10 +35,16 @@
 - (id)init {
     if (!(self = [super initWithWindowNibName:@"BrowsWindow"])) return nil;
     
-    
+    tabs = [NSMutableArray array];
+    __block BrowsWindow *bself = self;
+    frontTab = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        bself->tabChanger = subscriber;
+        return nil;  // No cleanup.
+    }];
     
     return self;
 }
+
 
 
 
@@ -35,7 +52,7 @@
     [super windowDidLoad];
     
     [[self window] setStyleMask:[[self window] styleMask] | NSFullSizeContentViewWindowMask];  // Set here for easier layout in nib.
-//    [[self window] setTitleVisibility:NSWindowTitleHidden];
+    [[self window] setTitleVisibility:NSWindowTitleHidden];
     [[self window] setTitlebarAppearsTransparent:YES];
     
 
@@ -51,7 +68,21 @@
         NSLog(@"%@", x);
     }];
     
+    [frontTab subscribeNext:^(BrowsTab *presentTab) {
+        // Change out subviews.
+    }];
+    
 }
+
+
+
+- (IBAction)newTab:(id)sender {
+    
+}
+
+
+
+
 
 
 
