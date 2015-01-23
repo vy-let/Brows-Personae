@@ -9,10 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
-@interface BrowsWindow : NSWindowController {
-    IBOutlet NSComboBox *locationBox;
-    IBOutlet NSComboBox *profileSelectrix;
-//    IBOutlet NSProgressIndicator *spinny;
+@interface BrowsWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate> {
+    IBOutlet NSTableView *tabsList;
 }
 
 

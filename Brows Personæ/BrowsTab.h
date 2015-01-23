@@ -12,4 +12,7 @@
 
 + (instancetype)nilTab;
 
+- (NSImage *)thumbnail;
+- (NSImage *)favicon;
+
 @end

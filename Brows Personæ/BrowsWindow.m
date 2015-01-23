@@ -11,15 +11,15 @@
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "BrowsTab.h"
+#import "BrowsTabTableCellView.h"
 
 
 
 
 
 @interface BrowsWindow () {
-    NSMutableArray *tabs;
-    RACSignal *frontTab;
-    __weak id<RACSubscriber> tabChanger;
+    NSMutableArray *browsTabs;
+    NSNib *tabCellNib;
 }
 
 @end
@@ -32,17 +32,19 @@
 
 
 
-- (id)init {
+- (id)initWithTabs:(NSArray *)tabs {
     if (!(self = [super initWithWindowNibName:@"BrowsWindow"])) return nil;
     
-    tabs = [NSMutableArray array];
-    __block BrowsWindow *bself = self;
-    frontTab = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        bself->tabChanger = subscriber;
-        return nil;  // No cleanup.
-    }];
+    browsTabs = [tabs mutableCopy];
+    tabCellNib = [[NSNib alloc] initWithNibNamed:@"TabCell" bundle:[NSBundle mainBundle]];
     
     return self;
+}
+
+
+
+- (id)init {
+    return [self initWithTabs:@[]];
 }
 
 
@@ -52,32 +54,17 @@
     [super windowDidLoad];
     
     [[self window] setStyleMask:[[self window] styleMask] | NSFullSizeContentViewWindowMask];  // Set here for easier layout in nib.
-    [[self window] setTitleVisibility:NSWindowTitleHidden];
+//    [[self window] setTitleVisibility:NSWindowTitleHidden];
     [[self window] setTitlebarAppearsTransparent:YES];
     
 
-    [self iDoDeclare];
-    
-}
-
-
-
-- (void)iDoDeclare {
-    
-    [[locationBox rac_textSignal] subscribeNext:^(id x) {
-        NSLog(@"%@", x);
-    }];
-    
-    [frontTab subscribeNext:^(BrowsTab *presentTab) {
-        // Change out subviews.
-    }];
     
 }
 
 
 
 - (IBAction)newTab:(id)sender {
-    
+    // Pop over!
 }
 
 
@@ -88,7 +75,53 @@
 
 
 
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    if (tableView == tabsList) {
+        return [browsTabs count];
+        
+    }
+    
+    
+    return 0;
+    
+}
+
+
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    if (tableView == tabsList) {
+        BrowsTab *applicableTab = [browsTabs objectAtIndex:row];
+        BrowsTabTableCellView *availableView = [tableView makeViewWithIdentifier:@"BrowsTabCell" owner:self];
+        
+        [[availableView thumbnailView] setImage:[applicableTab thumbnail]];
+        [[availableView faviconView] setImage:[applicableTab favicon]];
+        
+    }
+    
+    return nil;
+    
+}
+
+
 
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
