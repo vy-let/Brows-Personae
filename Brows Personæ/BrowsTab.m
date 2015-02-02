@@ -7,14 +7,14 @@
 //
 
 #import "BrowsTab.h"
-#import "BrowsingSession.h"
+#import "SiteProfile.h"
 
 #import <WebKit/WebKit.h>
 
 @interface BrowsTab () {
     NSObject *tabViewButtonThing;
     WebView *webView;
-    BrowsingSession *browsingSession;
+    SiteProfile *browsProfile;
 }
 
 @end
@@ -23,12 +23,32 @@
 
 @implementation BrowsTab
 
-- (id)init {
+- (instancetype)initWithProfile:(SiteProfile *)profile {
     if (!(self = [super initWithNibName:@"BrowsTab" bundle:nil])) return nil;
     
-    // something
+    browsProfile = profile;
     
     return self;
+    
+}
+
+- (instancetype)initWithProfileNamed:(NSString *)profileName {
+    return [self initWithProfile:[SiteProfile named:profileName]];
+}
+
+- (id)init {
+    NSAssert(false, @"Cannot raw-init a BrowsTab!");
+    return nil;
+}
+
+
+
+- (NSImage *)favicon {
+    return [NSImage imageNamed:@"NSMobileMe"];
+}
+
+- (NSImage *)thumbnail {
+    return [NSImage imageNamed:@"NSMultipleDocuments"];
 }
 
 

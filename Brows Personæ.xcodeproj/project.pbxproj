@@ -13,6 +13,7 @@
 		9C0C53C819F480A3003E0984 /* BrowsTab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C0C53C719F480A3003E0984 /* BrowsTab.xib */; };
 		9C3071511A71D1C800AAA4F5 /* TabCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C3071501A71D1C800AAA4F5 /* TabCell.xib */; };
 		9C3071571A71DCBB00AAA4F5 /* BrowsTabTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */; };
+		9C6810F21A7CB76D008263A4 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6810F11A7CB76D008263A4 /* WebKit.framework */; };
 		9CDF343819EB2F4C0040AA0F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF343719EB2F4C0040AA0F /* AppDelegate.m */; };
 		9CDF343A19EB2F4C0040AA0F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF343919EB2F4C0040AA0F /* main.m */; };
 		9CDF343F19EB2F4C0040AA0F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CDF343D19EB2F4C0040AA0F /* MainMenu.xib */; };
@@ -20,7 +21,6 @@
 		9CDF345719EB30640040AA0F /* BrowsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF345519EB30640040AA0F /* BrowsWindow.m */; };
 		9CDF345819EB30640040AA0F /* BrowsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CDF345619EB30640040AA0F /* BrowsWindow.xib */; };
 		9CDF345C19EB53F40040AA0F /* BrowsTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF345B19EB53F40040AA0F /* BrowsTab.m */; };
-		9CDF346219EB94950040AA0F /* BrowsingSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF346119EB94950040AA0F /* BrowsingSession.m */; };
 		9CDF346519EB94DF0040AA0F /* SiteProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF346419EB94DF0040AA0F /* SiteProfile.m */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +88,8 @@
 		9C3071501A71D1C800AAA4F5 /* TabCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabCell.xib; sourceTree = "<group>"; };
 		9C3071551A71DCBB00AAA4F5 /* BrowsTabTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsTabTableCellView.h; sourceTree = "<group>"; };
 		9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTabTableCellView.m; sourceTree = "<group>"; };
+		9C6810F01A7C6940008263A4 /* Personæ.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Personæ.pch"; sourceTree = "<group>"; };
+		9C6810F11A7CB76D008263A4 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		9CDF343119EB2F4C0040AA0F /* Brows Personæ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brows Personæ.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CDF343519EB2F4C0040AA0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CDF343619EB2F4C0040AA0F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -103,8 +105,6 @@
 		9CDF345919EB4D0D0040AA0F /* Brows Personæ.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Brows Personæ.entitlements"; sourceTree = "<group>"; };
 		9CDF345A19EB53F40040AA0F /* BrowsTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsTab.h; sourceTree = "<group>"; };
 		9CDF345B19EB53F40040AA0F /* BrowsTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTab.m; sourceTree = "<group>"; };
-		9CDF346019EB94950040AA0F /* BrowsingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsingSession.h; sourceTree = "<group>"; };
-		9CDF346119EB94950040AA0F /* BrowsingSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsingSession.m; sourceTree = "<group>"; };
 		9CDF346319EB94DF0040AA0F /* SiteProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteProfile.h; sourceTree = "<group>"; };
 		9CDF346419EB94DF0040AA0F /* SiteProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteProfile.m; sourceTree = "<group>"; };
 		9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactiveCocoa.xcodeproj; path = ../../../Git/ReactiveCocoa/ReactiveCocoa.xcodeproj; sourceTree = "<group>"; };
@@ -115,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C6810F21A7CB76D008263A4 /* WebKit.framework in Frameworks */,
 				9C0C53C219F2EEAA003E0984 /* ReactiveCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -132,6 +133,7 @@
 		9CDF342819EB2F4C0040AA0F = {
 			isa = PBXGroup;
 			children = (
+				9C6810F11A7CB76D008263A4 /* WebKit.framework */,
 				9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */,
 				9CDF343319EB2F4C0040AA0F /* Brows Personæ */,
 				9CDF344719EB2F4C0040AA0F /* Brows PersonæTests */,
@@ -164,8 +166,6 @@
 				9CDF345A19EB53F40040AA0F /* BrowsTab.h */,
 				9CDF345B19EB53F40040AA0F /* BrowsTab.m */,
 				9C0C53C719F480A3003E0984 /* BrowsTab.xib */,
-				9CDF346019EB94950040AA0F /* BrowsingSession.h */,
-				9CDF346119EB94950040AA0F /* BrowsingSession.m */,
 				9CDF346319EB94DF0040AA0F /* SiteProfile.h */,
 				9CDF346419EB94DF0040AA0F /* SiteProfile.m */,
 				9C0C53C519F38DC3003E0984 /* Texpert.xib */,
@@ -177,6 +177,7 @@
 		9CDF343419EB2F4C0040AA0F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9C6810F01A7C6940008263A4 /* Personæ.pch */,
 				9CDF343519EB2F4C0040AA0F /* Info.plist */,
 				9CDF343919EB2F4C0040AA0F /* main.m */,
 			);
@@ -362,7 +363,6 @@
 				9C3071571A71DCBB00AAA4F5 /* BrowsTabTableCellView.m in Sources */,
 				9CDF345C19EB53F40040AA0F /* BrowsTab.m in Sources */,
 				9CDF343A19EB2F4C0040AA0F /* main.m in Sources */,
-				9CDF346219EB94950040AA0F /* BrowsingSession.m in Sources */,
 				9CDF346519EB94DF0040AA0F /* SiteProfile.m in Sources */,
 				9CDF343819EB2F4C0040AA0F /* AppDelegate.m in Sources */,
 			);
@@ -486,6 +486,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREFIX_HEADER = "Brows Personæ/Personæ.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Applications/Xcode-Beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
@@ -504,6 +505,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREFIX_HEADER = "Brows Personæ/Personæ.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Applications/Xcode-Beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",

@@ -7,10 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+@class SiteProfile;
+
 
 @interface BrowsTab : NSViewController
 
-+ (instancetype)nilTab;
+- (instancetype)initWithProfile:(SiteProfile *)profile;
+- (instancetype)initWithProfileNamed:(NSString *)profileName;
 
 - (NSImage *)thumbnail;
 - (NSImage *)favicon;

@@ -11,5 +11,6 @@
 @interface SiteProfile : NSObject
 
 + (instancetype)named:(NSString *)profileName;
++ (NSURL *)mainProfileFolder;
 
 @end

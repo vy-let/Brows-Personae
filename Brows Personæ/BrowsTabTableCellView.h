@@ -13,4 +13,6 @@
 @property (nonatomic) IBOutlet NSImageView *thumbnailView;
 @property (nonatomic) IBOutlet NSImageView *faviconView;
 
++ (instancetype)measurementDummyView;
+
 @end

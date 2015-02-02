@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "BrowsWindow.h"
+#import "BrowsTabTableCellView.h"
 
 @interface AppDelegate () {
     NSMutableArray *browsWindows;
@@ -36,6 +37,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

@@ -11,6 +11,9 @@
 
 @interface BrowsWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate> {
     IBOutlet NSTableView *tabsList;
+    IBOutlet NSView *windowBody;
+    IBOutlet NSView *noTabPlaceholder;
+    IBOutlet NSView *multiTabsPlaceholder;
 }
 
 
