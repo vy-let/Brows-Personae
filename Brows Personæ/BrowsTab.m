@@ -13,7 +13,6 @@
 
 @interface BrowsTab () {
     NSObject *tabViewButtonThing;
-    WebView *webView;
     SiteProfile *browsProfile;
 }
 
@@ -39,6 +38,13 @@
 - (id)init {
     NSAssert(false, @"Cannot raw-init a BrowsTab!");
     return nil;
+}
+
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [tooblar setBlendingMode:NSVisualEffectBlendingModeWithinWindow];
+    [tooblar setMaterial:NSVisualEffectMaterialTitlebar];
 }
 
 

@@ -163,7 +163,7 @@
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
     if (tableView == tabsList) {
         // TODO make dummy hidden cell and measure its height.
-        CGFloat colWidth = [[[tableView tableColumns] objectAtIndex:0] width];
+        CGFloat colWidth = [(NSTableColumn *)[[tableView tableColumns] objectAtIndex:0] width];
         
         // subtract the 8pt l/r margin, mult. by aspect ratio, and add the 8pt t/b margin.
         return round( (colWidth - 8 - 8) * (3 / 2.0) + 8 + 8 );

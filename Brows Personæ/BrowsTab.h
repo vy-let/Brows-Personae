@@ -7,10 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <WebKit/WebKit.h>
 @class SiteProfile;
 
 
-@interface BrowsTab : NSViewController
+@interface BrowsTab : NSViewController {
+    IBOutlet WebView *pageView;
+    IBOutlet NSVisualEffectView *tooblar;
+}
 
 - (instancetype)initWithProfile:(SiteProfile *)profile;
 - (instancetype)initWithProfileNamed:(NSString *)profileName;
