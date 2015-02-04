@@ -100,8 +100,22 @@
         
     }];
     
+    @weakify(windowBody)
     [viewForTabSelection subscribeNext:^(NSView *selTab) {
+        @strongify(windowBody)
+        
         [windowBody setSubviews:@[selTab]];
+        
+        NSDictionary *views = NSDictionaryOfVariableBindings(selTab);
+        [windowBody addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[selTab]|"
+                                                                           options:0
+                                                                           metrics:nil
+                                                                             views:views]];
+        [windowBody addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[selTab]|"
+                                                                           options:0
+                                                                           metrics:nil
+                                                                             views:views]];
+        
     }];
     
     
