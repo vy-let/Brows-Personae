@@ -24,7 +24,7 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="5ak-oa-1Kh"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="9WE-rM-N5G"/>
                     </constraints>
-                    <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12">
+                    <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="12" plugInsEnabled="NO" javaEnabled="NO">
                         <nil key="identifier"/>
                     </webPreferences>
                 </webView>

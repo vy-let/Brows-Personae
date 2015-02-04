@@ -71,6 +71,11 @@
     
     @weakify(tabsList)
     @weakify(browsTabs)
+    if ([browsTabs count]) {
+        // Replace with last-selected indices.
+        [tabsList selectRowIndexes:[NSIndexSet indexSetWithIndex:[browsTabs count] - 1] byExtendingSelection:NO];
+    }
+    
     tabSelection = [[[[[self rac_signalForSelector:@selector(tableViewSelectionDidChange:)]
                        map:^id(RACTuple *args) { return [args first]; }]
                       filter:^BOOL(NSNotification *note) { @strongify(tabsList); return [note object] == tabsList; }]
@@ -78,7 +83,7 @@
                         @strongify(tabsList); @strongify(browsTabs);
                         return [browsTabs objectsAtIndexes:[tabsList selectedRowIndexes]];
                      }]
-                    startWith:@[]];
+                    startWith:[browsTabs objectsAtIndexes:[tabsList selectedRowIndexes]]];  // There's gotta be a better way to init the signal.
     
     
     @weakify(noTabPlaceholder)
@@ -118,10 +123,6 @@
         
     }];
     
-    
-    if ([browsTabs count]) {
-        [tabsList selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-    }
     
 }
 
