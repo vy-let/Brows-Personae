@@ -6,10 +6,11 @@
 //  Copyright (c) 2014 Eightt. All rights reserved.
 //
 
+#import <WebKit/WebKit.h>
+
 #import "BrowsTab.h"
 #import "SiteProfile.h"
-
-#import <WebKit/WebKit.h>
+#import "IGIsolatedCookieWebView.h"
 
 @interface BrowsTab () {
     NSObject *tabViewButtonThing;
@@ -45,6 +46,31 @@
     [super awakeFromNib];
     [tooblar setBlendingMode:NSVisualEffectBlendingModeWithinWindow];
     [tooblar setMaterial:NSVisualEffectMaterialTitlebar];
+}
+
+
+
+- (IBAction)gotoPage:(id)sender {
+    NSString *request = [sender stringValue];
+    NSURL *potentialURL = [NSURL URLWithString:request];
+    NSLog(@"\n abso %@\n base %@\n host %@\n rpth %@\n rstr %@\n schm %@\n strd %@",
+          [potentialURL absoluteString],
+          [potentialURL baseURL],
+          [potentialURL host],
+          [potentialURL relativePath],
+          [potentialURL relativeString],
+          [potentialURL scheme],
+          [potentialURL standardizedURL]);
+    
+    if (potentialURL && ![potentialURL scheme]) {
+        potentialURL = [NSURL URLWithString:[@"https://" stringByAppendingString:[potentialURL absoluteString]]];
+    }
+    
+    if ([potentialURL scheme] && [potentialURL host])
+        [[pageView mainFrame] loadRequest:[NSURLRequest requestWithURL:potentialURL
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                       timeoutInterval:30.0]];
+    
 }
 
 

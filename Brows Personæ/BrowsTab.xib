@@ -18,7 +18,7 @@
         <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
             <rect key="frame" x="0.0" y="0.0" width="884" height="960"/>
             <subviews>
-                <webView translatesAutoresizingMaskIntoConstraints="NO" id="Os0-Ec-xeC">
+                <webView translatesAutoresizingMaskIntoConstraints="NO" id="Os0-Ec-xeC" customClass="IGIsolatedCookieWebView">
                     <rect key="frame" x="0.0" y="0.0" width="884" height="960"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="5ak-oa-1Kh"/>
@@ -83,6 +83,9 @@
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
+                            <connections>
+                                <action selector="gotoPage:" target="-2" id="ThV-Ua-oiM"/>
+                            </connections>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wau-Sp-3wN">
                             <rect key="frame" x="653" y="8" width="213" height="14"/>

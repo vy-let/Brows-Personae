@@ -9,10 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 @class SiteProfile;
+@class IGIsolatedCookieWebView;
 
 
 @interface BrowsTab : NSViewController {
-    IBOutlet WebView *pageView;
+    IBOutlet IGIsolatedCookieWebView *pageView;
     IBOutlet NSVisualEffectView *tooblar;
 }
 
