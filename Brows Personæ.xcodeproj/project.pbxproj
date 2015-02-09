@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9C0C53C019F2EEA6003E0984 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CF8CF8C19F21F0E00B62C65 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9C0C53C219F2EEAA003E0984 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF8CF8C19F21F0E00B62C65 /* ReactiveCocoa.framework */; };
 		9C0C53C619F38DC3003E0984 /* Texpert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C0C53C519F38DC3003E0984 /* Texpert.xib */; };
 		9C0C53C819F480A3003E0984 /* BrowsTab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C0C53C719F480A3003E0984 /* BrowsTab.xib */; };
 		9C3071511A71D1C800AAA4F5 /* TabCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C3071501A71D1C800AAA4F5 /* TabCell.xib */; };
@@ -28,47 +26,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		9C0C53C319F2EEB5003E0984 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D04725E919E49ED7006002AA;
-			remoteInfo = "ReactiveCocoa-Mac";
-		};
 		9CDF344519EB2F4C0040AA0F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9CDF342919EB2F4C0040AA0F /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 9CDF343019EB2F4C0040AA0F;
 			remoteInfo = "Brows Personæ";
-		};
-		9CF8CF8B19F21F0E00B62C65 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D04725EA19E49ED7006002AA;
-			remoteInfo = "ReactiveCocoa-Mac";
-		};
-		9CF8CF8D19F21F0E00B62C65 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D04725F519E49ED7006002AA;
-			remoteInfo = "ReactiveCocoa-MacTests";
-		};
-		9CF8CF8F19F21F0E00B62C65 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D047260C19E49F82006002AA;
-			remoteInfo = "ReactiveCocoa-iOS";
-		};
-		9CF8CF9119F21F0E00B62C65 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D047261619E49F82006002AA;
-			remoteInfo = "ReactiveCocoa-iOSTests";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -79,7 +42,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9C0C53C019F2EEA6003E0984 /* ReactiveCocoa.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,7 +78,6 @@
 		9CDF345B19EB53F40040AA0F /* BrowsTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTab.m; sourceTree = "<group>"; };
 		9CDF346319EB94DF0040AA0F /* SiteProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteProfile.h; sourceTree = "<group>"; };
 		9CDF346419EB94DF0040AA0F /* SiteProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteProfile.m; sourceTree = "<group>"; };
-		9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactiveCocoa.xcodeproj; path = ../../../Git/ReactiveCocoa/ReactiveCocoa.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +86,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C6810F21A7CB76D008263A4 /* WebKit.framework in Frameworks */,
-				9C0C53C219F2EEAA003E0984 /* ReactiveCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				9C6810F11A7CB76D008263A4 /* WebKit.framework */,
-				9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */,
 				9CDF343319EB2F4C0040AA0F /* Brows Personæ */,
 				9CDF344719EB2F4C0040AA0F /* Brows PersonæTests */,
 				9CDF343219EB2F4C0040AA0F /* Products */,
@@ -224,17 +183,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9CF8CF8519F21F0E00B62C65 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9CF8CF8C19F21F0E00B62C65 /* ReactiveCocoa.framework */,
-				9CF8CF8E19F21F0E00B62C65 /* ReactiveCocoa-MacTests.xctest */,
-				9CF8CF9019F21F0E00B62C65 /* ReactiveCocoa.framework */,
-				9CF8CF9219F21F0E00B62C65 /* ReactiveCocoa-iOSTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -250,7 +198,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				9C0C53C419F2EEB5003E0984 /* PBXTargetDependency */,
 			);
 			name = "Brows Personæ";
 			productName = "Brows Personæ";
@@ -310,12 +257,6 @@
 			mainGroup = 9CDF342819EB2F4C0040AA0F;
 			productRefGroup = 9CDF343219EB2F4C0040AA0F /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 9CF8CF8519F21F0E00B62C65 /* Products */;
-					ProjectRef = 9CF8CF8419F21F0E00B62C65 /* ReactiveCocoa.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				9CDF343019EB2F4C0040AA0F /* Brows Personæ */,
@@ -323,37 +264,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		9CF8CF8C19F21F0E00B62C65 /* ReactiveCocoa.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ReactiveCocoa.framework;
-			remoteRef = 9CF8CF8B19F21F0E00B62C65 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9CF8CF8E19F21F0E00B62C65 /* ReactiveCocoa-MacTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "ReactiveCocoa-MacTests.xctest";
-			remoteRef = 9CF8CF8D19F21F0E00B62C65 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9CF8CF9019F21F0E00B62C65 /* ReactiveCocoa.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ReactiveCocoa.framework;
-			remoteRef = 9CF8CF8F19F21F0E00B62C65 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9CF8CF9219F21F0E00B62C65 /* ReactiveCocoa-iOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "ReactiveCocoa-iOSTests.xctest";
-			remoteRef = 9CF8CF9119F21F0E00B62C65 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		9CDF342F19EB2F4C0040AA0F /* Resources */ = {
@@ -405,11 +315,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		9C0C53C419F2EEB5003E0984 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "ReactiveCocoa-Mac";
-			targetProxy = 9C0C53C319F2EEB5003E0984 /* PBXContainerItemProxy */;
-		};
 		9CDF344619EB2F4C0040AA0F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9CDF343019EB2F4C0040AA0F /* Brows Personæ */;

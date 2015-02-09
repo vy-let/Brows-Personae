@@ -27,6 +27,10 @@
                     <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="12" plugInsEnabled="NO" javaEnabled="NO">
                         <nil key="identifier"/>
                     </webPreferences>
+                    <connections>
+                        <outlet property="UIDelegate" destination="-2" id="hJt-Ni-eDI"/>
+                        <outlet property="frameLoadDelegate" destination="-2" id="cyZ-hj-jEj"/>
+                    </connections>
                 </webView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="yQk-ri-Ojl" customClass="NSVisualEffectView">
                     <rect key="frame" x="0.0" y="905" width="884" height="55"/>
