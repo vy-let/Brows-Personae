@@ -14,7 +14,15 @@
 
 @interface BrowsTab : NSViewController {
     IBOutlet IGIsolatedCookieWebView *pageView;
+    
     IBOutlet NSVisualEffectView *tooblar;
+    IBOutlet NSImageView *pageSecurityIndicator;
+    IBOutlet NSProgressIndicator *pageSpinny;
+    IBOutlet NSSegmentedControl *forwardBackwardButtons;
+    IBOutlet NSTextField *locationBox;
+    IBOutlet NSButton *goStopReloadButton;
+    IBOutlet NSTextField *personaIndicator;
+    
 }
 
 - (instancetype)initWithProfile:(SiteProfile *)profile;

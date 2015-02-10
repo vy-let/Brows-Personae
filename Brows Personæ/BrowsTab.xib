@@ -8,7 +8,13 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="BrowsTab">
             <connections>
+                <outlet property="forwardBackwardButtons" destination="pXe-VQ-z8h" id="ezt-L2-QHo"/>
+                <outlet property="goStopReloadButton" destination="nbI-S6-HGb" id="fIx-ik-Did"/>
+                <outlet property="locationBox" destination="Jjb-3b-eS6" id="XPS-zF-sZo"/>
+                <outlet property="pageSecurityIndicator" destination="hkU-KP-lEa" id="TPV-9M-g2v"/>
+                <outlet property="pageSpinny" destination="c77-HL-ODd" id="ir1-SW-wz7"/>
                 <outlet property="pageView" destination="Os0-Ec-xeC" id="7Wv-jh-wQa"/>
+                <outlet property="personaIndicator" destination="Wau-Sp-3wN" id="JtB-2P-me6"/>
                 <outlet property="tooblar" destination="yQk-ri-Ojl" id="PFO-dm-EfT"/>
                 <outlet property="view" destination="c22-O7-iKe" id="jyp-Vp-0zi"/>
             </connections>
@@ -82,13 +88,13 @@
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="cxD-fo-ZRx"/>
                             </constraints>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="URL or Search" drawsBackground="YES" usesSingleLineMode="YES" id="mll-ol-Qkw">
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="URL or Search" drawsBackground="YES" usesSingleLineMode="YES" id="mll-ol-Qkw">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <action selector="gotoPage:" target="-2" id="ThV-Ua-oiM"/>
+                                <action selector="submitLocation:" target="-2" id="zAd-iU-Eyx"/>
                             </connections>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wau-Sp-3wN">
