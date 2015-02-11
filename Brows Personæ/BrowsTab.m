@@ -12,6 +12,7 @@
 #import "BrowsTab.h"
 #import "SiteProfile.h"
 #import "IGIsolatedCookieWebView.h"
+#import "Helpies.h"
 
 @interface BrowsTab () {
     NSObject *tabViewButtonThing;
@@ -56,17 +57,40 @@
                                                                       fromProtocol:@protocol(NSTextDelegate)]      mapReplace:@(YES)],
                                                [[locationDasu startWith:[RACUnit defaultUnit]]                     mapReplace:@(NO)]
                                                ]];
-    @weakify(locationBox)
-    [locationIsBeingEdited subscribeNext:^(NSNumber *x) {
-        @strongify(locationBox);
-        [locationBox setBackgroundColor:([x boolValue] ?
-                                         [NSColor colorWithCalibratedRed:1 green:0.9 blue:0.9 alpha:1] :
-                                         [NSColor colorWithCalibratedRed:0.9 green:0.9 blue:1 alpha:1]
-         )];
+    
+    @weakify(locationBox) @weakify(pageView)
+    [locationDasu subscribeNext:^(id x) {
+        @strongify(locationBox)
+        NSString *request = [locationBox stringValue];
+        NSURL *requestURL = isProbablyURLWithScheme(request) ? [NSURL URLWithString:request] :
+                                 isProbablyNakedURL(request) ? [NSURL URLWithString:[@"http://" stringByAppendingString:request]] :
+                                                               nil;
+        // Either it's not a URL-looking thing, or it's not actually parseable as a URL (URLWithString: returning nil).
+        // In both cases, take it to be a search.
+        if (!requestURL)
+            requestURL = searchEngineURLForQuery(request);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{  // Postpone until location editing session has fully popped.
+            @strongify(pageView)
+            NSLog(@"Loading “%@”", requestURL);
+            [[pageView mainFrame] loadRequest:[NSURLRequest requestWithURL:requestURL
+                                                               cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                           timeoutInterval:30]];
+        });
         
     }];
     
     
+    
+    // DEBUG-ONLY COLOR CHANGES
+    [locationIsBeingEdited subscribeNext:^(NSNumber *x) {
+        @strongify(locationBox)
+        [locationBox setBackgroundColor:([x boolValue] ?
+                                         [NSColor colorWithCalibratedRed:1 green:0.95 blue:0.95 alpha:1] :
+                                         [NSColor colorWithCalibratedRed:0.95 green:0.95 blue:1 alpha:1]
+         )];
+        
+    }];
     
 }
 
@@ -74,26 +98,6 @@
 
 - (IBAction)submitLocation:(id)sender {
     [locationDasu sendNext:[RACUnit defaultUnit]];
-    
-    NSString *request = [sender stringValue];
-    NSURL *potentialURL = [NSURL URLWithString:request];
-    NSLog(@"\n abso %@\n base %@\n host %@\n rpth %@\n rstr %@\n schm %@\n strd %@",
-          [potentialURL absoluteString],
-          [potentialURL baseURL],
-          [potentialURL host],
-          [potentialURL relativePath],
-          [potentialURL relativeString],
-          [potentialURL scheme],
-          [potentialURL standardizedURL]);
-    
-    if (potentialURL && ![potentialURL scheme]) {
-        potentialURL = [NSURL URLWithString:[@"https://" stringByAppendingString:[potentialURL absoluteString]]];
-    }
-    
-    if ([potentialURL scheme] && [potentialURL host])
-        [[pageView mainFrame] loadRequest:[NSURLRequest requestWithURL:potentialURL
-                                                           cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                                                       timeoutInterval:30.0]];
     
 }
 
