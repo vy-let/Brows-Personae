@@ -8,7 +8,7 @@
 
 #import "Helpies.h"
 
-static NSRegularExpression *urlDetector, *nakedDomainDetector;
+static NSRegularExpression *urlDetector, *nakedDomainDetector, *justWhitespaceDetector;
 static dispatch_once_t haveURLDetectorsBeenSet;
 static dispatch_block_t regexpInitialator = ^{
     // This is John Gruber’s global URL detector, anchored to match against the entire string only.
@@ -23,6 +23,10 @@ static dispatch_block_t regexpInitialator = ^{
     nakedDomainDetector = [[NSRegularExpression alloc] initWithPattern:@"^(?:(?<!@)[a-z0-9]+(?:[.\\-][a-z0-9]+)*[.](?:\\w{2,13})\\b/?(?!@))$"
                                                                options:NSRegularExpressionCaseInsensitive
                                                                  error:NULL];
+    
+    justWhitespaceDetector = [[NSRegularExpression alloc] initWithPattern:@"^\\s+$"
+                                                                  options:0
+                                                                    error:NULL];
     
 };
 
@@ -41,7 +45,17 @@ BOOL isProbablyNakedURL(NSString *request) {
     return [nakedDomainDetector numberOfMatchesInString:request
                                                 options:NSMatchingAnchored
                                                   range:NSMakeRange(0, [request length])]
-    > 0;
+            > 0;
+    
+}
+
+BOOL isBasicallyEmpty(NSString *ipnuts) {
+    dispatch_once(&haveURLDetectorsBeenSet, regexpInitialator);
+    return [ipnuts length] > 0 &&
+        [justWhitespaceDetector numberOfMatchesInString:ipnuts
+                                                options:NSMatchingAnchored
+                                                  range:NSMakeRange(0, [ipnuts length])]
+            > 0;
     
 }
 

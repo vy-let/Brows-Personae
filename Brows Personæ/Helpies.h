@@ -10,5 +10,6 @@
 
 BOOL isProbablyURLWithScheme(NSString *);
 BOOL isProbablyNakedURL(NSString *);
+BOOL isBasicallyEmpty(NSString *);
 NSURL *searchEngineURLForQuery(NSString *);
 

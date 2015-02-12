@@ -19,6 +19,8 @@
     SiteProfile *browsProfile;
     RACSignal *locationIsBeingEdited;
     RACSubject *locationDasu;  // Into which submit events are pushed.
+    RACSignal *locationEditEnd;
+    
 }
 
 @end
@@ -46,27 +48,43 @@
     return nil;
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     [tooblar setBlendingMode:NSVisualEffectBlendingModeWithinWindow];
     [tooblar setMaterial:NSVisualEffectMaterialTitlebar];
     
-    locationIsBeingEdited = [RACSignal merge:@[
-                                               [[locationBox rac_signalForSelector:@selector(textDidBeginEditing:)
-                                                                      fromProtocol:@protocol(NSTextDelegate)]      mapReplace:@(YES)],
-                                               [[locationDasu startWith:[RACUnit defaultUnit]]                     mapReplace:@(NO)]
-                                               ]];
+    locationEditEnd = [locationBox rac_signalForSelector:@selector(textDidEndEditing:)
+                                              fromProtocol:@protocol(NSTextDelegate)];
+    RACSignal *locationEditStart = [locationBox rac_signalForSelector:@selector(textDidBeginEditing:)
+                                                         fromProtocol:@protocol(NSTextDelegate)];
+    
+    locationIsBeingEdited = [[RACSignal merge:@[
+                                                [locationEditStart mapReplace:@(YES)]
+                                                ,[locationEditEnd mapReplace:@(NO)]
+                                                ,[locationDasu mapReplace:@(NO)]
+                                                ]]
+                             startWith:@(NO)];
+    
+#pragma mark User Submits Page Location
     
     @weakify(locationBox) @weakify(pageView)
     [locationDasu subscribeNext:^(id x) {
         @strongify(locationBox)
+        NSLog(@"Location did submit");
+        
         NSString *request = [locationBox stringValue];
+        if (isBasicallyEmpty(request)) return;  // Empty request just aborts.
+        
         NSURL *requestURL = isProbablyURLWithScheme(request) ? [NSURL URLWithString:request] :
                                  isProbablyNakedURL(request) ? [NSURL URLWithString:[@"http://" stringByAppendingString:request]] :
                                                                nil;
-        // Either it's not a URL-looking thing, or it's not actually parseable as a URL (URLWithString: returning nil).
-        // In both cases, take it to be a search.
+        // If it's not a URL-looking thing, or if it's not actually parseable as a URL,
+        // either way, take it to be a search.
         if (!requestURL)
             requestURL = searchEngineURLForQuery(request);
         
@@ -82,6 +100,13 @@
     
     
     
+    [locationEditEnd subscribeNext:^(id x) {
+        @strongify(locationBox) @strongify(pageView)
+        [locationBox setStringValue:[pageView mainFrameURL]];
+    }];
+    
+    
+    
     // DEBUG-ONLY COLOR CHANGES
     [locationIsBeingEdited subscribeNext:^(NSNumber *x) {
         @strongify(locationBox)
@@ -91,6 +116,12 @@
          )];
         
     }];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateProgress:)
+                                                 name:WebViewProgressEstimateChangedNotification
+                                               object:pageView];
     
 }
 
@@ -103,6 +134,9 @@
 
 
 
+
+#pragma mark - Properties
+
 - (NSImage *)favicon {
     return [NSImage imageNamed:@"NSMobileMe"];
 }
@@ -110,6 +144,71 @@
 - (NSImage *)thumbnail {
     return [NSImage imageNamed:@"NSMultipleDocuments"];
 }
+
+
+
+
+
+
+
+
+#pragma mark -
+#pragma mark Frame Load Delegate
+
+
+- (void)webView:(WebView *)sender didStartProvisionalLoadForFrame:(WebFrame *)frame {
+    if (frame != [pageView mainFrame]) return;
+    
+    [locationBox setStringValue:[[[[frame provisionalDataSource] request] URL] absoluteString]];
+    
+    [pageSpinny setDoubleValue:0];
+    [pageSpinny setIndeterminate:YES];
+    [pageSpinny startAnimation:sender];
+    
+}
+
+
+- (void)webView:(WebView *)sender didCommitLoadForFrame:(WebFrame *)frame {
+    if (frame != [pageView mainFrame]) return;
+    
+    [pageSpinny setIndeterminate:NO];
+    
+}
+
+
+- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame {
+    if (frame != [pageView mainFrame]) return;
+    
+    [pageSpinny setIndeterminate:YES];
+    [pageSpinny stopAnimation:sender];
+    
+}
+
+- (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame {
+    if (frame != [pageView mainFrame]) return;
+    
+    [pageSpinny setIndeterminate:YES];
+    [pageSpinny stopAnimation:sender];
+    NSLog(@"Did fail provisional load with error: %@", error);
+    
+}
+
+- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame {
+    if (frame != [pageView mainFrame]) return;
+    
+    [pageSpinny setIndeterminate:YES];
+    [pageSpinny stopAnimation:sender];
+    NSLog(@"Did fail load with error: %@", error);
+    
+}
+
+- (void)updateProgress:(NSNotification *)note {
+    [pageSpinny setDoubleValue:[pageView estimatedProgress]];
+}
+
+
+
+
 
 
 

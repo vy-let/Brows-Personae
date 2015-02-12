@@ -18,6 +18,7 @@
 		9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */; };
 		9C6810F21A7CB76D008263A4 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6810F11A7CB76D008263A4 /* WebKit.framework */; };
 		9CD502EC1A8AF31100AFE556 /* Helpies.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502EB1A8AF31100AFE556 /* Helpies.m */; };
+		9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */; };
 		9CDF343819EB2F4C0040AA0F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF343719EB2F4C0040AA0F /* AppDelegate.m */; };
 		9CDF343A19EB2F4C0040AA0F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF343919EB2F4C0040AA0F /* main.m */; };
 		9CDF343F19EB2F4C0040AA0F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CDF343D19EB2F4C0040AA0F /* MainMenu.xib */; };
@@ -71,6 +72,8 @@
 		9C6810F11A7CB76D008263A4 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		9CD502EB1A8AF31100AFE556 /* Helpies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helpies.m; sourceTree = "<group>"; };
 		9CD502ED1A8AF33C00AFE556 /* Helpies.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helpies.h; sourceTree = "<group>"; };
+		9CD502F11A8C41BE00AFE556 /* WebView+ScrollViewAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebView+ScrollViewAccess.h"; sourceTree = "<group>"; };
+		9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebView+ScrollViewAccess.m"; sourceTree = "<group>"; };
 		9CDF343119EB2F4C0040AA0F /* Brows Personæ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brows Personæ.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CDF343519EB2F4C0040AA0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CDF343619EB2F4C0040AA0F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -125,6 +128,15 @@
 			name = "COOOOKIES omm nomm";
 			sourceTree = "<group>";
 		};
+		9CD502F41A8C41C800AFE556 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				9CD502F11A8C41BE00AFE556 /* WebView+ScrollViewAccess.h */,
+				9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		9CDF342819EB2F4C0040AA0F = {
 			isa = PBXGroup;
 			children = (
@@ -176,6 +188,7 @@
 		9CDF343419EB2F4C0040AA0F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9CD502F41A8C41C800AFE556 /* Categories */,
 				9C6810F01A7C6940008263A4 /* Personæ.pch */,
 				9CDF343519EB2F4C0040AA0F /* Info.plist */,
 				9CDF343919EB2F4C0040AA0F /* main.m */,
@@ -406,6 +419,7 @@
 				9CDF343A19EB2F4C0040AA0F /* main.m in Sources */,
 				9CDF346519EB94DF0040AA0F /* SiteProfile.m in Sources */,
 				9CDF343819EB2F4C0040AA0F /* AppDelegate.m in Sources */,
+				9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
