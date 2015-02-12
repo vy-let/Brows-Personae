@@ -58,6 +58,8 @@
     [tooblar setBlendingMode:NSVisualEffectBlendingModeWithinWindow];
     [tooblar setMaterial:NSVisualEffectMaterialTitlebar];
     
+    [pageView setCustomUserAgent:@"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"];
+    
     locationEditEnd = [locationBox rac_signalForSelector:@selector(textDidEndEditing:)
                                               fromProtocol:@protocol(NSTextDelegate)];
     RACSignal *locationEditStart = [locationBox rac_signalForSelector:@selector(textDidBeginEditing:)
@@ -102,7 +104,8 @@
     
     [locationEditEnd subscribeNext:^(id x) {
         @strongify(locationBox) @strongify(pageView)
-        [locationBox setStringValue:[pageView mainFrameURL]];
+        if ([pageView mainFrameURL])
+            [locationBox setStringValue:[pageView mainFrameURL]];
     }];
     
     
@@ -159,7 +162,8 @@
 - (void)webView:(WebView *)sender didStartProvisionalLoadForFrame:(WebFrame *)frame {
     if (frame != [pageView mainFrame]) return;
     
-    [locationBox setStringValue:[[[[frame provisionalDataSource] request] URL] absoluteString]];
+    NSString *pageLoc = [[[[frame provisionalDataSource] request] URL] absoluteString];
+    if (pageLoc) [locationBox setStringValue:pageLoc];
     
     [pageSpinny setDoubleValue:0];
     [pageSpinny setIndeterminate:YES];
