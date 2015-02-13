@@ -28,6 +28,9 @@
 - (instancetype)initWithProfile:(SiteProfile *)profile;
 - (instancetype)initWithProfileNamed:(NSString *)profileName;
 
+- (IBAction)submitLocation:(id)sender;
+- (IBAction)goBackOrForward:(id)sender;
+
 - (NSImage *)thumbnail;
 - (NSImage *)favicon;
 

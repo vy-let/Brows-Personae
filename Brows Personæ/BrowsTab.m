@@ -12,7 +12,9 @@
 #import "BrowsTab.h"
 #import "SiteProfile.h"
 #import "IGIsolatedCookieWebView.h"
+#import "WebView+ScrollViewAccess.h"
 #import "Helpies.h"
+
 
 @interface BrowsTab () {
     NSObject *tabViewButtonThing;
@@ -20,6 +22,8 @@
     RACSignal *locationIsBeingEdited;
     RACSubject *locationDasu;  // Into which submit events are pushed.
     RACSignal *locationEditEnd;
+    RACSubject *pageIsLoading;
+    RACSubject *pageLoadingProgress;
     
 }
 
@@ -34,6 +38,8 @@
     
     browsProfile = profile;
     locationDasu = [RACSubject subject];
+    pageIsLoading = [RACSubject subject];  [pageIsLoading sendNext:@(NO)];
+    pageLoadingProgress = [RACSubject subject];
     
     return self;
     
@@ -59,6 +65,8 @@
     [tooblar setMaterial:NSVisualEffectMaterialTitlebar];
     
     [pageView setCustomUserAgent:@"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"];
+    [[pageView ei_scrollView] setContentInsets:NSEdgeInsetsMake([tooblar frame].size.height, 0, 0, 0)];
+    NSLog(@"Tooblar's height is %f and the scroll view is %@ with content inset top %f at start", [tooblar frame].size.height, [pageView ei_scrollView], [[pageView ei_scrollView] contentInsets].top);
     
     locationEditEnd = [locationBox rac_signalForSelector:@selector(textDidEndEditing:)
                                               fromProtocol:@protocol(NSTextDelegate)];
@@ -72,9 +80,25 @@
                                                 ]]
                              startWith:@(NO)];
     
+    @weakify(tooblar) @weakify(pageView)
+    [RACObserve([pageView ei_scrollView], contentInsets) subscribeNext:^(NSValue *edgeInsets) {
+        @strongify(tooblar)
+        NSEdgeInsets contentInsets;  [edgeInsets getValue:&contentInsets];
+        CGFloat tooblarHeight = [tooblar frame].size.height;
+        
+        if (contentInsets.top != tooblarHeight) {
+            [[pageView ei_scrollView] setContentInsets:NSEdgeInsetsMake(tooblarHeight, 0, 0, 0)];
+            NSLog(@"!! Had to re-establish content insets !!");
+            
+        } else {
+            NSLog(@"Did not have to re-establish content insets.");
+        }
+        
+    }];
+    
 #pragma mark User Submits Page Location
     
-    @weakify(locationBox) @weakify(pageView)
+    @weakify(locationBox)
     [locationDasu subscribeNext:^(id x) {
         @strongify(locationBox)
         NSLog(@"Location did submit");
@@ -121,6 +145,41 @@
     }];
     
     
+    @weakify(pageSpinny)
+    [pageLoadingProgress subscribeNext:^(NSNumber *prague) {
+        @strongify(pageSpinny)
+        [pageSpinny setDoubleValue:[prague doubleValue]];
+    }];
+    
+    [[pageIsLoading combineLatestWith:pageLoadingProgress] subscribeNext:^(RACTuple *latest) {
+        @strongify(pageSpinny)
+        double progress = [[latest second] doubleValue];
+        BOOL isLoading = [[latest first] boolValue];
+        
+        if (!isLoading) {
+            [pageSpinny setIndeterminate:YES];  [pageSpinny stopAnimation:nil];
+            
+        } else if (progress < 0 || progress > 1) {
+            [pageSpinny setIndeterminate:YES];  [pageSpinny startAnimation:nil];
+            
+        } else {
+            [pageSpinny setIndeterminate:NO];  [pageSpinny startAnimation:nil];
+            
+        }
+        
+    }];
+    
+    @weakify(forwardBackwardButtons)
+    [[RACObserve(pageView, canGoBack) startWith:@(NO)] subscribeNext:^(NSNumber *canI) {
+        @strongify(forwardBackwardButtons)
+        [forwardBackwardButtons setEnabled:[canI boolValue] forSegment:0];
+    }];
+    [[RACObserve(pageView, canGoForward) startWith:@(NO)] subscribeNext:^(NSNumber *canI) {
+        @strongify(forwardBackwardButtons)
+        [forwardBackwardButtons setEnabled:[canI boolValue] forSegment:1];
+    }];
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateProgress:)
                                                  name:WebViewProgressEstimateChangedNotification
@@ -133,6 +192,13 @@
 - (IBAction)submitLocation:(id)sender {
     [locationDasu sendNext:[RACUnit defaultUnit]];
     
+}
+
+
+
+- (IBAction)goBackOrForward:(id)sender {
+    BOOL goForward = [forwardBackwardButtons selectedSegment];
+    goForward ? [pageView goForward:sender] : [pageView goBack:sender];
 }
 
 
@@ -165,9 +231,10 @@
     NSString *pageLoc = [[[[frame provisionalDataSource] request] URL] absoluteString];
     if (pageLoc) [locationBox setStringValue:pageLoc];
     
-    [pageSpinny setDoubleValue:0];
-    [pageSpinny setIndeterminate:YES];
-    [pageSpinny startAnimation:sender];
+    NSLog(@"Provisionally load with content inset top %f", [[pageView ei_scrollView] contentInsets].top);
+    
+    [pageIsLoading sendNext:@(YES)];
+    [pageLoadingProgress sendNext:@(-1)];  // Spin
     
 }
 
@@ -175,7 +242,9 @@
 - (void)webView:(WebView *)sender didCommitLoadForFrame:(WebFrame *)frame {
     if (frame != [pageView mainFrame]) return;
     
-    [pageSpinny setIndeterminate:NO];
+    NSLog(@"Commit load with content inset top %f", [[pageView ei_scrollView] contentInsets].top);
+    
+    [pageLoadingProgress sendNext:@(0)];
     
 }
 
@@ -183,16 +252,18 @@
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame {
     if (frame != [pageView mainFrame]) return;
     
-    [pageSpinny setIndeterminate:YES];
-    [pageSpinny stopAnimation:sender];
+    [pageLoadingProgress sendNext:@(1)];
+    [pageIsLoading sendNext:@(NO)];
+    
+    NSLog(@"Finish load %@ with content inset top %f", [pageView ei_scrollView], [[pageView ei_scrollView] contentInsets].top);
     
 }
 
 - (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame {
     if (frame != [pageView mainFrame]) return;
     
-    [pageSpinny setIndeterminate:YES];
-    [pageSpinny stopAnimation:sender];
+    [pageIsLoading sendNext:@(NO)];
+    NSBeep();
     NSLog(@"Did fail provisional load with error: %@", error);
     
 }
@@ -200,14 +271,14 @@
 - (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame {
     if (frame != [pageView mainFrame]) return;
     
-    [pageSpinny setIndeterminate:YES];
-    [pageSpinny stopAnimation:sender];
+    [pageIsLoading sendNext:@(NO)];
+    NSBeep();
     NSLog(@"Did fail load with error: %@", error);
     
 }
 
 - (void)updateProgress:(NSNotification *)note {
-    [pageSpinny setDoubleValue:[pageView estimatedProgress]];
+    [pageLoadingProgress sendNext:@([pageView estimatedProgress])];
 }
 
 
