@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "BrowsWindow.h"
 #import "BrowsTabTableCellView.h"
+#import "WebCache.h"
 
 @interface AppDelegate () {
     NSMutableArray *browsWindows;
@@ -37,6 +38,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    [WebCache setDisabled:YES];
     
 }
 

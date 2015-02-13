@@ -74,6 +74,7 @@
 		9CD502ED1A8AF33C00AFE556 /* Helpies.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helpies.h; sourceTree = "<group>"; };
 		9CD502F11A8C41BE00AFE556 /* WebView+ScrollViewAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebView+ScrollViewAccess.h"; sourceTree = "<group>"; };
 		9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebView+ScrollViewAccess.m"; sourceTree = "<group>"; };
+		9CD502F51A8D968300AFE556 /* WebCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebCache.h; sourceTree = "<group>"; };
 		9CDF343119EB2F4C0040AA0F /* Brows Personæ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brows Personæ.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CDF343519EB2F4C0040AA0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CDF343619EB2F4C0040AA0F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -133,6 +134,7 @@
 			children = (
 				9CD502F11A8C41BE00AFE556 /* WebView+ScrollViewAccess.h */,
 				9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */,
+				9CD502F51A8D968300AFE556 /* WebCache.h */,
 			);
 			name = Categories;
 			sourceTree = "<group>";

@@ -83,8 +83,8 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </button>
-                        <textField verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jjb-3b-eS6">
-                            <rect key="frame" x="196" y="6" width="417" height="22"/>
+                        <textField verticalHuggingPriority="750" misplaced="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jjb-3b-eS6">
+                            <rect key="frame" x="196" y="6" width="418" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="cxD-fo-ZRx"/>
                             </constraints>
@@ -110,7 +110,7 @@
                             </textFieldCell>
                         </textField>
                         <segmentedControl verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pXe-VQ-z8h">
-                            <rect key="frame" x="135" y="3" width="53" height="27"/>
+                            <rect key="frame" x="135" y="4" width="53" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="24" id="Thr-CN-ARV"/>
                                 <constraint firstAttribute="width" constant="53" id="yI0-KI-kt5"/>
