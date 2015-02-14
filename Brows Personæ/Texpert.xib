@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner"/>
@@ -11,13 +11,50 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="549" height="340"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="549" height="340"/>
                 <autoresizingMask key="autoresizingMask"/>
             </view>
+            <toolbar key="toolbar" implicitIdentifier="1B1B772F-85F4-4BFC-A195-DB4A79DD51BC" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="fd8-aw-FAU">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="6d7-HM-iUx"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="PHz-jC-w0b"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="WXN-r3-zLB"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="ako-Mo-tta"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="ODY-J7-tRz"/>
+                    <toolbarItem implicitItemIdentifier="F1218890-3EEC-4561-A7FD-228D18CE3FF8" label="Custom View" paletteLabel="Custom View" id="aRu-6s-df9">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="67" height="28"/>
+                        <size key="maxSize" width="100" height="28"/>
+                        <segmentedControl key="view" verticalHuggingPriority="750" id="HF3-Xj-3Fs">
+                            <rect key="frame" x="5" y="14" width="71" height="28"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="GHn-Tz-qYT">
+                                <font key="font" metaFont="system"/>
+                                <segments>
+                                    <segment image="NSGoLeftTemplate" width="32"/>
+                                    <segment image="NSGoRightTemplate" width="32" tag="1"/>
+                                </segments>
+                            </segmentedCell>
+                        </segmentedControl>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="6d7-HM-iUx"/>
+                    <toolbarItem reference="PHz-jC-w0b"/>
+                    <toolbarItem reference="ODY-J7-tRz"/>
+                    <toolbarItem reference="aRu-6s-df9"/>
+                    <toolbarItem reference="ODY-J7-tRz"/>
+                    <toolbarItem reference="WXN-r3-zLB"/>
+                </defaultToolbarItems>
+            </toolbar>
             <contentBorderThickness maxY="100"/>
             <point key="canvasLocation" x="339.5" y="327"/>
         </window>
     </objects>
+    <resources>
+        <image name="NSGoLeftTemplate" width="9" height="12"/>
+        <image name="NSGoRightTemplate" width="9" height="12"/>
+    </resources>
 </document>
