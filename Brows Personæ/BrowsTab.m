@@ -65,11 +65,23 @@
     [tooblar setMaterial:NSVisualEffectMaterialTitlebar];
     
     [pageView setCustomUserAgent:@"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"];
-    [[pageView ei_scrollView] setContentInsets:NSEdgeInsetsMake([tooblar frame].size.height, 0, 0, 0)];
-    NSLog(@"Tooblar's height is %f and the scroll view is %@ with content inset top %f at start", [tooblar frame].size.height, [pageView ei_scrollView], [[pageView ei_scrollView] contentInsets].top);
     
+    [self setUpRACListeners];
+    [self pushInitialInterfaceState];  // Must happen *after* RAC is already listening, in some cases.
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateProgress:)
+                                                 name:WebViewProgressEstimateChangedNotification
+                                               object:pageView];
+    
+}
+
+
+
+- (void)setUpRACListeners {
     locationEditEnd = [locationBox rac_signalForSelector:@selector(textDidEndEditing:)
-                                              fromProtocol:@protocol(NSTextDelegate)];
+                                            fromProtocol:@protocol(NSTextDelegate)];
     RACSignal *locationEditStart = [locationBox rac_signalForSelector:@selector(textDidBeginEditing:)
                                                          fromProtocol:@protocol(NSTextDelegate)];
     
@@ -141,7 +153,7 @@
         [locationBox setBackgroundColor:([x boolValue] ?
                                          [NSColor colorWithCalibratedRed:1 green:0.95 blue:0.95 alpha:1] :
                                          [NSColor colorWithCalibratedRed:0.95 green:0.95 blue:1 alpha:1]
-         )];
+                                         )];
         
     }];
     
@@ -199,17 +211,25 @@
     
     [[pageIsLoading combineLatestWith:locationIsBeingEdited] subscribeNext:^(RACTuple *isLoadingIsEditing) {
         @strongify(goStopReloadButton)
-        [goStopReloadButton setAction:( [[isLoadingIsEditing second] boolValue] ? @selector(goLoad:) :
+        [goStopReloadButton setAction:( [[isLoadingIsEditing second] boolValue] ? @selector(submitLocation:) :
                                          [[isLoadingIsEditing first] boolValue] ? @selector(stopLoad:) :
                                                                                   @selector(reLoad:) )];
     }];
+    
 
+}
+
+
+
+- (void)pushInitialInterfaceState {
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateProgress:)
-                                                 name:WebViewProgressEstimateChangedNotification
-                                               object:pageView];
+    // This will trigger a listener (above) to say 'no no no, that should be x instead!':
+    [[pageView ei_scrollView] setContentInsets:NSEdgeInsetsMake(0, 0, 0, 0)];
     
+    // Fragile RACSubjects should be init'd here:
+    [pageIsLoading sendNext:@(0)];
+    [pageLoadingProgress sendNext:@(-1)];
+
 }
 
 
@@ -224,6 +244,16 @@
 - (IBAction)goBackOrForward:(id)sender {
     BOOL goForward = [forwardBackwardButtons selectedSegment];
     goForward ? [pageView goForward:sender] : [pageView goBack:sender];
+}
+
+
+
+- (void)stopLoad:(id)sender {
+    [pageView stopLoading:sender];
+}
+
+- (void)reLoad:(id)sender {
+    [pageView reload:sender];
 }
 
 
