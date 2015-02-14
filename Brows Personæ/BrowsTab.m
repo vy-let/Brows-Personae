@@ -38,7 +38,7 @@
     
     browsProfile = profile;
     locationDasu = [RACSubject subject];
-    pageIsLoading = [RACSubject subject];  [pageIsLoading sendNext:@(NO)];
+    pageIsLoading = [RACSubject subject];
     pageLoadingProgress = [RACSubject subject];
     
     return self;
@@ -73,6 +73,7 @@
     RACSignal *locationEditStart = [locationBox rac_signalForSelector:@selector(textDidBeginEditing:)
                                                          fromProtocol:@protocol(NSTextDelegate)];
     
+    [pageIsLoading sendNext:@(NO)];
     locationIsBeingEdited = [[RACSignal merge:@[
                                                 [locationEditStart mapReplace:@(YES)]
                                                 ,[locationEditEnd mapReplace:@(NO)]
@@ -179,6 +180,30 @@
         [forwardBackwardButtons setEnabled:[canI boolValue] forSegment:1];
     }];
     
+    
+    [pageIsLoading subscribeNext:^(id x) {
+        NSLog(@"Is page loading? %@", x);
+    }];
+    [locationIsBeingEdited subscribeNext:^(id x) {
+        NSLog(@"Is location being edited? %@", x);
+    }];
+    @weakify(goStopReloadButton)
+    [[[pageIsLoading combineLatestWith:locationIsBeingEdited] map:^(RACTuple *isLoadingIsEditing) {
+        return [NSImage imageNamed:( [[isLoadingIsEditing second] boolValue] ? @"NSMenuOnStateTemplate" :
+                                      [[isLoadingIsEditing first] boolValue] ? @"NSStopProgressTemplate" :
+                                                                               @"NSReloadTemplate" )];
+    }] subscribeNext:^(NSImage *buttonImage) {
+        @strongify(goStopReloadButton)
+        [goStopReloadButton setImage:buttonImage];
+    }];
+    
+    [[pageIsLoading combineLatestWith:locationIsBeingEdited] subscribeNext:^(RACTuple *isLoadingIsEditing) {
+        @strongify(goStopReloadButton)
+        [goStopReloadButton setAction:( [[isLoadingIsEditing second] boolValue] ? @selector(goLoad:) :
+                                         [[isLoadingIsEditing first] boolValue] ? @selector(stopLoad:) :
+                                                                                  @selector(reLoad:) )];
+    }];
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateProgress:)

@@ -30,6 +30,9 @@
 
 - (IBAction)submitLocation:(id)sender;
 - (IBAction)goBackOrForward:(id)sender;
+- (IBAction)stopLoad:(id)sender;
+- (IBAction)reLoad:(id)sender;
+- (IBAction)goLoad:(id)sender;
 
 - (NSImage *)thumbnail;
 - (NSImage *)favicon;

@@ -82,6 +82,9 @@
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <connections>
+                                <action selector="reLoad:" target="-2" id="Ysk-Ax-BqK"/>
+                            </connections>
                         </button>
                         <textField verticalHuggingPriority="750" misplaced="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jjb-3b-eS6">
                             <rect key="frame" x="196" y="6" width="418" height="22"/>
