@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="BrowsWindow">
             <connections>
                 <outlet property="multiTabsPlaceholder" destination="Ja4-3Z-jJK" id="Oj8-4f-9tz"/>
+                <outlet property="newTabButton" destination="S1E-Cn-fV3" id="WMh-Y4-i9Y"/>
                 <outlet property="noTabPlaceholder" destination="wia-Ri-hZh" id="QJH-77-btn"/>
                 <outlet property="tabsList" destination="3wx-xm-ARL" id="BZf-R5-HLy"/>
                 <outlet property="window" destination="jqs-u9-lwD" id="Ok0-JD-sIu"/>

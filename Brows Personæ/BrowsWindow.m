@@ -13,6 +13,7 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "BrowsTab.h"
 #import "BrowsTabTableCellView.h"
+#import "MktabController.h"
 
 
 
@@ -22,6 +23,11 @@
     NSMutableArray *browsTabs;
     RACSignal *tabSelection;
     RACSignal *viewForTabSelection;
+    
+    dispatch_once_t didInitNewtab;
+    MktabController *newtabController;
+    __weak NSPopover *newtabPopover;
+    
 }
 
 @end
@@ -129,13 +135,35 @@
 
 
 - (IBAction)newTab:(id)sender {
-    // TODO Pop over!
+    dispatch_once(&didInitNewtab, ^{
+        newtabController = [[MktabController alloc] initWithBrowsWindow:self];
+    });
     
+    NSPopover *pop = newtabPopover;
+    if (pop) return;
+    
+    newtabPopover = pop = [[NSPopover alloc] init];
+    [pop setContentViewController:newtabController];
+    [pop setBehavior:NSPopoverBehaviorSemitransient];
+    
+    [pop showRelativeToRect:[newTabButton bounds]
+                     ofView:newTabButton
+              preferredEdge:NSMaxYEdge];
     
 }
 
 
-
+- (void)finalizeNewTabPanelWithTab:(BrowsTab *)tab {
+    [newtabPopover performClose:nil];
+    newtabPopover = nil;  // just in case
+    
+    if (!tab) return;
+    
+    [browsTabs insertObject:tab atIndex:0];
+    [tabsList reloadData];
+    [tabsList selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+    
+}
 
 
 
