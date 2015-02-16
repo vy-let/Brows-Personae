@@ -25,6 +25,8 @@
     RACSubject *pageIsLoading;
     RACSubject *pageLoadingProgress;
     
+    NSURL *initialLocation;
+    
 }
 
 @end
@@ -33,7 +35,7 @@
 
 @implementation BrowsTab
 
-- (instancetype)initWithProfile:(SiteProfile *)profile {
+- (instancetype)initWithProfile:(SiteProfile *)profile initialLocation:(NSURL *)urlOrSearch {
     if (!(self = [super initWithNibName:@"BrowsTab" bundle:nil])) return nil;
     
     browsProfile = profile;
@@ -41,12 +43,14 @@
     pageIsLoading = [RACSubject subject];
     pageLoadingProgress = [RACSubject subject];
     
+    initialLocation = urlOrSearch;
+    
     return self;
     
 }
 
-- (instancetype)initWithProfileNamed:(NSString *)profileName {
-    return [self initWithProfile:[SiteProfile named:profileName]];
+- (instancetype)initWithProfileNamed:(NSString *)profileName initialLocation:(NSURL *)urlOrSearch {
+    return [self initWithProfile:[SiteProfile named:profileName] initialLocation:urlOrSearch];
 }
 
 - (id)init {
@@ -111,28 +115,20 @@
     
 #pragma mark User Submits Page Location
     
-    @weakify(locationBox)
+    @weakify(locationBox) @weakify(self)
     [locationDasu subscribeNext:^(id x) {
         @strongify(locationBox)
-        NSLog(@"Location did submit");
         
         NSString *request = [locationBox stringValue];
-        if (isBasicallyEmpty(request)) return;  // Empty request just aborts.
+        NSURL *requestURL = urlForLocation(request, NULL, NULL);
+        // Right now, we don't care whether those were inferred-protocol or search, hence NULLs.
         
-        NSURL *requestURL = isProbablyURLWithScheme(request) ? [NSURL URLWithString:request] :
-                                 isProbablyNakedURL(request) ? [NSURL URLWithString:[@"http://" stringByAppendingString:request]] :
-                                                               nil;
-        // If it's not a URL-looking thing, or if it's not actually parseable as a URL,
-        // either way, take it to be a search.
-        if (!requestURL)
-            requestURL = searchEngineURLForQuery(request);
+        if (!requestURL) return;  // Just abort the whole thing. Act like they said nothing.
         
         dispatch_async(dispatch_get_main_queue(), ^{  // Postpone until location editing session has fully popped.
-            @strongify(pageView)
+            @strongify(self)
             NSLog(@"Loading “%@”", requestURL);
-            [[pageView mainFrame] loadRequest:[NSURLRequest requestWithURL:requestURL
-                                                               cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                                                           timeoutInterval:30]];
+            [self performStandardRequest:requestURL];
         });
         
     }];
@@ -229,6 +225,12 @@
     // Fragile RACSubjects should be init'd here:
     [pageIsLoading sendNext:@(0)];
     [pageLoadingProgress sendNext:@(-1)];
+    
+    // Set initial location:
+    if (initialLocation) {
+        [locationBox setStringValue:[initialLocation absoluteString]];  // Not abs. necessary, but makes for a more responsive feel
+        [self performStandardRequest:initialLocation];
+    }
 
 }
 
@@ -254,6 +256,14 @@
 
 - (void)reLoad:(id)sender {
     [pageView reload:sender];
+}
+
+
+
+- (void)performStandardRequest:(NSURL *)location {
+    [[pageView mainFrame] loadRequest:[NSURLRequest requestWithURL:location
+                                                       cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                   timeoutInterval:30]];
 }
 
 

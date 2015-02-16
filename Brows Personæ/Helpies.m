@@ -31,6 +31,45 @@ static dispatch_block_t regexpInitialator = ^{
 };
 
 
+
+
+NSURL *urlForLocation(NSString *location, BOOL *protocolInferred, BOOL *isSearch) {
+    
+    void (^setOutparams)(BOOL, BOOL) = ^(BOOL protocolWasInf, BOOL wasSearch) {
+        if (protocolInferred)
+            *protocolInferred = protocolWasInf;
+        if (isSearch)
+            *isSearch = wasSearch;
+    };
+    
+    if (isBasicallyEmpty(location)) {
+        setOutparams(NO, NO);
+        return nil;
+    }
+    
+    
+    if (isProbablyURLWithScheme(location)) {
+        setOutparams(NO, NO);
+        return [NSURL URLWithString:location];
+        
+    } else if (isProbablyNakedURL(location)) {
+        setOutparams(YES, NO);
+        return [NSURL URLWithString:[@"http://" stringByAppendingString:location]];
+        
+    } else {
+        // If it's not a URL-looking thing, or if it's not actually parseable as a URL,
+        // either way, take it to be a search.
+        setOutparams(NO, YES);
+        return searchEngineURLForQuery(location);
+
+    }
+    
+}
+
+
+
+
+
 BOOL isProbablyURLWithScheme(NSString *request) {
     dispatch_once(&haveURLDetectorsBeenSet, regexpInitialator);
     return [urlDetector numberOfMatchesInString:request

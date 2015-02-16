@@ -51,8 +51,7 @@
 
 
 - (id)init {
-    return [self initWithTabs:@[ [[BrowsTab alloc] initWithProfileNamed:@"a.com"],
-                                 [[BrowsTab alloc] initWithProfileNamed:@"b.org"] ]];
+    return [self initWithTabs:@[ ]];
 }
 
 

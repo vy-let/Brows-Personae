@@ -9,6 +9,7 @@
 #import "MktabController.h"
 #import "BrowsWindow.h"
 #import "BrowsTab.h"
+#import "Helpies.h"
 
 @interface MktabController () {
     __weak BrowsWindow *browsWindow;
@@ -54,6 +55,7 @@
 
 
 - (void)iWantToGoToThere:(id)sender {
+    NSString *location = [locationBox stringValue];
     NSString *personaName = [personaBox stringValue];
     
     if (!personaName) {
@@ -62,7 +64,14 @@
         return;
     }
     
-    [browsWindow finalizeNewTabPanelWithTab:[[BrowsTab alloc] initWithProfileNamed:personaName]];
+    NSURL *desiredLocation = urlForLocation(location, NULL, NULL);
+    if (!desiredLocation) {
+        [browsWindow finalizeNewTabPanelWithTab:nil];
+        return;
+    }
+    
+    [browsWindow finalizeNewTabPanelWithTab:[[BrowsTab alloc] initWithProfileNamed:personaName
+                                                                   initialLocation:desiredLocation]];
     
 }
 

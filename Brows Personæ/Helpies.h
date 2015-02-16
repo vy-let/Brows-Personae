@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+NSURL *urlForLocation(NSString *location, BOOL *protocolInferred, BOOL *isSearch);
+
 BOOL isProbablyURLWithScheme(NSString *);
 BOOL isProbablyNakedURL(NSString *);
 BOOL isBasicallyEmpty(NSString *);

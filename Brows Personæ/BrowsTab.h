@@ -25,14 +25,13 @@
     
 }
 
-- (instancetype)initWithProfile:(SiteProfile *)profile;
-- (instancetype)initWithProfileNamed:(NSString *)profileName;
+- (instancetype)initWithProfile:(SiteProfile *)profile initialLocation:(NSURL *)loc;
+- (instancetype)initWithProfileNamed:(NSString *)profileName initialLocation:(NSURL *)loc;
 
 - (IBAction)submitLocation:(id)sender;
 - (IBAction)goBackOrForward:(id)sender;
 - (IBAction)stopLoad:(id)sender;
 - (IBAction)reLoad:(id)sender;
-- (IBAction)goLoad:(id)sender;
 
 - (NSImage *)thumbnail;
 - (NSImage *)favicon;
