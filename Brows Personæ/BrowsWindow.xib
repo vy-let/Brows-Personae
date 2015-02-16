@@ -12,6 +12,7 @@
                 <outlet property="newTabButton" destination="S1E-Cn-fV3" id="WMh-Y4-i9Y"/>
                 <outlet property="noTabPlaceholder" destination="wia-Ri-hZh" id="QJH-77-btn"/>
                 <outlet property="tabsList" destination="3wx-xm-ARL" id="BZf-R5-HLy"/>
+                <outlet property="tabsListController" destination="Q0g-zp-p63" id="OGQ-no-Jrx"/>
                 <outlet property="window" destination="jqs-u9-lwD" id="Ok0-JD-sIu"/>
                 <outlet property="windowBody" destination="fWJ-BM-bdp" id="eVi-BC-FyB"/>
             </connections>
@@ -83,8 +84,8 @@
                                                                 </tableColumn>
                                                             </tableColumns>
                                                             <connections>
-                                                                <outlet property="dataSource" destination="-2" id="HuS-aW-4KM"/>
-                                                                <outlet property="delegate" destination="-2" id="nJx-0f-e7V"/>
+                                                                <outlet property="dataSource" destination="Q0g-zp-p63" id="2TJ-kV-M7N"/>
+                                                                <outlet property="delegate" destination="Q0g-zp-p63" id="U7l-wn-aOY"/>
                                                             </connections>
                                                         </tableView>
                                                     </subviews>
@@ -249,6 +250,12 @@
             </constraints>
             <point key="canvasLocation" x="2540.5" y="553"/>
         </customView>
+        <customObject id="Q0g-zp-p63" customClass="BrowsTabList">
+            <connections>
+                <outlet property="tabsList" destination="3wx-xm-ARL" id="NBR-ch-VBy"/>
+                <outlet property="windowController" destination="-2" id="zg6-IX-DwS"/>
+            </connections>
+        </customObject>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>

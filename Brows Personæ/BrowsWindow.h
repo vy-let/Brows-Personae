@@ -9,9 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 @class BrowsTab;
+@class BrowsTabList;
 
-@interface BrowsWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate> {
+@interface BrowsWindow : NSWindowController {
     IBOutlet NSTableView *tabsList;
+    IBOutlet BrowsTabList *tabsListController;
     IBOutlet NSButton *newTabButton;
     IBOutlet NSView *windowBody;
     IBOutlet NSView *noTabPlaceholder;
@@ -21,6 +23,8 @@
 
 - (IBAction)newTab:(id)sender;
 - (void)finalizeNewTabPanelWithTab:(BrowsTab *)tab;
+
+- (NSArray *)tabs;
 
 
 

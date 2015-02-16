@@ -12,6 +12,7 @@
 #import <tgmath.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "BrowsTab.h"
+#import "BrowsTabList.h"
 #import "BrowsTabTableCellView.h"
 #import "MktabController.h"
 
@@ -20,9 +21,7 @@
 
 
 @interface BrowsWindow () {
-    NSMutableArray *browsTabs;
-    RACSignal *tabSelection;
-    RACSignal *viewForTabSelection;
+    NSArray *initialTabs;
     
     dispatch_once_t didInitNewtab;
     MktabController *newtabController;
@@ -43,7 +42,7 @@
 - (id)initWithTabs:(NSArray *)tabs {
     if (!(self = [super initWithWindowNibName:@"BrowsWindow"])) return nil;
     
-    browsTabs = [tabs mutableCopy];
+    initialTabs = [tabs copy];
     
     return self;
 }
@@ -56,11 +55,21 @@
 
 
 
+- (NSArray *)tabs {
+    return [tabsListController tabs];
+}
+
+
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     
     [tabsList registerNib:[[NSNib alloc] initWithNibNamed:@"TabCell" bundle:[NSBundle mainBundle]]
             forIdentifier:@"BrowsTabCell"];
+    
+    if (initialTabs)
+        [tabsListController swapTabs:initialTabs];
+    initialTabs = nil;
     
 }
 
@@ -74,27 +83,15 @@
 //    [[self window] setTitleVisibility:NSWindowTitleHidden];
     [[self window] setTitlebarAppearsTransparent:YES];
     
-    @weakify(tabsList)
-    @weakify(browsTabs)
-    if ([browsTabs count]) {
+    if ([[tabsListController tabs] count]) {
         // Replace with last-selected indices.
-        [tabsList selectRowIndexes:[NSIndexSet indexSetWithIndex:[browsTabs count] - 1] byExtendingSelection:NO];
+        [tabsList selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
     }
-    
-    tabSelection = [[[[[self rac_signalForSelector:@selector(tableViewSelectionDidChange:)]
-                       map:^id(RACTuple *args) { return [args first]; }]
-                      filter:^BOOL(NSNotification *note) { @strongify(tabsList); return [note object] == tabsList; }]
-                     map:^id(NSNotification *note) {
-                        @strongify(tabsList); @strongify(browsTabs);
-                        return [browsTabs objectsAtIndexes:[tabsList selectedRowIndexes]];
-                     }]
-                    startWith:[browsTabs objectsAtIndexes:[tabsList selectedRowIndexes]]];  // There's gotta be a better way to init the signal.
-    
     
     @weakify(noTabPlaceholder)
     @weakify(multiTabsPlaceholder)
-    viewForTabSelection =[tabSelection map:^id(NSArray *selTabs) {
-        @strongify(noTabPlaceholder); @strongify(multiTabsPlaceholder);
+    RACSignal *viewForTabSelection =[[tabsListController tabSelection] map:^id(NSArray *selTabs) {
+        @strongify(noTabPlaceholder) @strongify(multiTabsPlaceholder)
         
         switch ([selTabs count]) {
             case 1:
@@ -158,64 +155,11 @@
     
     if (!tab) return;
     
-    [browsTabs insertObject:tab atIndex:0];
-    [tabsList reloadData];
+    [tabsListController putTab:tab];
     [tabsList selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
     
 }
 
-
-
-
-
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    if (tableView == tabsList) {
-        return [browsTabs count];
-        
-    }
-    
-    
-    return 0;
-    
-}
-
-
-
-- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    if (tableView == tabsList) {
-        BrowsTab *applicableTab = [browsTabs objectAtIndex:row];
-        BrowsTabTableCellView *availableView = [tableView makeViewWithIdentifier:@"BrowsTabCell" owner:self];
-        
-        [[availableView thumbnailView] setImage:[applicableTab thumbnail]];
-        [[availableView faviconView] setImage:[applicableTab favicon]];
-        
-        // TODO Add drop-shadow to thumbnail if not present.
-        
-        return availableView;
-        
-    }
-    
-    return nil;
-    
-}
-
-
-
-- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
-    if (tableView == tabsList) {
-        // TODO make dummy hidden cell and measure its height.
-        CGFloat colWidth = [(NSTableColumn *)[[tableView tableColumns] objectAtIndex:0] width];
-        
-        // subtract the 8pt l/r margin, mult. by aspect ratio, and add the 8pt t/b margin.
-        return round( (colWidth - 8 - 8) * (3 / 2.0) + 8 + 8 );
-        
-    }
-    
-    return [tableView rowHeight];
-}
-
-- (void)tableViewSelectionDidChange:(NSNotification *)notification {  /* Swizzled out */  }
 
 
 
