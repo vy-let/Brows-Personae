@@ -11,6 +11,7 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 - (IBAction)newBrowsWindow:(id)sender;
+- (IBAction)newTab:(id)sender;
 
 
 @end

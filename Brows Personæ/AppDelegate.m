@@ -37,6 +37,10 @@
     
 }
 
+- (IBAction)newTab:(id)sender {
+    [self newBrowsWindow:sender];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     [WebCache setDisabled:YES];
