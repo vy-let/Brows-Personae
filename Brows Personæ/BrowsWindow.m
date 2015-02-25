@@ -83,9 +83,21 @@
 //    [[self window] setTitleVisibility:NSWindowTitleHidden];
     [[self window] setTitlebarAppearsTransparent:YES];
     
+    NSRect windyFrame = [[self window] frame];
+    windyFrame.origin.y = 0;
+    windyFrame.size.height = 10000;
+    [[self window] setFrame:windyFrame display:YES];
+    
     if ([[tabsListController tabs] count]) {
         // Replace with last-selected indices.
         [tabsList selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+        
+    } else {
+        // Mktab!
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self newTab:newTabButton];
+        });
+        
     }
     
     @weakify(noTabPlaceholder)
