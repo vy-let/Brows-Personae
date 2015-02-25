@@ -40,10 +40,11 @@
     // Insert code here to initialize your application
     [WebCache setDisabled:YES];
     
-}
-
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
-    // Insert code here to tear down your application
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (![browsWindows count])
+            [self newBrowsWindow:nil];
+    });
+    
 }
 
 @end
