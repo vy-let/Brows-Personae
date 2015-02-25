@@ -29,10 +29,10 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSColorPanel" id="kcd-3U-XAS"/>
                 </imageView>
                 <button hidden="YES" toolTip="Close Tab" translatesAutoresizingMaskIntoConstraints="NO" id="vUK-oZ-no8">
-                    <rect key="frame" x="3" y="85" width="24" height="24"/>
+                    <rect key="frame" x="3" y="89" width="20" height="20"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="24" id="FBc-VG-DYF"/>
-                        <constraint firstAttribute="width" constant="24" id="Ngs-0D-rh4"/>
+                        <constraint firstAttribute="height" constant="20" id="FBc-VG-DYF"/>
+                        <constraint firstAttribute="width" constant="20" id="Ngs-0D-rh4"/>
                     </constraints>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSStopProgressFreestandingTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="te1-sG-ha9">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
