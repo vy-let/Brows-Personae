@@ -34,6 +34,7 @@
     [browsWindows addObject:newWindow];
     
     [newWindow showWindow:sender];
+    
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
