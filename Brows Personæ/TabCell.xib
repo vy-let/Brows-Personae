@@ -55,6 +55,7 @@
             </constraints>
             <connections>
                 <outlet property="faviconView" destination="NkB-gU-4lX" id="Zbn-eR-aHF"/>
+                <outlet property="tabCloseButton" destination="vUK-oZ-no8" id="FYk-Bi-MBT"/>
                 <outlet property="thumbnailView" destination="hIj-6m-rPg" id="lfv-g0-K1s"/>
             </connections>
             <point key="canvasLocation" x="375" y="766"/>

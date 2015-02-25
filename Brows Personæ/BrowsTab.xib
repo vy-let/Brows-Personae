@@ -8,8 +8,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="BrowsTab">
             <connections>
-                <outlet property="forwardBackwardButtons" destination="pXe-VQ-z8h" id="ezt-L2-QHo"/>
+                <outlet property="goFrothButton" destination="6qb-g7-UYF" id="e9X-SQ-ZPC"/>
                 <outlet property="goStopReloadButton" destination="nbI-S6-HGb" id="fIx-ik-Did"/>
+                <outlet property="gotoTheBackwardButton" destination="Fzo-bD-6On" id="sHy-pp-0iq"/>
                 <outlet property="locationBox" destination="Jjb-3b-eS6" id="XPS-zF-sZo"/>
                 <outlet property="pageSecurityIndicator" destination="hkU-KP-lEa" id="TPV-9M-g2v"/>
                 <outlet property="pageSpinny" destination="c77-HL-ODd" id="ir1-SW-wz7"/>
@@ -86,8 +87,8 @@
                                 <action selector="reLoad:" target="-2" id="Ysk-Ax-BqK"/>
                             </connections>
                         </button>
-                        <textField verticalHuggingPriority="750" misplaced="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jjb-3b-eS6">
-                            <rect key="frame" x="196" y="6" width="418" height="22"/>
+                        <textField verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jjb-3b-eS6">
+                            <rect key="frame" x="196" y="6" width="417" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="cxD-fo-ZRx"/>
                             </constraints>
@@ -112,46 +113,64 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <segmentedControl verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pXe-VQ-z8h">
-                            <rect key="frame" x="135" y="4" width="53" height="27"/>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6qb-g7-UYF">
+                            <rect key="frame" x="162" y="4" width="26" height="25"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="24" id="Thr-CN-ARV"/>
-                                <constraint firstAttribute="width" constant="53" id="yI0-KI-kt5"/>
+                                <constraint firstAttribute="height" constant="22" id="3af-n0-pgd"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="26" id="Azj-XQ-fwc"/>
+                                <constraint firstAttribute="width" constant="26" id="Dtc-pY-TeI"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="XYo-VH-bR9"/>
                             </constraints>
-                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="AU1-Ru-qIq">
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSGoRightTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="X5g-a2-d0x">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
-                                <segments>
-                                    <segment toolTip="Go Back in History" image="NSGoLeftTemplate" width="23"/>
-                                    <segment toolTip="Go Forward in History" image="NSGoRightTemplate" width="23" tag="1"/>
-                                </segments>
-                            </segmentedCell>
+                            </buttonCell>
                             <connections>
-                                <action selector="goBackOrForward:" target="-2" id="gEf-Lq-jOM"/>
+                                <action selector="goFroth:" target="-2" id="5it-dp-VFU"/>
                             </connections>
-                        </segmentedControl>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fzo-bD-6On">
+                            <rect key="frame" x="135" y="4" width="26" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="H96-px-fUf"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="26" id="IEw-gk-gra"/>
+                                <constraint firstAttribute="width" constant="26" id="VXS-yf-OEG"/>
+                                <constraint firstAttribute="height" constant="22" id="uRg-oa-yI2"/>
+                            </constraints>
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSGoLeftTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YPz-H9-oa5">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="gotoTheBackward:" target="-2" id="zKU-qS-1iL"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstItem="hkU-KP-lEa" firstAttribute="centerY" secondItem="c77-HL-ODd" secondAttribute="centerY" id="6BY-mj-SbW"/>
                         <constraint firstAttribute="bottom" secondItem="51r-DS-gzP" secondAttribute="bottom" id="9tX-wx-cmc"/>
+                        <constraint firstItem="hkU-KP-lEa" firstAttribute="centerY" secondItem="Jjb-3b-eS6" secondAttribute="centerY" id="B63-gB-oMh"/>
                         <constraint firstAttribute="trailing" secondItem="Wau-Sp-3wN" secondAttribute="trailing" constant="20" id="BWv-JY-Vo3"/>
                         <constraint firstItem="51r-DS-gzP" firstAttribute="width" secondItem="Tc1-zQ-QWb" secondAttribute="width" id="C3n-UD-tsb"/>
                         <constraint firstAttribute="bottom" secondItem="Jjb-3b-eS6" secondAttribute="bottom" constant="6" id="FoE-EK-WLj"/>
-                        <constraint firstItem="pXe-VQ-z8h" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c77-HL-ODd" secondAttribute="trailing" constant="8" id="KVG-YX-AuG"/>
                         <constraint firstItem="Jjb-3b-eS6" firstAttribute="leading" secondItem="51r-DS-gzP" secondAttribute="trailing" constant="8" id="LY6-uj-B6m"/>
+                        <constraint firstItem="c77-HL-ODd" firstAttribute="centerY" secondItem="hkU-KP-lEa" secondAttribute="centerY" id="Lb6-hE-e8q"/>
                         <constraint firstItem="51r-DS-gzP" firstAttribute="leading" secondItem="yQk-ri-Ojl" secondAttribute="leading" id="O9x-bs-Lgl"/>
                         <constraint firstItem="Wau-Sp-3wN" firstAttribute="baseline" secondItem="Jjb-3b-eS6" secondAttribute="baseline" id="Oa2-oX-Lr2"/>
+                        <constraint firstItem="6qb-g7-UYF" firstAttribute="centerY" secondItem="Fzo-bD-6On" secondAttribute="centerY" id="Or6-19-5Cx"/>
                         <constraint firstItem="nbI-S6-HGb" firstAttribute="centerY" secondItem="Jjb-3b-eS6" secondAttribute="centerY" id="T0d-52-MdZ"/>
-                        <constraint firstItem="Jjb-3b-eS6" firstAttribute="centerY" secondItem="pXe-VQ-z8h" secondAttribute="centerY" id="Th6-xp-f0O"/>
                         <constraint firstItem="hkU-KP-lEa" firstAttribute="leading" secondItem="yQk-ri-Ojl" secondAttribute="leading" constant="20" id="VXs-SM-LQt"/>
                         <constraint firstAttribute="trailing" secondItem="Tc1-zQ-QWb" secondAttribute="trailing" constant="75" id="X3f-nR-eRS"/>
                         <constraint firstItem="c77-HL-ODd" firstAttribute="leading" secondItem="hkU-KP-lEa" secondAttribute="trailing" constant="8" id="Zj6-x3-hcu"/>
                         <constraint firstItem="51r-DS-gzP" firstAttribute="width" secondItem="Jjb-3b-eS6" secondAttribute="width" multiplier="0.45" id="bZH-jv-Zdf"/>
                         <constraint firstItem="Tc1-zQ-QWb" firstAttribute="leading" secondItem="Jjb-3b-eS6" secondAttribute="trailing" constant="8" id="beb-AG-2jj"/>
-                        <constraint firstItem="hkU-KP-lEa" firstAttribute="centerY" secondItem="pXe-VQ-z8h" secondAttribute="centerY" id="ck2-Sl-lD7"/>
+                        <constraint firstItem="Fzo-bD-6On" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c77-HL-ODd" secondAttribute="trailing" constant="8" id="fsd-n5-Rmg"/>
                         <constraint firstAttribute="bottom" secondItem="Tc1-zQ-QWb" secondAttribute="bottom" id="gt5-CE-QXx"/>
                         <constraint firstAttribute="height" constant="55" id="jT9-fl-Pmh"/>
-                        <constraint firstItem="Jjb-3b-eS6" firstAttribute="leading" secondItem="pXe-VQ-z8h" secondAttribute="trailing" constant="8" id="ly6-5k-geQ"/>
+                        <constraint firstItem="6qb-g7-UYF" firstAttribute="centerY" secondItem="Jjb-3b-eS6" secondAttribute="centerY" id="n7p-l8-vkr"/>
+                        <constraint firstItem="6qb-g7-UYF" firstAttribute="leading" secondItem="Fzo-bD-6On" secondAttribute="trailing" constant="1" id="rro-TQ-rDD"/>
                         <constraint firstItem="nbI-S6-HGb" firstAttribute="leading" secondItem="Jjb-3b-eS6" secondAttribute="trailing" constant="8" id="xOc-bT-bIK"/>
+                        <constraint firstItem="Jjb-3b-eS6" firstAttribute="leading" secondItem="6qb-g7-UYF" secondAttribute="trailing" constant="8" id="yLj-SR-FEm"/>
                         <constraint firstItem="Wau-Sp-3wN" firstAttribute="leading" secondItem="nbI-S6-HGb" secondAttribute="trailing" constant="8" id="zCk-q7-WLN"/>
                     </constraints>
                 </customView>

@@ -18,7 +18,8 @@
     IBOutlet NSVisualEffectView *tooblar;
     IBOutlet NSImageView *pageSecurityIndicator;
     IBOutlet NSProgressIndicator *pageSpinny;
-    IBOutlet NSSegmentedControl *forwardBackwardButtons;
+    IBOutlet NSButton *gotoTheBackwardButton;
+    IBOutlet NSButton *goFrothButton;
     IBOutlet NSTextField *locationBox;
     IBOutlet NSButton *goStopReloadButton;
     IBOutlet NSTextField *personaIndicator;
@@ -29,11 +30,12 @@
 - (instancetype)initWithProfileNamed:(NSString *)profileName initialLocation:(NSURL *)loc;
 
 - (IBAction)submitLocation:(id)sender;
-- (IBAction)goBackOrForward:(id)sender;
+- (IBAction)gotoTheBackward:(id)sender;
+- (IBAction)goFroth:(id)sender;
 - (IBAction)stopLoad:(id)sender;
 - (IBAction)reLoad:(id)sender;
 
-- (NSImage *)thumbnail;
-- (NSImage *)favicon;
+@property (nonatomic) NSImage *thumbnail;
+@property (nonatomic) NSImage *favicon;
 
 @end

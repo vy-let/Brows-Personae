@@ -7,11 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+@class BrowsTab;
 
 @interface BrowsTabTableCellView : NSTableCellView
 
+@property (nonatomic, weak) BrowsTab *representedTab;
 @property (nonatomic) IBOutlet NSImageView *thumbnailView;
 @property (nonatomic) IBOutlet NSImageView *faviconView;
+@property (nonatomic) IBOutlet NSButton *tabCloseButton;
 
 + (instancetype)measurementDummyView;
 

@@ -38,6 +38,7 @@
 
 
 - (void)awakeFromNib {
+    // Called every single time there's a new tab cell created, for any reason.
     [super awakeFromNib];
     
     // Should be OK---only called on main thread, right?
@@ -45,12 +46,12 @@
         @weakify(tabsList, browsTabs)
         tabSelection = [[[[[self rac_signalForSelector:@selector(tableViewSelectionDidChange:)]
                            map:^id(RACTuple *args) { return [args first]; }]
-                          filter:^BOOL(NSNotification *note) { @strongify(tabsList); return [note object] == tabsList; }]
+                          filter:^BOOL(NSNotification *note) { @strongify(tabsList) return [note object] == tabsList; }]
                          map:^id(NSNotification *note) {
                              @strongify(tabsList, browsTabs)
                              return [browsTabs objectsAtIndexes:[tabsList selectedRowIndexes]];
                          }]
-                        startWith:[browsTabs objectsAtIndexes:[tabsList selectedRowIndexes]]];  // There's gotta be a better way to init the signal.
+                        startWith:[browsTabs objectsAtIndexes:[tabsList selectedRowIndexes]]];  // There's gotta be a better way to bump the signal.
     }
     
 }
@@ -58,6 +59,8 @@
 
 
 - (void)swapTabs:(NSArray *)newTabs {
+    // SHALL NOT ANIMATE.
+    
     // Why not just reassign? B/c our signals have already-established pointers.
     [browsTabs removeAllObjects];
     [browsTabs addObjectsFromArray:newTabs];
@@ -69,12 +72,22 @@
 }
 
 - (void)putTab:(BrowsTab *)tab atIndex:(NSUInteger)idex {
+    [tabsList beginUpdates];
     [browsTabs insertObject:tab atIndex:idex];
-    [tabsList reloadData];
+    [tabsList insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:idex] withAnimation:NSTableViewAnimationSlideDown];
+    [tabsList endUpdates];
+    //[tabsList reloadData];
 }
 
 - (void)putTab:(BrowsTab *)tab {
     [self putTab:tab atIndex:0];
+}
+
+- (void)pullTabsFromIndices:(NSIndexSet *)idices {
+    [tabsList beginUpdates];
+    [browsTabs removeObjectsAtIndexes:idices];
+    [tabsList removeRowsAtIndexes:idices withAnimation:NSTableViewAnimationSlideLeft | NSTableViewAnimationEffectFade];
+    [tabsList endUpdates];
 }
 
 - (RACSignal *)tabSelection { return tabSelection; }
@@ -87,8 +100,23 @@
 }
 
 - (IBAction)closeTab:(id)sender {
-    // TODO
-    NSBeep();
+    if (![[sender superview] respondsToSelector:@selector(representedTab)]) {
+        NSLog(@"Superview of close button does not represent a tab.");
+        return;
+    }
+    
+    BrowsTab *applicableTab = [(BrowsTabTableCellView *)[sender superview] representedTab];
+    
+//    if ([applicableTab respondsToSelector:@selector(shouldClose)]) {
+//        if ( ![applicableTab shouldClose] )  return;
+//    }
+    
+    if (applicableTab) {
+        NSUInteger tabidex = [browsTabs indexOfObject:applicableTab];
+        if (tabidex != NSNotFound)
+            [self pullTabsFromIndices:[NSIndexSet indexSetWithIndex:tabidex]];
+    }
+    
 }
 
 
@@ -104,8 +132,7 @@
     BrowsTab *applicableTab = [browsTabs objectAtIndex:row];
     BrowsTabTableCellView *availableView = [tableView makeViewWithIdentifier:@"BrowsTabCell" owner:self];
     
-    [[availableView thumbnailView] setImage:[applicableTab thumbnail]];
-    [[availableView faviconView] setImage:[applicableTab favicon]];
+    [availableView setRepresentedTab:applicableTab];
     
     // TODO Add drop-shadow to thumbnail if not present.
     

@@ -7,6 +7,16 @@
 //
 
 #import "BrowsTabTableCellView.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
+#import "BrowsTab.h"
+
+
+@interface BrowsTabTableCellView () {
+    NSTrackingArea *whyTheFuckDoIHaveToManuallyDealWithThisShitIn2015;
+    dispatch_once_t racObservationsDidInit;
+}
+
+@end
 
 
 
@@ -41,6 +51,78 @@
     return measurementTableCellView;
     
 }
+
+
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    dispatch_once(&racObservationsDidInit, ^{
+        
+        @weakify(self)
+        [RACObserve(self, representedTab) subscribeNext:^(BrowsTab *applicableTab) {
+            // Whenever the represented tab is set, subscribe to its thumbnails & favicons.
+            
+            BOOL (^whileApplicable)(id) = ^BOOL(id dontcare) {
+                // Terminate all subscriptions which no longer refer to the represented tab.
+                @strongify(self)
+                return [self representedTab] == applicableTab;
+            };
+            
+            [[[RACObserve(applicableTab, thumbnail)
+               startWith:[applicableTab thumbnail]]
+              takeWhileBlock:whileApplicable]
+             subscribeNext:^(NSImage *thumbnailImage) {  @strongify(self)
+                 [[self thumbnailView] setImage:thumbnailImage];
+             }];
+            
+            [[[RACObserve(applicableTab, favicon)
+               startWith:[applicableTab favicon]]
+              takeWhileBlock:whileApplicable]
+             subscribeNext:^(NSImage *faviconImage) {  @strongify(self)
+                 [[self faviconView] setImage:faviconImage];
+             }];
+            
+            
+            
+        }];
+        
+    });
+    
+}
+
+
+
+- (void)updateTrackingAreas {
+    [super updateTrackingAreas];
+    
+    if (whyTheFuckDoIHaveToManuallyDealWithThisShitIn2015) {
+        [self removeTrackingArea:whyTheFuckDoIHaveToManuallyDealWithThisShitIn2015];
+        whyTheFuckDoIHaveToManuallyDealWithThisShitIn2015 = nil;
+    }
+    
+    whyTheFuckDoIHaveToManuallyDealWithThisShitIn2015 = [[NSTrackingArea alloc] initWithRect:[self bounds]
+                                                                                     options:NSTrackingMouseEnteredAndExited | NSTrackingActiveInActiveApp
+                                                                                       owner:self
+                                                                                    userInfo:nil];
+    [self addTrackingArea:whyTheFuckDoIHaveToManuallyDealWithThisShitIn2015];
+    
+}
+
+
+- (void)mouseEntered:(NSEvent *)theEvent {
+    [super mouseEntered:theEvent];
+    [[self tabCloseButton] setHidden:NO];
+    
+}
+
+- (void)mouseExited:(NSEvent *)theEvent {
+    [super mouseExited:theEvent];
+    [[self tabCloseButton] setHidden:YES];
+}
+
+
+
 
 
 @end

@@ -105,10 +105,7 @@
         
         if (contentInsets.top != tooblarHeight) {
             [[pageView ei_scrollView] setContentInsets:NSEdgeInsetsMake(tooblarHeight, 0, 0, 0)];
-            NSLog(@"!! Had to re-establish content insets !!");
             
-        } else {
-            NSLog(@"Did not have to re-establish content insets.");
         }
         
     }];
@@ -178,14 +175,14 @@
         
     }];
     
-    @weakify(forwardBackwardButtons)
+    @weakify(gotoTheBackwardButton, goFrothButton)
     [[RACObserve(pageView, canGoBack) startWith:@(NO)] subscribeNext:^(NSNumber *canI) {
-        @strongify(forwardBackwardButtons)
-        [forwardBackwardButtons setEnabled:[canI boolValue] forSegment:0];
+        @strongify(gotoTheBackwardButton)
+        [gotoTheBackwardButton setEnabled:[canI boolValue]];
     }];
     [[RACObserve(pageView, canGoForward) startWith:@(NO)] subscribeNext:^(NSNumber *canI) {
-        @strongify(forwardBackwardButtons)
-        [forwardBackwardButtons setEnabled:[canI boolValue] forSegment:1];
+        @strongify(goFrothButton)
+        [goFrothButton setEnabled:[canI boolValue]];
     }];
     
     
@@ -243,9 +240,12 @@
 
 
 
-- (IBAction)goBackOrForward:(id)sender {
-    BOOL goForward = [forwardBackwardButtons selectedSegment];
-    goForward ? [pageView goForward:sender] : [pageView goBack:sender];
+- (IBAction)gotoTheBackward:(id)sender {
+    [pageView goBack:sender];
+}
+
+- (IBAction)goFroth:(id)sender {
+    [pageView goForward:sender];
 }
 
 
