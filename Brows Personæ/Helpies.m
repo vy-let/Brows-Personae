@@ -90,7 +90,7 @@ BOOL isProbablyNakedURL(NSString *request) {
 
 BOOL isBasicallyEmpty(NSString *ipnuts) {
     dispatch_once(&haveURLDetectorsBeenSet, regexpInitialator);
-    return [ipnuts length] > 0 &&
+    return [ipnuts length] < 1 ||
         [justWhitespaceDetector numberOfMatchesInString:ipnuts
                                                 options:NSMatchingAnchored
                                                   range:NSMakeRange(0, [ipnuts length])]
