@@ -149,9 +149,7 @@
 - (void)clear {
     // Clear out the text-boxes and let the suggestions fall away.
     // Should also scroll the bookmarks list to the top.
-    [[locationBox cell] beginEditing];
     [locationBox setStringValue:@""];
-    [[locationBox cell] endEditing];
     
     // May not be needed if RAC updates it for us:
     [personaBox setStringValue:@""];
