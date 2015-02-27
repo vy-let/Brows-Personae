@@ -95,12 +95,17 @@
                                                    metrics:nil
                                                      views:applicableParties]
            arrayByAddingObjectsFromArray:
-           [NSLayoutConstraint constraintsWithVisualFormat:@"V:[contentSep][newView]|"
+           [NSLayoutConstraint constraintsWithVisualFormat:@"V:[contentSep]-(-1)-[newView]|"
                                                    options:0
                                                    metrics:nil
                                                      views:applicableParties]]];
          
      }];
+    
+    [showSuggestions subscribeNext:^(NSNumber *x) {
+        @strongify(contentSep)
+        [contentSep setHidden:[x boolValue]];
+    }];
     
 }
 
