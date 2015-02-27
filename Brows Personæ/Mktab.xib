@@ -143,9 +143,8 @@ DQ
             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
             <autoresizingMask key="autoresizingMask"/>
         </view>
-        <customView id="ujn-LR-r6O">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="ujn-LR-r6O">
             <rect key="frame" x="0.0" y="0.0" width="699" height="384"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGM-gA-bIA">
                     <rect key="frame" x="0.0" y="0.0" width="699" height="384"/>
