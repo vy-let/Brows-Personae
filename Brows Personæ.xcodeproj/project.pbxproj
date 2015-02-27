@@ -17,6 +17,7 @@
 		9C4EAAE01A82F92E00E6CE03 /* IGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAADF1A82F92E00E6CE03 /* IGIsolatedCookieWebViewResourceLoadDelegate.m */; };
 		9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */; };
 		9C6810F21A7CB76D008263A4 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6810F11A7CB76D008263A4 /* WebKit.framework */; };
+		9C68B11B1A9EA7D800F5C444 /* RACStream+SlidingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */; };
 		9CD502EC1A8AF31100AFE556 /* Helpies.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502EB1A8AF31100AFE556 /* Helpies.m */; };
 		9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */; };
 		9CD502F91A901A5800AFE556 /* MktabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502F71A901A5800AFE556 /* MktabController.m */; };
@@ -73,6 +74,8 @@
 		9C4EAAE31A82FAED00E6CE03 /* NSHTTPCookie+IGPropertyTesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSHTTPCookie+IGPropertyTesting.h"; sourceTree = "<group>"; };
 		9C6810F01A7C6940008263A4 /* Personæ.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Personæ.pch"; sourceTree = "<group>"; };
 		9C6810F11A7CB76D008263A4 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		9C68B1191A9EA7D800F5C444 /* RACStream+SlidingWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACStream+SlidingWindow.h"; sourceTree = "<group>"; };
+		9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACStream+SlidingWindow.m"; sourceTree = "<group>"; };
 		9CD502EB1A8AF31100AFE556 /* Helpies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helpies.m; sourceTree = "<group>"; };
 		9CD502ED1A8AF33C00AFE556 /* Helpies.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helpies.h; sourceTree = "<group>"; };
 		9CD502F11A8C41BE00AFE556 /* WebView+ScrollViewAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebView+ScrollViewAccess.h"; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 			children = (
 				9CD502F11A8C41BE00AFE556 /* WebView+ScrollViewAccess.h */,
 				9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */,
+				9C68B1191A9EA7D800F5C444 /* RACStream+SlidingWindow.h */,
+				9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */,
 				9CD502F51A8D968300AFE556 /* WebCache.h */,
 			);
 			name = Categories;
@@ -428,6 +433,7 @@
 				9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */,
 				9CDF345719EB30640040AA0F /* BrowsWindow.m in Sources */,
 				9CD502EC1A8AF31100AFE556 /* Helpies.m in Sources */,
+				9C68B11B1A9EA7D800F5C444 /* RACStream+SlidingWindow.m in Sources */,
 				9CD502F91A901A5800AFE556 /* MktabController.m in Sources */,
 				9C3071571A71DCBB00AAA4F5 /* BrowsTabTableCellView.m in Sources */,
 				9CDF345C19EB53F40040AA0F /* BrowsTab.m in Sources */,

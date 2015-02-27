@@ -13,4 +13,6 @@
 + (instancetype)named:(NSString *)profileName;
 + (NSURL *)mainProfileFolder;
 
+@property (readonly) NSString *name;
+
 @end

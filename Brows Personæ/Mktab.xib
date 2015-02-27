@@ -23,7 +23,7 @@
             <rect key="frame" x="0.0" y="0.0" width="699" height="467"/>
             <subviews>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wWa-9x-FNZ">
-                    <rect key="frame" x="12" y="405" width="464" height="17"/>
+                    <rect key="frame" x="12" y="405" width="470" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="Nls-3h-Jgr"/>
                     </constraints>
@@ -40,12 +40,12 @@
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cUj-vs-jnV">
-                    <rect key="frame" x="659" y="400" width="26" height="25"/>
+                    <rect key="frame" x="665" y="403" width="20" height="20"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="26" id="Yy0-OK-PC8"/>
-                        <constraint firstAttribute="height" constant="22" id="vY1-QR-wAb"/>
+                        <constraint firstAttribute="width" constant="20" id="Yy0-OK-PC8"/>
+                        <constraint firstAttribute="height" constant="20" id="vY1-QR-wAb"/>
                     </constraints>
-                    <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSMenuOnStateTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Sdt-U5-ZH8">
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSFollowLinkFreestandingTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Sdt-U5-ZH8">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                         <string key="keyEquivalent" base64-UTF8="YES">
@@ -57,7 +57,7 @@ DQ
                     </connections>
                 </button>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tfv-BU-afA">
-                    <rect key="frame" x="484" y="405" width="167" height="17"/>
+                    <rect key="frame" x="490" y="405" width="167" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="OVc-HC-j3g"/>
                         <constraint firstAttribute="width" priority="750" constant="163" id="WnW-gY-Y42"/>
@@ -105,7 +105,7 @@ DQ
                             <collectionView id="2zl-UV-4kt">
                                 <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="primaryBackgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                 <connections>
                                     <outlet property="itemPrototype" destination="iPA-sl-Hxb" id="mdz-aF-c5i"/>
                                 </connections>
@@ -149,12 +149,11 @@ DQ
             <subviews>
                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGM-gA-bIA">
                     <rect key="frame" x="0.0" y="0.0" width="699" height="384"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="P7n-da-Hso">
+                    <clipView key="contentView" misplaced="YES" drawsBackground="NO" copiesOnScroll="NO" id="P7n-da-Hso">
                         <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="QqT-u8-6SS" viewBased="YES" id="KDM-0z-y2M">
-                                <rect key="frame" x="0.0" y="0.0" width="238" height="134"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -257,6 +256,6 @@ DQ
         </customView>
     </objects>
     <resources>
-        <image name="NSMenuOnStateTemplate" width="12" height="12"/>
+        <image name="NSFollowLinkFreestandingTemplate" width="14" height="14"/>
     </resources>
 </document>

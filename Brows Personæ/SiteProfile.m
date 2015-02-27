@@ -72,9 +72,15 @@ static NSMapTable *namedProfiles;
     if (!(self = [super init])) return nil;
     
     diskLocation = file;
-    name = profileName;
+    name = [profileName copy];
     
     return self;
+}
+
+
+
+- (NSString *)name {
+    return name;
 }
 
 

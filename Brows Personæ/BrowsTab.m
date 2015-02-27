@@ -216,6 +216,8 @@
 
 - (void)pushInitialInterfaceState {
     
+    [personaIndicator setStringValue:[browsProfile name]];
+    
     // This will trigger a listener (above) to say 'no no no, that should be x instead!':
     [[pageView ei_scrollView] setContentInsets:NSEdgeInsetsMake(0, 0, 0, 0)];
     
