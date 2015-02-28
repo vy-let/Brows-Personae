@@ -11,6 +11,7 @@
 #import "BrowsTab.h"
 #import "RACStream+SlidingWindow.h"
 #import "Helpies.h"
+#import "PublicSuffixList.h"
 
 @interface MktabController () {
     __weak BrowsWindow *browsWindow;
@@ -65,10 +66,13 @@
                                )];
      }];
     
+    
+    // Figure out when we should be showing suggestions:
     RACSignal *showSuggestions = [[locationSignal map:^(NSString *loc) {
         return @(!isBasicallyEmpty(loc));
     }] distinctUntilChanged];
     
+    // Swap the suggestions/bookmarks views:
     [[[showSuggestions
        map:^id(NSNumber *suggest) {
            @strongify(suggestionsView, bookmarksView)
@@ -102,10 +106,19 @@
          
      }];
     
+    // Don't show the content separator when we have the suggestions up:
     [showSuggestions subscribeNext:^(NSNumber *x) {
         @strongify(contentSep)
         [contentSep setHidden:[x boolValue]];
     }];
+    
+    
+    [PublicSuffixList suffixList];
+    
+    RACSignal *derivedPersona = [locationDestIssearch reduceEach:^id(NSString *location, NSURL *dest, NSNumber *isSearch) {
+        return [dest host];
+    }];
+    
     
 }
 

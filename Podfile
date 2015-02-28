@@ -3,9 +3,13 @@
 
 target 'Brows Personæ' do
     pod 'ReactiveCocoa', '~> 2.4.4'
+    pod 'NSArray+Functional',  '~> 1.0.0'
+    pod 'NSString+Ruby', '~> 1.1'
 end
 
 target 'Brows PersonæTests' do
     pod 'ReactiveCocoa', '~> 2.4.4'
+    pod 'NSArray+Functional',  '~> 1.0.0'
+    pod 'NSString+Ruby', '~> 1.1'
 end
 

@@ -1,6 +1,6 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ReactiveCocoa"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/ReactiveCocoa"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"Pods-Brows Personæ-ReactiveCocoa"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/NSArray+Functional" "${PODS_ROOT}/Headers/Public/NSString+Ruby" "${PODS_ROOT}/Headers/Public/ReactiveCocoa"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/NSArray+Functional" -isystem "${PODS_ROOT}/Headers/Public/NSString+Ruby" -isystem "${PODS_ROOT}/Headers/Public/ReactiveCocoa"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"Pods-Brows Personæ-NSArray+Functional" -l"Pods-Brows Personæ-NSString+Ruby" -l"Pods-Brows Personæ-ReactiveCocoa"
 OTHER_LIBTOOLFLAGS = $(OTHER_LDFLAGS)
 PODS_ROOT = ${SRCROOT}/Pods
