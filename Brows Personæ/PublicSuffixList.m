@@ -116,20 +116,34 @@ static dispatch_block_t ei_mkPSLSingleton = ^{
     publicTrees = [NSMutableDictionary dictionary];
     privateExceptions = [NSMutableDictionary dictionary];
     [publicSuffixRules applyBlock:^(NSString *rule) {
-        NSArray *components = [rule componentsSeparatedByString:@"."];
+        NSArray *components = [self domainLabels:rule];
         putComponentsUnderDictionary(components, publicSuffixes);
     }];
     [publicTreeRules applyBlock:^(NSString *rule) {
-        NSArray *components = [rule componentsSeparatedByString:@"."];
+        // Omit the empty first component of glob-tree rules:
+        NSArray *components = [[self domainLabels:rule] filterUsingBlock:^BOOL(NSString *roole) { return !![roole length]; }];
         putComponentsUnderDictionary(components, publicTrees);
     }];
     [privateExceptionRules applyBlock:^(NSString *rule) {
-        NSArray *components = [rule componentsSeparatedByString:@"."];
+        NSArray *components = [self domainLabels:rule];
         putComponentsUnderDictionary(components, privateExceptions);
     }];
     
     
     NSLog(@"PSL\nsuffixes %@\ntrees %@\nexceptions %@", publicSuffixes, publicTrees, privateExceptions);
+    NSLog(@"foo.bar.com.ac => %@", [self partition:@"foo.bar.com.ac"]);
+    NSLog(@"gov.ae => %@", [self partition:@"gov.ae"]);
+    NSLog(@"ae => %@", [self partition:@"ae"]);
+    NSLog(@"zap.jp => %@", [self partition:@"zap.jp"]);
+    NSLog(@"example.blob => %@", [self partition:@"example.blob"]);
+    NSLog(@"“” => %@", [self partition:@""]);
+    NSLog(@"floop => %@", [self partition:@"floop"]);
+    
+    NSLog(@"foo.city.kawasaki.jp => %@", [self partition:@"foo.city.kawasaki.jp"]);
+    NSLog(@"city.kawasaki.jp => %@", [self partition:@"city.kawasaki.jp"]);
+    NSLog(@"kawasaki.jp => %@", [self partition:@"kawasaki.jp"]);
+    NSLog(@"bar.kawasaki.jp => %@", [self partition:@"bar.kawasaki.jp"]);
+    
     
     
 }
@@ -140,8 +154,54 @@ static dispatch_block_t ei_mkPSLSingleton = ^{
 
 
 
-- (NSArray *)split:(NSString *)domain {
-    return nil;
+- (NSArray *)partition:(NSString *)domain {
+    
+    __block NSInteger (^indexOfDeepestMatchingComponent)(NSArray *, id);
+    __block id matchingRuleComponent;
+    indexOfDeepestMatchingComponent = ^NSInteger(NSArray *components, id ruleParent) {
+        if (![components count]) {
+            matchingRuleComponent = ruleParent;
+            return 0;  // Whole shebang is a public match
+        }
+        
+        NSString *lastComponent = [components lastObject];
+        NSArray *rest = [components subarrayWithRange:NSMakeRange(0, [components count] - 1)];
+        
+        if (![ruleParent respondsToSelector:@selector(objectForKey:)]) {
+            matchingRuleComponent = ruleParent;
+            return [components count];  // End of match
+        }
+        
+        id rule = [ruleParent objectForKey:lastComponent];
+        if (!rule) {
+            matchingRuleComponent = ruleParent;
+            return [components count];  // End of match
+        }
+        
+        return indexOfDeepestMatchingComponent(rest, rule);
+        
+    };
+    
+    NSArray *domainComponents = [self domainLabels:domain];
+    
+    NSInteger shallowestPrivateIdex = indexOfDeepestMatchingComponent(domainComponents, privateExceptions) + 1;
+    NSInteger publicTreeIdex = indexOfDeepestMatchingComponent(domainComponents, publicTrees);
+    id publicMatchingComponent = matchingRuleComponent;
+    
+    NSInteger publicHeadIdex = indexOfDeepestMatchingComponent(domainComponents, publicSuffixes);
+    
+    NSInteger splitSpot = publicHeadIdex;
+    
+    if (shallowestPrivateIdex < splitSpot)
+        splitSpot = shallowestPrivateIdex;
+    if ([publicMatchingComponent isEqual:@1] && publicTreeIdex < shallowestPrivateIdex)
+        splitSpot = 0;  // Public w/o exception => all public
+    
+    
+    return [@[[domainComponents subarrayWithRange:NSMakeRange(0,         splitSpot)],
+              [domainComponents subarrayWithRange:NSMakeRange(splitSpot, [domainComponents count] - splitSpot)]
+              ]
+            mapUsingBlock:^id(NSArray *components) { return [components componentsJoinedByString:@"."]; }];
 }
 
 

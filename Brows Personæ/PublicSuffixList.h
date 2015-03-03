@@ -15,7 +15,7 @@
 //
 // Split a domain name into its @[private, public] parts.
 // The intervening dot is omitted.
-- (NSArray *)split:(NSString *)domain;
+- (NSArray *)partition:(NSString *)domain;
 
 - (NSArray *)domainLabels:(NSString *)domain;
 
