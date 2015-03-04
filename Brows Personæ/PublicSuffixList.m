@@ -54,6 +54,8 @@ static dispatch_block_t ei_mkPSLSingleton = ^{
 
 
 - (void)loadRules {
+    NSDate *startDate = [NSDate date];
+    
     NSString *pslFile = [[NSString alloc] initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"PSL" withExtension:@"txt"]
                                                        encoding:NSUTF8StringEncoding
                                                           error:NULL];
@@ -130,20 +132,8 @@ static dispatch_block_t ei_mkPSLSingleton = ^{
     }];
     
     
-    NSLog(@"PSL\nsuffixes %@\ntrees %@\nexceptions %@", publicSuffixes, publicTrees, privateExceptions);
-    NSLog(@"foo.bar.com.ac => %@", [self partition:@"foo.bar.com.ac"]);
-    NSLog(@"gov.ae => %@", [self partition:@"gov.ae"]);
-    NSLog(@"ae => %@", [self partition:@"ae"]);
-    NSLog(@"zap.jp => %@", [self partition:@"zap.jp"]);
-    NSLog(@"example.blob => %@", [self partition:@"example.blob"]);
-    NSLog(@"“” => %@", [self partition:@""]);
-    NSLog(@"floop => %@", [self partition:@"floop"]);
     
-    NSLog(@"foo.city.kawasaki.jp => %@", [self partition:@"foo.city.kawasaki.jp"]);
-    NSLog(@"city.kawasaki.jp => %@", [self partition:@"city.kawasaki.jp"]);
-    NSLog(@"kawasaki.jp => %@", [self partition:@"kawasaki.jp"]);
-    NSLog(@"bar.kawasaki.jp => %@", [self partition:@"bar.kawasaki.jp"]);
-    
+    NSLog(@"Loaded PSL rules in %f seconds.", -[startDate timeIntervalSinceNow]);
     
     
 }
