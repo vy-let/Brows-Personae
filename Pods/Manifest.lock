@@ -1,4 +1,9 @@
 PODS:
+  - FMDB (2.5):
+    - FMDB/standard (= 2.5)
+  - FMDB/common (2.5)
+  - FMDB/standard (2.5):
+    - FMDB/common
   - NSArray+Functional (1.0.0)
   - NSString+Ruby (1.1)
   - ReactiveCocoa (2.4.4):
@@ -10,11 +15,13 @@ PODS:
     - ReactiveCocoa/Core
 
 DEPENDENCIES:
+  - FMDB
   - NSArray+Functional (~> 1.0.0)
   - NSString+Ruby (~> 1.1)
   - ReactiveCocoa (~> 2.4.4)
 
 SPEC CHECKSUMS:
+  FMDB: 0efa188cf0dd1ce82c27a478cd5f5fa245308677
   NSArray+Functional: 2c9ad6ab9b0dc7abe73416d265d569c8b20b9f3c
   NSString+Ruby: 78ba29d70546c42ed1044305bbaaf17046c000cd
   ReactiveCocoa: 31119068e3dde866bd257cf74e1f06b4023bf387
