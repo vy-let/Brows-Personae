@@ -9,6 +9,7 @@
 #import "MktabController.h"
 #import "BrowsWindow.h"
 #import "BrowsTab.h"
+#import "SiteProfile.h"
 #import "RACStream+SlidingWindow.h"
 #import "Helpies.h"
 #import "PublicSuffixList.h"
@@ -32,6 +33,13 @@
     browsWindow = windowController;
     lastClosed = [NSDate date];
     
+    // Pre-load the PSL on a separate thread.
+    // It should take less than a second on any reasonable hardware, but should
+    // nevertheless happen before the first keystroke.
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [PublicSuffixList suffixList];
+    });
+    
     return self;
 }
 
@@ -51,7 +59,11 @@
     RACSignal *locationDestIssearch = [locationSignal map:^(NSString *loc) {
         BOOL isSearch;
         NSURL *eventualDest = urlForLocation(loc, NULL, &isSearch);
-        return [RACTuple tupleWithObjects:loc, eventualDest, @(isSearch), nil];
+        return [RACTuple tupleWithObjects:
+                loc ? loc : [RACTupleNil tupleNil]
+                , eventualDest ? eventualDest : [RACTupleNil tupleNil]
+                , @(isSearch)
+                , nil];
     }];
     
     @weakify(gotoButton, suggestionsView, bookmarksView, contentSep, self)
@@ -113,10 +125,28 @@
     }];
     
     
-    [PublicSuffixList suffixList];
-    
     RACSignal *derivedPersona = [locationDestIssearch reduceEach:^id(NSString *location, NSURL *dest, NSNumber *isSearch) {
-        return [dest host];
+        // Avoid unnecessarily waiting for the PSL on the main thread before any text is entered:
+        if (!dest)  return nil;
+        
+        NSArray *privatePublicParts = [[PublicSuffixList suffixList] partition:[dest host]];
+        NSString *lastPrivatePart = [[[PublicSuffixList suffixList]
+                                      domainLabels:[privatePublicParts firstObject]]
+                                     lastObject];
+        
+        NSMutableArray *registrableParts = [@[] mutableCopy];
+        if ([lastPrivatePart length])  [registrableParts addObject:lastPrivatePart];
+        if ([[privatePublicParts lastObject] length])  [registrableParts addObject:[privatePublicParts lastObject]];
+        NSString *registrableDomain = [registrableParts componentsJoinedByString:@"."];
+        
+        return [SiteProfile named:registrableDomain];
+        
+    }];
+    
+    @weakify(personaBox)
+    [derivedPersona subscribeNext:^(SiteProfile *profile) {
+        @strongify(personaBox)
+        [personaBox setStringValue:(profile ? [profile name] : @"")];
     }];
     
     
