@@ -7,6 +7,7 @@
 //
 
 #import "Helpies.h"
+#import "PublicSuffixList.h"
 
 static NSRegularExpression *urlDetector, *nakedDomainDetector, *justWhitespaceDetector;
 static dispatch_once_t haveURLDetectorsBeenSet;
@@ -72,19 +73,34 @@ NSURL *urlForLocation(NSString *location, BOOL *protocolInferred, BOOL *isSearch
 
 BOOL isProbablyURLWithScheme(NSString *request) {
     dispatch_once(&haveURLDetectorsBeenSet, regexpInitialator);
-    return [urlDetector numberOfMatchesInString:request
-                                        options:NSMatchingAnchored
-                                          range:NSMakeRange(0, [request length])]
-            > 0;
+    if ([urlDetector numberOfMatchesInString:request
+                                     options:NSMatchingAnchored
+                                       range:NSMakeRange(0, [request length])]
+        > 0) {
+        
+        // Probably, so check for a known public suffix:
+        return [[PublicSuffixList suffixList] URLHasPublicSuffix:[NSURL URLWithString:request]];
+        
+    }
+    
+    return NO;
     
 }
 
 BOOL isProbablyNakedURL(NSString *request) {
     dispatch_once(&haveURLDetectorsBeenSet, regexpInitialator);
-    return [nakedDomainDetector numberOfMatchesInString:request
-                                                options:NSMatchingAnchored
-                                                  range:NSMakeRange(0, [request length])]
-            > 0;
+    if ([nakedDomainDetector numberOfMatchesInString:request
+                                             options:NSMatchingAnchored
+                                               range:NSMakeRange(0, [request length])]
+        > 0) {
+        
+        // Probably, so check for a known public suffix:
+        NSURL *requestURL = [NSURL URLWithString:[@"http://" stringByAppendingString:request]];
+        return [[PublicSuffixList suffixList] URLHasPublicSuffix:requestURL];
+        
+    }
+    
+    return NO;
     
 }
 

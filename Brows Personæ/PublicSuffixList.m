@@ -135,6 +135,9 @@ static dispatch_block_t ei_mkPSLSingleton = ^{
     
     NSLog(@"Loaded PSL rules in %f seconds.", -[startDate timeIntervalSinceNow]);
     
+    // Uncomment to debug HI sluggishness:
+    // NSLog(@"Waiting 3 seconds for dramatic effect..."); sleep(3);
+    
     
 }
 
@@ -145,6 +148,7 @@ static dispatch_block_t ei_mkPSLSingleton = ^{
 
 
 - (NSArray *)partition:(NSString *)domain {
+    if (!domain)  domain = @"";  // A nil domain would cause a nil-in-array exception below.
     
     __block NSInteger (^indexOfDeepestMatchingComponent)(NSArray *, id);
     __block id matchingRuleComponent;
@@ -192,6 +196,16 @@ static dispatch_block_t ei_mkPSLSingleton = ^{
               [domainComponents subarrayWithRange:NSMakeRange(splitSpot, [domainComponents count] - splitSpot)]
               ]
             mapUsingBlock:^id(NSArray *components) { return [components componentsJoinedByString:@"."]; }];
+}
+
+
+
+- (BOOL)domainHasPublicSuffix:(NSString *)domain {
+    return !![[[self partition:domain] lastObject] length];
+}
+
+- (BOOL)URLHasPublicSuffix:(NSURL *)url {
+    return [self domainHasPublicSuffix:[url host]];
 }
 
 

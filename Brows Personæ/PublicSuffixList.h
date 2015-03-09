@@ -26,6 +26,12 @@
 - (NSArray *)partition:(NSString *)domain;
 
 //
+// Ask whether a domain name has a public suffix.
+// In other words, is the public partition (of the host) nonzero in length?
+- (BOOL)domainHasPublicSuffix:(NSString *)domain;
+- (BOOL)URLHasPublicSuffix:(NSURL *)url;
+
+//
 // Split a domain on dots.
 // @"foo.bar.co.uk" => @[@"foo", @"bar", @"co", @"uk"]
 - (NSArray *)domainLabels:(NSString *)domain;
