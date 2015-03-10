@@ -7,6 +7,7 @@
 //
 
 #import "PublicSuffixList.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import <NSString+Ruby/NSString+Ruby.h>
 #import <NSArray+Functional/NSArray+Functional.h>
 
@@ -83,8 +84,8 @@ static dispatch_block_t ei_mkPSLSingleton = ^{
     
     NSNumber *placeholder = @YES;
     
-    __block void (^putComponentsUnderDictionary)(NSArray *, NSMutableDictionary *);
-    putComponentsUnderDictionary = ^(NSArray *components, NSMutableDictionary *tree) {
+    __block __weak void (^pcud)(NSArray *, NSMutableDictionary *);
+    void (^putComponentsUnderDictionary)(NSArray *, NSMutableDictionary *) = ^(NSArray *components, NSMutableDictionary *tree) {
         NSString *lastComponent = [components lastObject];
         NSArray *rest = [components subarrayWithRange:NSMakeRange(0, [components count] - 1)];
         if (!lastComponent) return;  // Safety valve
@@ -107,11 +108,12 @@ static dispatch_block_t ei_mkPSLSingleton = ^{
             }
             
             NSMutableDictionary *subtree = node;
-            putComponentsUnderDictionary(rest, subtree);
+            pcud(rest, subtree);
             
         }
         
     };
+    pcud = putComponentsUnderDictionary;
     
     
     publicSuffixes = [NSMutableDictionary dictionary];
@@ -150,9 +152,10 @@ static dispatch_block_t ei_mkPSLSingleton = ^{
 - (NSArray *)partition:(NSString *)domain {
     if (!domain)  domain = @"";  // A nil domain would cause a nil-in-array exception below.
     
-    __block NSInteger (^indexOfDeepestMatchingComponent)(NSArray *, id);
+    __block NSInteger (^idmc)(NSArray *, id);
     __block id matchingRuleComponent;
-    indexOfDeepestMatchingComponent = ^NSInteger(NSArray *components, id ruleParent) {
+    NSInteger (^indexOfDeepestMatchingComponent)(NSArray *, id) = ^NSInteger(NSArray *components, id ruleParent) {
+        
         if (![components count]) {
             matchingRuleComponent = ruleParent;
             return 0;  // Whole shebang is a public match
@@ -172,9 +175,10 @@ static dispatch_block_t ei_mkPSLSingleton = ^{
             return [components count];  // End of match
         }
         
-        return indexOfDeepestMatchingComponent(rest, rule);
+        return idmc(rest, rule);
         
     };
+    idmc = indexOfDeepestMatchingComponent;
     
     NSArray *domainComponents = [self domainLabels:domain];
     
