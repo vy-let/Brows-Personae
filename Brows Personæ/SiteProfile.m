@@ -99,11 +99,14 @@ static NSMapTable *namedProfiles;
 
 - (void)dealloc {
     FMDatabaseQueue *cookieTin = cookieJar;
+    NSLog(@"Should finalize cookie jar in %@", name);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        NSLog(@"Will finalize cookie jar in %@", name);
         [cookieTin inDatabase:^(FMDatabase *db) {
             [db executeUpdate:@"vacuum"];
         }];
         [cookieTin close];
+        NSLog(@"Did finalize cookie jar in %@", name);
     });
     
 }
