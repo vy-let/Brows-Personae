@@ -139,14 +139,14 @@
         if ([[privatePublicParts lastObject] length])  [registrableParts addObject:[privatePublicParts lastObject]];
         NSString *registrableDomain = [registrableParts componentsJoinedByString:@"."];
         
-        return [SiteProfile named:registrableDomain];
+        return registrableDomain;
         
     }];
     
     @weakify(personaBox)
-    [derivedPersona subscribeNext:^(SiteProfile *profile) {
+    [derivedPersona subscribeNext:^(NSString *profile) {
         @strongify(personaBox)
-        [personaBox setStringValue:(profile ? [profile name] : @"")];
+        [personaBox setStringValue:(profile ? profile : @"")];
     }];
     
     
@@ -176,7 +176,7 @@
     NSString *location = [locationBox stringValue];
     NSString *personaName = [personaBox stringValue];
     
-    if (!personaName) {
+    if (![personaName length]) {
         NSBeep();
         [personaBox selectText:sender];
         return;
