@@ -48,7 +48,8 @@ static NSMapTable *namedProfiles;
         if (!applicationSupport)
             @throw NSInternalInconsistencyException;
         
-        profiles = [applicationSupport URLByAppendingPathComponent:@"Profiles" isDirectory:YES];
+        profiles = [[applicationSupport URLByAppendingPathComponent:@"Brows Personæ" isDirectory:YES]
+                    URLByAppendingPathComponent:@"Personæ" isDirectory:YES];
         [[NSFileManager defaultManager] createDirectoryAtURL:profiles
                                  withIntermediateDirectories:YES
                                                   attributes:nil
