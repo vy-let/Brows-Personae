@@ -152,7 +152,7 @@ static dispatch_block_t ei_mkPSLSingleton = ^{
 - (NSArray *)partition:(NSString *)domain {
     if (!domain)  domain = @"";  // A nil domain would cause a nil-in-array exception below.
     
-    __block NSInteger (^idmc)(NSArray *, id);
+    __block __weak NSInteger (^idmc)(NSArray *, id);
     __block id matchingRuleComponent;
     NSInteger (^indexOfDeepestMatchingComponent)(NSArray *, id) = ^NSInteger(NSArray *components, id ruleParent) {
         
