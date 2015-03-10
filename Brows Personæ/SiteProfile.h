@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+
+const NSUInteger SiteProfileStorePresentVersion;
+const NSUInteger SiteProfileStoreApplicationID;
+
+
 @interface SiteProfile : NSObject
 
 + (instancetype)named:(NSString *)profileName;
