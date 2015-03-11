@@ -35,6 +35,8 @@
 - (IBAction)stopLoad:(id)sender;
 - (IBAction)reLoad:(id)sender;
 
+- (void)tabWillClose;
+
 @property (nonatomic) NSImage *thumbnail;
 @property (nonatomic) NSImage *favicon;
 

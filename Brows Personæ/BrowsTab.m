@@ -60,6 +60,7 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"Brows Tab for %@ at %@ is being deallocated.", [browsProfile name], [pageView mainFrameURL]);
 }
 
 
@@ -83,11 +84,24 @@
 
 
 
+- (void)tabWillClose { }
+
+
+
 - (void)setUpRACListeners {
-    locationEditEnd = [locationBox rac_signalForSelector:@selector(textDidEndEditing:)
-                                            fromProtocol:@protocol(NSTextDelegate)];
-    RACSignal *locationEditStart = [locationBox rac_signalForSelector:@selector(textDidBeginEditing:)
-                                                         fromProtocol:@protocol(NSTextDelegate)];
+    RACSignal *tabClosure = [[self rac_signalForSelector:@selector(tabWillClose)] take:1];
+    [tabClosure subscribeNext:^(id x) {
+        [@[locationDasu, pageIsLoading, pageLoadingProgress]
+         makeObjectsPerformSelector:@selector(sendCompleted)];
+    }];
+    
+    
+    locationEditEnd = [[locationBox rac_signalForSelector:@selector(textDidEndEditing:)
+                                             fromProtocol:@protocol(NSTextDelegate)]
+                       takeUntil:tabClosure];
+    RACSignal *locationEditStart = [[locationBox rac_signalForSelector:@selector(textDidBeginEditing:)
+                                                          fromProtocol:@protocol(NSTextDelegate)]
+                                    takeUntil:tabClosure];
     
     [pageIsLoading sendNext:@(NO)];
     locationIsBeingEdited = [[RACSignal merge:@[
@@ -98,7 +112,8 @@
                              startWith:@(NO)];
     
     @weakify(tooblar) @weakify(pageView)
-    [RACObserve([pageView ei_scrollView], contentInsets) subscribeNext:^(NSValue *edgeInsets) {
+    [[RACObserve([pageView ei_scrollView], contentInsets) takeUntil:tabClosure]
+     subscribeNext:^(NSValue *edgeInsets) {
         @strongify(tooblar)
         NSEdgeInsets contentInsets;  [edgeInsets getValue:&contentInsets];
         CGFloat tooblarHeight = [tooblar frame].size.height;
@@ -176,11 +191,13 @@
     }];
     
     @weakify(gotoTheBackwardButton, goFrothButton)
-    [[RACObserve(pageView, canGoBack) startWith:@(NO)] subscribeNext:^(NSNumber *canI) {
+    [[[RACObserve(pageView, canGoBack) startWith:@(NO)] takeUntil:tabClosure]
+     subscribeNext:^(NSNumber *canI) {
         @strongify(gotoTheBackwardButton)
         [gotoTheBackwardButton setEnabled:[canI boolValue]];
     }];
-    [[RACObserve(pageView, canGoForward) startWith:@(NO)] subscribeNext:^(NSNumber *canI) {
+    [[[RACObserve(pageView, canGoForward) startWith:@(NO)] takeUntil:tabClosure]
+     subscribeNext:^(NSNumber *canI) {
         @strongify(goFrothButton)
         [goFrothButton setEnabled:[canI boolValue]];
     }];

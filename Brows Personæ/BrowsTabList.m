@@ -112,6 +112,8 @@
 //    }
     
     if (applicableTab) {
+        [applicableTab tabWillClose];
+        
         NSUInteger tabidex = [browsTabs indexOfObject:applicableTab];
         if (tabidex != NSNotFound)
             [self pullTabsFromIndices:[NSIndexSet indexSetWithIndex:tabidex]];
