@@ -148,8 +148,6 @@
     
 }
 
-
-
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
         // TODO make dummy hidden cell and measure its height.
         CGFloat colWidth = [(NSTableColumn *)[[tableView tableColumns] objectAtIndex:0] width];
@@ -159,6 +157,11 @@
         
     
     return [tableView rowHeight];
+}
+
+- (void)tableView:(NSTableView *)tableView didRemoveRowView:(NSTableRowView *)rowView forRow:(NSInteger)row {
+    if (row < 0)
+        [[rowView viewAtColumn:0] setObjectValue:nil];
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {  /* Swizzled out */  }
