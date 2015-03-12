@@ -59,26 +59,15 @@
     
     dispatch_once(&racObservationsDidInit, ^{
         
-        @weakify(self)
-        [RACObserve(self, representedTab) subscribeNext:^(BrowsTab *applicableTab) {
-            // Whenever the represented tab is set, subscribe to its thumbnails & favicons.
-            
-            BOOL (^whileApplicable)(id) = ^BOOL(id dontcare) {
-                // Terminate all subscriptions which no longer refer to the represented tab.
-                @strongify(self)
-                return [self representedTab] == applicableTab;
-            };
-            
-            RAC([self thumbnailView], image) = [[RACObserve(applicableTab, thumbnail)
-                                                 startWith:[applicableTab thumbnail]]
-                                                takeWhileBlock:whileApplicable];
-            
-            RAC([self faviconView], image) = [[RACObserve(applicableTab, favicon)
-                                               startWith:[applicableTab favicon]]
-                                              takeWhileBlock:whileApplicable];
-            
-            
-            
+        RACSignal *repTab = [RACObserve(self, objectValue)
+                             filter:^BOOL(BrowsTab *applicableTab) {  NSLog(@"TCV is receiving tab %@.", applicableTab);  return !!applicableTab;  }];
+        
+        RAC([self thumbnailView], image, [NSImage imageNamed:@"NSMultipleDocuments"]) = [repTab map:^id(BrowsTab *applicableTab) {
+            return [applicableTab thumbnail];
+        }];
+        
+        RAC([self faviconView], image, [NSImage imageNamed:@"NSNetwork"]) = [repTab map:^id(BrowsTab *applicableTab) {
+            return [applicableTab favicon];
         }];
         
     });
@@ -113,6 +102,16 @@
 - (void)mouseExited:(NSEvent *)theEvent {
     [super mouseExited:theEvent];
     [[self tabCloseButton] setHidden:YES];
+}
+
+
+
+- (BrowsTab *)representedTab {
+    return [self objectValue];
+}
+
+- (void)setRepresentedTab:(BrowsTab *)representedTab {
+    [self setObjectValue:representedTab];
 }
 
 

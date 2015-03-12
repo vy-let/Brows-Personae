@@ -129,13 +129,17 @@
     
 }
 
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    return [browsTabs objectAtIndex:row];
+}
+
 
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    BrowsTab *applicableTab = [browsTabs objectAtIndex:row];
+    //BrowsTab *applicableTab = [self tableView:tableView objectValueForTableColumn:tableColumn row:row];
     BrowsTabTableCellView *availableView = [tableView makeViewWithIdentifier:@"BrowsTabCell" owner:self];
     
-    [availableView setRepresentedTab:applicableTab];
+    //[availableView setRepresentedTab:applicableTab];
     
     // TODO Add drop-shadow to thumbnail if not present.
     
