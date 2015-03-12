@@ -19,9 +19,7 @@
 @interface BrowsTab () {
     NSObject *tabViewButtonThing;
     SiteProfile *browsProfile;
-    RACSignal *locationIsBeingEdited;
     RACSubject *locationDasu;  // Into which submit events are pushed.
-    RACSignal *locationEditEnd;
     RACSubject *pageIsLoading;
     RACSubject *pageLoadingProgress;
     
@@ -96,7 +94,7 @@
     }];
     
     
-    locationEditEnd = [[locationBox rac_signalForSelector:@selector(textDidEndEditing:)
+    RACSignal *locationEditEnd = [[locationBox rac_signalForSelector:@selector(textDidEndEditing:)
                                              fromProtocol:@protocol(NSTextDelegate)]
                        takeUntil:tabClosure];
     RACSignal *locationEditStart = [[locationBox rac_signalForSelector:@selector(textDidBeginEditing:)
@@ -104,7 +102,7 @@
                                     takeUntil:tabClosure];
     
     [pageIsLoading sendNext:@(NO)];
-    locationIsBeingEdited = [[RACSignal merge:@[
+    RACSignal *locationIsBeingEdited = [[RACSignal merge:@[
                                                 [locationEditStart mapReplace:@(YES)]
                                                 ,[locationEditEnd mapReplace:@(NO)]
                                                 ,[locationDasu mapReplace:@(NO)]

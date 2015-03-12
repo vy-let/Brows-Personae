@@ -69,19 +69,13 @@
                 return [self representedTab] == applicableTab;
             };
             
-            [[[RACObserve(applicableTab, thumbnail)
-               startWith:[applicableTab thumbnail]]
-              takeWhileBlock:whileApplicable]
-             subscribeNext:^(NSImage *thumbnailImage) {  @strongify(self)
-                 [[self thumbnailView] setImage:thumbnailImage];
-             }];
+            RAC([self thumbnailView], image) = [[RACObserve(applicableTab, thumbnail)
+                                                 startWith:[applicableTab thumbnail]]
+                                                takeWhileBlock:whileApplicable];
             
-            [[[RACObserve(applicableTab, favicon)
-               startWith:[applicableTab favicon]]
-              takeWhileBlock:whileApplicable]
-             subscribeNext:^(NSImage *faviconImage) {  @strongify(self)
-                 [[self faviconView] setImage:faviconImage];
-             }];
+            RAC([self faviconView], image) = [[RACObserve(applicableTab, favicon)
+                                               startWith:[applicableTab favicon]]
+                                              takeWhileBlock:whileApplicable];
             
             
             

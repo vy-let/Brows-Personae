@@ -41,3 +41,4 @@
 @property (nonatomic) NSImage *favicon;
 
 @end
+

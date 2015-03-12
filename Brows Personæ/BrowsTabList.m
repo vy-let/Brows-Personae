@@ -44,6 +44,7 @@
     // Should be OK---only called on main thread, right?
     if (!tabSelection) {
         @weakify(tabsList, browsTabs)
+        // signalForSelector “completes when the receiver is deallocated” so we don’t need to clean up:
         tabSelection = [[[[[self rac_signalForSelector:@selector(tableViewSelectionDidChange:)]
                            map:^id(RACTuple *args) { return [args first]; }]
                           filter:^BOOL(NSNotification *note) { @strongify(tabsList) return [note object] == tabsList; }]
