@@ -167,7 +167,7 @@
     @weakify(pageSpinny)
     [pageLoadingProgress subscribeNext:^(NSNumber *prague) {
         @strongify(pageSpinny)
-        [pageSpinny setDoubleValue:[prague doubleValue]];
+        [[pageSpinny animator] setDoubleValue:[prague doubleValue]];
     }];
     
     [[pageIsLoading combineLatestWith:pageLoadingProgress] subscribeNext:^(RACTuple *latest) {
