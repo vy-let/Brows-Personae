@@ -11,8 +11,8 @@
 #import <FMDB/FMDB.h>
 
 
-const NSUInteger SiteProfileStorePresentVersion = 1;
-const NSUInteger SiteProfileStoreApplicationID = 3503103293;  // irb> rand 2**32
+const UInt32 SiteProfileStorePresentVersion = 1;
+const UInt32 SiteProfileStoreApplicationID = 625418296;  // irb> rand 2**31
 
 
 @interface SiteProfile () {
@@ -128,9 +128,9 @@ static NSMapTable *namedProfiles;
     __block BOOL worked = YES;
     
     [cookieJar inDatabase:^(FMDatabase *db) {
-        [db executeStatements:@"pragma encoding = \"UTF-8\";"
-        "pragma journal_mode = DELETE;"
-        "pragma checkpoint_fullfsync = yes;"];
+        [db executeStatements:@"pragma encoding = \"UTF-8\";"];
+        [db executeStatements:@"pragma journal_mode = DELETE;"
+         "pragma checkpoint_fullfsync = yes;"];
     }];
     
     [cookieJar inTransaction:^(FMDatabase *db, BOOL *rollback) {
@@ -156,6 +156,12 @@ static NSMapTable *namedProfiles;
         }
         
         // Database needs initialization
+        
+        // String substitution is OK here, because
+        //   1. It's just an int,
+        //   2. We know what it is, and
+        //   3. We're coercing it to unsigned-32, which sqlite expects.
+        [db executeUpdate:[NSString stringWithFormat:@"pragma application_id = %d", (UInt32)SiteProfileStoreApplicationID]];
         
         [db executeStatements:
          @"create table BrowsPersonæDataVersion (version integer);"

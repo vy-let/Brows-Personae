@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 
-const NSUInteger SiteProfileStorePresentVersion;
-const NSUInteger SiteProfileStoreApplicationID;
+const UInt32 SiteProfileStorePresentVersion;
+const UInt32 SiteProfileStoreApplicationID;
 
 
 @interface SiteProfile : NSObject
