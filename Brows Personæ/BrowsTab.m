@@ -11,7 +11,7 @@
 
 #import "BrowsTab.h"
 #import "SiteProfile.h"
-#import "IGIsolatedCookieWebView.h"
+#import "EIIGIsolatedCookieWebView.h"
 #import "WebView+ScrollViewAccess.h"
 #import "Helpies.h"
 

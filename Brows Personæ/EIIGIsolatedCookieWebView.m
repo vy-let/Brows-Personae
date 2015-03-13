@@ -29,13 +29,13 @@
 //  IGIsolatedCookieWebView.m
 //
 
-#import "IGIsolatedCookieWebView.h"
-#import "IGIsolatedCookieWebViewResourceLoadDelegate.h"
+#import "EIIGIsolatedCookieWebView.h"
+#import "EIIGIsolatedCookieWebViewResourceLoadDelegate.h"
 
 #pragma mark -
 #pragma mark main class implementation
 
-@implementation IGIsolatedCookieWebView
+@implementation EIIGIsolatedCookieWebView
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -49,7 +49,7 @@
 - (void)awakeFromNib
 {
 //	NSLog(@"=== awakeFromNib ===");
-	isolatedCookieResourceLoadDelegate = [[IGIsolatedCookieWebViewResourceLoadDelegate alloc] init];
+	isolatedCookieResourceLoadDelegate = [[EIIGIsolatedCookieWebViewResourceLoadDelegate alloc] init];
 	[self setResourceLoadDelegate:isolatedCookieResourceLoadDelegate];
 }
 
@@ -63,22 +63,22 @@
 
 - (NSArray *)cookies
 {
-    return [(IGIsolatedCookieWebViewResourceLoadDelegate *)[self resourceLoadDelegate] cookies];
+    return [(EIIGIsolatedCookieWebViewResourceLoadDelegate *)[self resourceLoadDelegate] cookies];
 }
 
 - (void)injectCookie:(NSHTTPCookie *)cookie
 {
-	[(IGIsolatedCookieWebViewResourceLoadDelegate *)[self resourceLoadDelegate] setCookie:cookie];
+	[(EIIGIsolatedCookieWebViewResourceLoadDelegate *)[self resourceLoadDelegate] setCookie:cookie];
 }
 
 - (void)removeAllCookies
 {
-    [(IGIsolatedCookieWebViewResourceLoadDelegate *)[self resourceLoadDelegate] removeAllCookies];
+    [(EIIGIsolatedCookieWebViewResourceLoadDelegate *)[self resourceLoadDelegate] removeAllCookies];
 }
 
 - (void)removeAllCookiesForHost:(NSString *)host
 {
-    [(IGIsolatedCookieWebViewResourceLoadDelegate *)[self resourceLoadDelegate] removeAllCookiesForHost:host];
+    [(EIIGIsolatedCookieWebViewResourceLoadDelegate *)[self resourceLoadDelegate] removeAllCookiesForHost:host];
 }
 
 @end

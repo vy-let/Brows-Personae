@@ -25,24 +25,41 @@
  
  *********************************************************************************/
 
-//
-//  IGIsolatedCookieWebView.h
-//
+// Class exploded by Talus Baddley out from IGIsolatedCookieWebView.m
+// to publish the private interface and aid in future customizations.
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-@class IGIsolatedCookieWebViewResourceLoadDelegate;
+#pragma mark -
+#pragma mark private resourceLoadDelegate class interface
 
-@interface IGIsolatedCookieWebView : WebView {
-    IGIsolatedCookieWebViewResourceLoadDelegate *isolatedCookieResourceLoadDelegate;
+@interface EIIGIsolatedCookieWebViewResourceLoadDelegate : NSObject {
+    NSMutableArray *cookieStore;
 }
+
+- (EIIGIsolatedCookieWebViewResourceLoadDelegate *)init;
+
+- (NSURLRequest *)webView:(WebView *)sender
+                 resource:(id)identifier
+          willSendRequest:(NSURLRequest *)request
+         redirectResponse:(NSURLResponse *)redirectResponse
+           fromDataSource:(WebDataSource *)dataSource;
+
+- (void)webView:(WebView *)sender
+       resource:(id)identifier
+didReceiveResponse:(NSURLResponse *)response
+ fromDataSource:(WebDataSource *)dataSource;
 
 - (NSArray *)cookies;
 
-- (void)injectCookie:(NSHTTPCookie *)cookie;
+- (void)setCookie:(NSHTTPCookie *)cookie;
+- (NSArray *)getCookieArrayForRequest:(NSURLRequest *)request;
 
 - (void)removeAllCookies;
 - (void)removeAllCookiesForHost:(NSString *)host;
+- (void)removeExpiredCookies;
 
 @end
+
+

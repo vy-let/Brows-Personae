@@ -28,15 +28,15 @@
 // Class exploded by Talus Baddley out from IGIsolatedCookieWebView.m
 // to publish the private interface and aid in future customizations.
 
-#import "IGIsolatedCookieWebViewResourceLoadDelegate.h"
+#import "EIIGIsolatedCookieWebViewResourceLoadDelegate.h"
 #import "NSHTTPCookie+IGPropertyTesting.h"
 
 #pragma mark -
 #pragma mark private resourceLoadDelegate class implementation
 
-@implementation IGIsolatedCookieWebViewResourceLoadDelegate
+@implementation EIIGIsolatedCookieWebViewResourceLoadDelegate
 
-- (IGIsolatedCookieWebViewResourceLoadDelegate *)init
+- (EIIGIsolatedCookieWebViewResourceLoadDelegate *)init
 {
     self = [super init];
     if (self) {

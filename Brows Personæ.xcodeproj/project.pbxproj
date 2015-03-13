@@ -15,8 +15,8 @@
 		9C0D93F51AA124B300728D2E /* PSL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9C0D93F41AA124B300728D2E /* PSL.txt */; };
 		9C3071511A71D1C800AAA4F5 /* TabCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C3071501A71D1C800AAA4F5 /* TabCell.xib */; };
 		9C3071571A71DCBB00AAA4F5 /* BrowsTabTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */; };
-		9C4EAADA1A82F33800E6CE03 /* IGIsolatedCookieWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAD91A82F33800E6CE03 /* IGIsolatedCookieWebView.m */; };
-		9C4EAAE01A82F92E00E6CE03 /* IGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAADF1A82F92E00E6CE03 /* IGIsolatedCookieWebViewResourceLoadDelegate.m */; };
+		9C4EAADA1A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */; };
+		9C4EAAE01A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAADF1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */; };
 		9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */; };
 		9C6810F21A7CB76D008263A4 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6810F11A7CB76D008263A4 /* WebKit.framework */; };
 		9C68B11B1A9EA7D800F5C444 /* RACStream+SlidingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */; };
@@ -71,10 +71,10 @@
 		9C3071501A71D1C800AAA4F5 /* TabCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabCell.xib; sourceTree = "<group>"; };
 		9C3071551A71DCBB00AAA4F5 /* BrowsTabTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsTabTableCellView.h; sourceTree = "<group>"; };
 		9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTabTableCellView.m; sourceTree = "<group>"; };
-		9C4EAAD81A82F33800E6CE03 /* IGIsolatedCookieWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGIsolatedCookieWebView.h; sourceTree = "<group>"; };
-		9C4EAAD91A82F33800E6CE03 /* IGIsolatedCookieWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGIsolatedCookieWebView.m; sourceTree = "<group>"; };
-		9C4EAADE1A82F92E00E6CE03 /* IGIsolatedCookieWebViewResourceLoadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGIsolatedCookieWebViewResourceLoadDelegate.h; sourceTree = "<group>"; };
-		9C4EAADF1A82F92E00E6CE03 /* IGIsolatedCookieWebViewResourceLoadDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGIsolatedCookieWebViewResourceLoadDelegate.m; sourceTree = "<group>"; };
+		9C4EAAD81A82F33800E6CE03 /* EIIGIsolatedCookieWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EIIGIsolatedCookieWebView.h; sourceTree = "<group>"; };
+		9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EIIGIsolatedCookieWebView.m; sourceTree = "<group>"; };
+		9C4EAADE1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EIIGIsolatedCookieWebViewResourceLoadDelegate.h; sourceTree = "<group>"; };
+		9C4EAADF1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EIIGIsolatedCookieWebViewResourceLoadDelegate.m; sourceTree = "<group>"; };
 		9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSHTTPCookie+IGPropertyTesting.m"; sourceTree = "<group>"; };
 		9C4EAAE31A82FAED00E6CE03 /* NSHTTPCookie+IGPropertyTesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSHTTPCookie+IGPropertyTesting.h"; sourceTree = "<group>"; };
 		9C6810F01A7C6940008263A4 /* Personæ.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Personæ.pch"; sourceTree = "<group>"; };
@@ -137,10 +137,10 @@
 			children = (
 				9CDF346319EB94DF0040AA0F /* SiteProfile.h */,
 				9CDF346419EB94DF0040AA0F /* SiteProfile.m */,
-				9C4EAAD81A82F33800E6CE03 /* IGIsolatedCookieWebView.h */,
-				9C4EAAD91A82F33800E6CE03 /* IGIsolatedCookieWebView.m */,
-				9C4EAADE1A82F92E00E6CE03 /* IGIsolatedCookieWebViewResourceLoadDelegate.h */,
-				9C4EAADF1A82F92E00E6CE03 /* IGIsolatedCookieWebViewResourceLoadDelegate.m */,
+				9C4EAAD81A82F33800E6CE03 /* EIIGIsolatedCookieWebView.h */,
+				9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */,
+				9C4EAADE1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.h */,
+				9C4EAADF1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */,
 				9C4EAAE31A82FAED00E6CE03 /* NSHTTPCookie+IGPropertyTesting.h */,
 				9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */,
 			);
@@ -446,8 +446,8 @@
 				9CD502F91A901A5800AFE556 /* MktabController.m in Sources */,
 				9C3071571A71DCBB00AAA4F5 /* BrowsTabTableCellView.m in Sources */,
 				9CDF345C19EB53F40040AA0F /* BrowsTab.m in Sources */,
-				9C4EAAE01A82F92E00E6CE03 /* IGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */,
-				9C4EAADA1A82F33800E6CE03 /* IGIsolatedCookieWebView.m in Sources */,
+				9C4EAAE01A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */,
+				9C4EAADA1A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m in Sources */,
 				9C0D93F31AA1226200728D2E /* PublicSuffixList.m in Sources */,
 				9CDF343A19EB2F4C0040AA0F /* main.m in Sources */,
 				9CD503001A927B9100AFE556 /* BrowsTabList.m in Sources */,
