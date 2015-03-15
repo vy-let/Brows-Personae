@@ -30,6 +30,7 @@
 
 #import "EIIGIsolatedCookieWebViewResourceLoadDelegate.h"
 #import "NSHTTPCookie+IGPropertyTesting.h"
+#import "SiteProfile.h"
 
 #pragma mark -
 #pragma mark private resourceLoadDelegate class implementation
@@ -107,6 +108,7 @@ didReceiveResponse:(NSURLResponse *)response
 
 - (NSArray *)cookies
 {
+    NSLog(@"FETCHING ALL COOKIES.\nCookie store has %@\nand DB has %@", cookieStore, [[self siteProfile] cookies]);
 #if __has_feature(objc_arc)
     return [cookieStore copy];
 #else
@@ -117,6 +119,7 @@ didReceiveResponse:(NSURLResponse *)response
 - (void) removeAllCookies
 {
     [cookieStore removeAllObjects];
+    [[self siteProfile] removeAllCookies];
 }
 
 - (void)removeAllCookiesForHost:(NSString *)host
@@ -126,6 +129,7 @@ didReceiveResponse:(NSURLResponse *)response
             [cookieStore removeObject:aCookie];
         }
     }
+    [[self siteProfile] removeAllCookiesForHost:host];
 }
 
 - (void)removeExpiredCookies
@@ -135,6 +139,7 @@ didReceiveResponse:(NSURLResponse *)response
             [cookieStore removeObject:aCookie];
         }
     }
+    [[self siteProfile] removeExpiredCookies];
 }
 
 - (void)setCookie:(NSHTTPCookie *)cookie
@@ -145,6 +150,7 @@ didReceiveResponse:(NSURLResponse *)response
         [cookieStore removeObject:cookie];
         [cookieStore addObject:cookie];
     }
+    [[self siteProfile] setCookie:cookie];
     [self removeExpiredCookies];
 }
 
@@ -156,6 +162,7 @@ didReceiveResponse:(NSURLResponse *)response
             [cookiesToSend addObject:aCookie];
         }
     }
+    NSLog(@"FETCHING COOKIES FOR REQUEST.\nCookie store has %@\nand DB has %@", cookiesToSend, [[self siteProfile] cookiesForRequest:request]);
     return [NSArray arrayWithArray:cookiesToSend];
 }
 

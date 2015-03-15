@@ -12,6 +12,7 @@
 #import "BrowsTab.h"
 #import "SiteProfile.h"
 #import "EIIGIsolatedCookieWebView.h"
+#import "EIIGIsolatedCookieWebViewResourceLoadDelegate.h"
 #import "WebView+ScrollViewAccess.h"
 #import "Helpies.h"
 
@@ -87,6 +88,19 @@
 
 
 - (void)setUpRACListeners {
+    
+    // As soon as the web view gains its final resource load delegate,
+    // inform that delegate of the tab's site profile:
+    @weakify(browsProfile)
+    [[[[RACObserve(pageView, resourceLoadDelegate)
+        startWith:[pageView resourceLoadDelegate]]  // Make sure we get the first one
+       skipUntilBlock:^BOOL(id resourceLoadDelegate) {  return [resourceLoadDelegate respondsToSelector:@selector(setSiteProfile:)];  }]
+      take:1]  // Make sure it's our custom subclass, and just take that single one
+     subscribeNext:^(EIIGIsolatedCookieWebViewResourceLoadDelegate *resourceLoadDelegate) {  @strongify(browsProfile)
+         [resourceLoadDelegate setSiteProfile:browsProfile];  // And inform the delegate.
+     }];
+    
+    
     RACSignal *tabClosure = [[self rac_signalForSelector:@selector(tabWillClose)] take:1];
     [tabClosure subscribeNext:^(id x) {
         [@[locationDasu, pageIsLoading, pageLoadingProgress]

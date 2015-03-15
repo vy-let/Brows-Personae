@@ -31,6 +31,8 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
+@class SiteProfile;
+
 #pragma mark -
 #pragma mark private resourceLoadDelegate class interface
 
@@ -59,6 +61,8 @@ didReceiveResponse:(NSURLResponse *)response
 - (void)removeAllCookies;
 - (void)removeAllCookiesForHost:(NSString *)host;
 - (void)removeExpiredCookies;
+
+@property (nonatomic, weak) SiteProfile *siteProfile;
 
 @end
 
