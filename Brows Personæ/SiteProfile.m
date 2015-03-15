@@ -19,7 +19,7 @@ const UInt32 SiteProfileStoreApplicationID = 625418296;  // irb> rand 2**31
     NSURL *diskLocation;
     NSString *name;
     FMDatabaseQueue *cookieJar;
-    NSUInteger presentSessionID;
+    u_int32_t presentSessionID;  // this type b/c of arc4random's behavior
 }
 
 @end
@@ -88,6 +88,7 @@ static NSMapTable *namedProfiles;
     
     diskLocation = file;
     name = [profileName copy];
+    presentSessionID = arc4random();
     
     BOOL looseDatabaseIntegrity =
     [self openDatabase];
@@ -170,9 +171,8 @@ static NSMapTable *namedProfiles;
         [db executeStatements:
          @"create table Session ("
          "    id        integer primary key"
-         "  , lastUsed  datetime"
+         "  , lastUsed  integer"
          ");"];
-        presentSessionID = [db lastInsertRowId];
         
         [db executeUpdate:
          @"create table Cookie ("
@@ -182,18 +182,20 @@ static NSMapTable *namedProfiles;
          "  , path        text not null"
          "  , name        text not null"
          "  , value       text not null"
-         "  , domain      text"  // or
-         "  , originURL   text"
-         "  , expiresDate text"  // or
-         "  , maximumAge  integer"
+         "  , domain      text not null"  // always available, v0 or v1
+         "  , originURL   text"  // possible, in addition to domain (v1)
+         "  , expiresDate integer"
+         "  , maximumAge  integer"  // possible, in addition to expiresDate (v1)
          // Other attributes
          "  , comment     text"
          "  , commentURL  text"
          "  , secure      integer not null default 0"
-         "  , sessionOnly integer not null default 0"
+         //"  , sessionOnly integer not null default 0"  // session not being null implies sessionOnly.
          "  , portList    text"
          "  , version     integer not null default 0"
-         ")"];
+         "  , lastUsed    integer not null"
+         
+         "  , unique (path, name, domain) )"];  // unique by standard design
         
         [db executeUpdate:
          @"create table HistoryItem ("
@@ -201,7 +203,7 @@ static NSMapTable *namedProfiles;
          "  , previousItem  integer references HistoryItem (id) on delete set null"
          "  , pageTitle     text not null"
          "  , pageURL       text not null"
-         "  , visitedDate   text not null"
+         "  , visitedDate   integer not null"
          ")"];
         
         
@@ -222,6 +224,327 @@ static NSMapTable *namedProfiles;
 - (NSString *)name {
     return name;
 }
+
+
+
+
+
+
+#pragma mark Cookie Data Source
+
+
+
+- (NSHTTPCookie *)cookieForCurrentResultInResultSet:(FMResultSet *)resultSet {
+    NSMutableDictionary *cookieAttrs = [NSMutableDictionary dictionaryWithCapacity:13];
+    
+    if (![resultSet columnIsNull:@"session"] && [resultSet longForColumn:@"session"] != presentSessionID) {
+        NSLog(@"Skipping stored cookie because its session does not match the present session.");
+        return nil;
+    }
+    
+    int cookieVersion = [resultSet intForColumn:@"version"];
+    [cookieAttrs setObject:[NSString stringWithFormat:@"%d", cookieVersion] forKey:NSHTTPCookieVersion];
+    
+    [cookieAttrs setObject:[resultSet stringForColumn:@"path"] forKey:NSHTTPCookiePath];
+    [cookieAttrs setObject:[resultSet stringForColumn:@"name"] forKey:NSHTTPCookieName];
+    [cookieAttrs setObject:[resultSet stringForColumn:@"domain"] forKey:NSHTTPCookieDomain];
+    [cookieAttrs setObject:[resultSet stringForColumn:@"value"] forKey:NSHTTPCookieValue];
+    
+    if (![resultSet columnIsNull:@"originURL"])
+        [cookieAttrs setObject:[resultSet stringForColumn:@"originURL"]
+                        forKey:NSHTTPCookieOriginURL];
+    
+    if (cookieVersion == 1 && ![resultSet columnIsNull:@"maximumAge"])
+        [cookieAttrs setObject:[NSString stringWithFormat:@"%lld", [resultSet longLongIntForColumn:@"maximumAge"]]
+                        forKey:NSHTTPCookieMaximumAge];
+    if (cookieVersion == 0 && ![resultSet columnIsNull:@"expiresDate"])
+        [cookieAttrs setObject:[resultSet dateForColumn:@"expiresDate"]
+                        forKey:NSHTTPCookieExpires];
+    
+    if (cookieVersion == 1 && ![resultSet columnIsNull:@"comment"])
+        [cookieAttrs setObject:[resultSet stringForColumn:@"comment"]
+                        forKey:NSHTTPCookieComment];
+    if (cookieVersion == 1 && ![resultSet columnIsNull:@"commentURL"])
+        [cookieAttrs setObject:[resultSet stringForColumn:@"commentURL"]
+                        forKey:NSHTTPCookieCommentURL];
+    
+    if (![resultSet columnIsNull:@"portList"])
+        [cookieAttrs setObject:[resultSet stringForColumn:@"portList"]
+                        forKey:NSHTTPCookiePort];
+    
+    if ([resultSet boolForColumn:@"secure"])
+        [cookieAttrs setObject:@YES forKey:NSHTTPCookieSecure];  // Specifying *any* value indicates YES.
+    
+    
+    return [NSHTTPCookie cookieWithProperties:cookieAttrs];
+    
+}
+
+
+
+- (NSArray *)cookies {
+    NSMutableArray *cookies = [NSMutableArray array];
+    
+    [cookieJar inDatabase:^(FMDatabase *db) {
+        FMResultSet *cookiePtr = [db executeQuery:@" select * from Cookie where session isnull or session = ? ", @(presentSessionID)];
+        while ([cookiePtr next]) {
+            NSHTTPCookie *cookie = [self cookieForCurrentResultInResultSet:cookiePtr];
+            if (cookie)  [cookies addObject:cookie];
+            
+        }
+        
+    }];
+    
+    [self touchCookies:cookies];
+    
+    return cookies;
+}
+
+
+- (NSArray *)cookiesForRequest:(NSURLRequest *)request {
+    NSMutableArray *cookies = [NSMutableArray array];
+    
+    NSString *domain = [[request URL] host];  NSString *path = [[request URL] path];
+    if (!domain || !path)  return @[];
+    
+    [cookieJar inDatabase:^(FMDatabase *db) {
+        FMResultSet *cookiePtr = [db executeQuery:@""
+                                  " select * from  Cookie                                   "
+                                  "         where  (session isnull or session = ?)          "
+                                  "           and  (domain = ?                              "
+                                  "                 or  ( domain like '.%' and              "
+                                  "                       '.' || ?  like  ('%' || domain) ) "
+                                  "                )                                        "
+                                  "           and  (? like (path || '%') )                  "
+                                  , @(presentSessionID), domain, domain, path];
+        while ([cookiePtr next]) {
+            NSHTTPCookie *cookie = [self cookieForCurrentResultInResultSet:cookiePtr];
+            if (cookie)  [cookies addObject:cookie];
+            
+        }
+        
+    }];
+    
+    [self touchCookies:cookies];
+    
+    return cookies;
+}
+
+
+- (void)touchCookies:(NSArray *)cookies {
+    NSDate *atime = [NSDate date];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        
+        [cookieJar inTransaction:^(FMDatabase *db, BOOL *rollback) {
+            
+            for (NSHTTPCookie *cookie in cookies) {
+                BOOL worked = [db executeUpdate:@""
+                 " update Cookie set lastUsed = ? "
+                 " where name = ? and domain = ? and path = ? ",
+                 atime, [cookie name], [cookie domain], [cookie path]];
+                
+                if (!worked) {
+                    NSLog(@"Problem updating atime for %@: %@", cookie, [db lastError]);
+                    return;  // No need to roll back, really.
+                }
+                
+            }
+            
+        }];
+        
+    });
+    
+    // References to self need not be weak: If the block keeps the profile alive for a few seconds longer after the tab has closed,
+    // it still has no reference to the tab; so the tab will dealloc, and then we can update the cookies and vacuum the DB
+    // when the background task fires.
+    
+}
+
+
+
+- (void)removeAllCookies {
+    [cookieJar inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"delete from Cookie"];
+    }];
+}
+
+
+- (void)removeAllCookiesForHost:(NSString *)host {
+    [cookieJar inDatabase:^(FMDatabase *db) {
+        
+        [db executeUpdate:@""
+         " delete from  Cookie                            "
+         "       where  domain = ?                        "
+         "          or  ( domain like '.%' and            "
+         "                '.' || ?  like  ('%' || domain) "
+         "              )                                 ", host, host];
+        
+    }];
+}
+
+
+- (void)removeExpiredCookies {
+    NSDate *expiry = [NSDate date];
+    [cookieJar inDatabase:^(FMDatabase *db) {
+        
+        [db executeUpdate:@""
+         " delete from  Cookie "
+         "       where  expiresDate not null  and  expiresDate < ? ", expiry];
+        
+    }];
+}
+
+
+- (void)setCookie:(NSHTTPCookie *)cookie {
+    if ([[cookie value] length] + [[cookie name] length] + [[cookie path] length]
+        + [[cookie domain] length] + [[cookie properties][NSHTTPCookieOriginURL] length]
+        + [[cookie comment] length] + [[[cookie commentURL] absoluteString] length]       > 4096) {
+        
+        NSLog(@"Rejecting cookie for its length.");
+        return;
+    }
+    
+    [cookieJar inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        
+        void (^whoopsie)(id) = ^(id error) {
+            NSLog(@"DB Error setting cookie “%@”:\n%@", cookie, error);
+            *rollback = YES;
+        };
+        
+        BOOL success;
+//        NSError *cookieDelError = nil;
+//        BOOL success = [db executeUpdate:@""
+//                        " delete from  Cookie     "
+//                        "       where  name = ?   "
+//                        "         and  domain = ? "
+//                        "         and  path = ?   "
+//                    withErrorAndBindings:&cookieDelError,  [cookie name], [cookie domain], [cookie path]];
+//        
+//        if (!success)
+//            return whoopsie(cookieDelError);
+        
+        
+        // Sometime soon, trim out old cookies
+        // if the cookie jar grows too full:
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            [cookieJar inDatabase:^(FMDatabase *db) {
+                
+                for (;;) {
+                    FMResultSet *domainCookies = [db executeQuery:@""
+                                                  " select  count(id)  "
+                                                  "   from  Cookie     "
+                                                  "  where  domain = ? ", [cookie domain]];
+                    [domainCookies next];
+                    long domainCookieCount = [domainCookies longForColumnIndex:0];
+                    
+                    FMResultSet *profileCookies = [db executeQuery:@""
+                                                  " select  count(id)  "
+                                                  "   from  Cookie     "];
+                    [profileCookies next];
+                    long profileCookieCount = [profileCookies longForColumnIndex:0];
+                    
+                    
+                    if (domainCookieCount <= 30 && profileCookieCount <= 300)
+                        break;  // Cookie count is good.
+                    
+                    // Cookie size is still too big.
+                    [db executeUpdate:@""
+                     " delete from  Cookie                  "
+                     "       where  id in (                 "
+                     "                select id from Cookie "
+                     "                order by lastUsed asc "
+                     "                limit 1               "
+                     "              )                       "];
+                    
+                }
+                
+            }];
+        });
+        
+        
+        // Make a session to attach to, if necessary.
+        NSError *sessionUpdateError = nil;
+        success = [db executeUpdate:@""
+                   " insert  or replace             "
+                   "   into  Session (id, lastUsed) "
+                   " values  (?, ?)                 "
+               withErrorAndBindings:&sessionUpdateError,  @(presentSessionID), [NSDate date]];
+        
+        if (!success)
+            return whoopsie(sessionUpdateError);
+        
+        
+        // Insert the core cookie information:
+        
+        NSAssert([cookie domain], @"A COOKIE CAME IN WITHOUT A DOMAIN! EVERYBODY GO NUTS!");
+        success = [db executeUpdate:@""
+                   " insert  or replace "
+                   "   into  Cookie ( session, path, name, value, domain, secure, version, lastUsed ) "
+                   " values  ( :session, :path, :name, :value, :domain, :secure, :version, :lastUsed ) "
+            withParameterDictionary:@{ @"session": [cookie isSessionOnly] ? @(presentSessionID) : [NSNull null]
+                                       , @"path": [cookie path]
+                                       , @"name": [cookie name]
+                                       , @"value": [cookie value]
+                                       , @"domain": [cookie domain]
+                                       , @"secure": @([cookie isSecure])
+                                       , @"version": @([cookie version])
+                                       , @"lastUsed": [NSDate date]
+                                       }];
+        if (!success)
+            return whoopsie([db lastError]);
+        
+        
+        // Now update the auxilliary details:
+        
+        
+        NSNumber *cookieID = @( [db lastInsertRowId] );
+        NSDictionary *cookieProperties = [cookie properties];
+        
+        if ([cookie comment] &&
+            ![db executeUpdate:@" update Cookie set comment = ? where id = ? ", [cookie comment], cookieID])
+            return whoopsie([db lastError]);
+        
+        if ([cookie commentURL] &&
+            ![db executeUpdate:@" update Cookie set commentURL = ? where id = ? ", [cookie commentURL], cookieID])
+            return whoopsie([db lastError]);
+        
+        // If there's a time limit,
+        // set the expiresDate if available; otherwise calculate it based on max-age:
+        if (([cookie expiresDate] || cookieProperties[NSHTTPCookieMaximumAge]) &&
+            ![db executeUpdate:@" update Cookie set expiresDate = ? where id = ? "
+              ,[cookie expiresDate] ?
+              [cookie expiresDate] :
+              [NSDate dateWithTimeIntervalSinceNow:[(NSString *)cookieProperties[NSHTTPCookieMaximumAge] integerValue]]
+              , cookieID])
+            return whoopsie([db lastError]);
+        
+        // If there's a max-age, set it directly:
+        if (cookieProperties[NSHTTPCookieMaximumAge] &&
+            ![db executeUpdate:@" update Cookie set maximumAge = ? where id = ? "
+              , [(NSString *)cookieProperties[NSHTTPCookieMaximumAge] integerValue]
+              , cookieID])
+            return whoopsie([db lastError]);
+        
+        if (cookieProperties[NSHTTPCookieOriginURL] &&
+            ![db executeUpdate:@" update Cookie set originURL = ? where id = ? ", cookieProperties[NSHTTPCookieOriginURL], cookieID])
+            return whoopsie([db lastError]);
+        
+        if (cookieProperties[NSHTTPCookiePort] &&
+            ![db executeUpdate:@" update Cookie set portList = ? where id = ? ", cookieProperties[NSHTTPCookiePort], cookieID])
+            return whoopsie([db lastError]);
+        
+        
+        
+    }];
+}
+
+
+
+
+
+
+
+
 
 
 

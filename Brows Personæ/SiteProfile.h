@@ -20,4 +20,14 @@ const UInt32 SiteProfileStoreApplicationID;
 
 @property (readonly) NSString *name;
 
+
+#pragma mark Cookie Data Source
+
+- (NSArray *)cookies;
+- (void)removeAllCookies;
+- (void)removeAllCookiesForHost:(NSString *)host;
+- (void)removeExpiredCookies;
+- (void)setCookie:(NSHTTPCookie *)cookie;
+- (NSArray *)cookiesForRequest:(NSURLRequest *)request;
+
 @end
