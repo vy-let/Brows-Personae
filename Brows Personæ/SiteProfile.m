@@ -9,6 +9,7 @@
 #import "SiteProfile.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <FMDB/FMDB.h>
+#import "NSHTTPCookie+IGPropertyTesting.h"
 
 
 const UInt32 SiteProfileStorePresentVersion = 1;
@@ -139,6 +140,7 @@ static NSMapTable *namedProfiles;
         // Check to see if database is empty
         FMResultSet *nonEmptyAnswer = [db executeQuery:@"select count(*) from sqlite_master where type = 'table' and name = 'BrowsPersonæDataVersion'"];
         [nonEmptyAnswer next];  if ([nonEmptyAnswer intForColumnIndex:0] != 0) {
+            [nonEmptyAnswer close];  nonEmptyAnswer = nil;
             
             // Non-empty. Check the version number
             FMResultSet *dataVersionAnswer = [db executeQuery:@"select version from BrowsPersonæDataVersion"];  [dataVersionAnswer next];
@@ -146,15 +148,18 @@ static NSMapTable *namedProfiles;
             if ([dataVersionAnswer intForColumnIndex:0] > SiteProfileStorePresentVersion) {
                 // Too new
                 NSLog(@"Using a version of the brows profile that's too new! Abort! Abort!");
-                *rollback = YES; worked = NO;
+                *rollback = YES; worked = NO;  [dataVersionAnswer close];  dataVersionAnswer = nil;
                 return;
                 
             } else {
                 // Version is good; OK to go.
+                [dataVersionAnswer close];  dataVersionAnswer = nil;
                 return;
             }
             
         }
+        
+        [nonEmptyAnswer close];  nonEmptyAnswer = nil;
         
         // Database needs initialization
         
@@ -185,7 +190,6 @@ static NSMapTable *namedProfiles;
          "  , domain      text not null"  // always available, v0 or v1
          "  , originURL   text"  // possible, in addition to domain (v1)
          "  , expiresDate integer"
-         "  , maximumAge  integer"  // possible, in addition to expiresDate (v1)
          // Other attributes
          "  , comment     text"
          "  , commentURL  text"
@@ -238,7 +242,7 @@ static NSMapTable *namedProfiles;
     NSMutableDictionary *cookieAttrs = [NSMutableDictionary dictionaryWithCapacity:13];
     
     if (![resultSet columnIsNull:@"session"] && [resultSet longForColumn:@"session"] != presentSessionID) {
-        NSLog(@"Skipping stored cookie because its session does not match the present session.");
+        // Skipping stored cookie because its session does not match the present session.
         return nil;
     }
     
@@ -254,9 +258,11 @@ static NSMapTable *namedProfiles;
         [cookieAttrs setObject:[resultSet stringForColumn:@"originURL"]
                         forKey:NSHTTPCookieOriginURL];
     
-    if (cookieVersion == 1 && ![resultSet columnIsNull:@"maximumAge"])
-        [cookieAttrs setObject:[NSString stringWithFormat:@"%lld", [resultSet longLongIntForColumn:@"maximumAge"]]
+    if (cookieVersion == 1 && ![resultSet columnIsNull:@"expiresDate"]) {
+        NSDate *expiresDate = [NSDate dateWithTimeIntervalSince1970:[resultSet longLongIntForColumn:@"expiresDate"]];
+        [cookieAttrs setObject:[NSString stringWithFormat:@"%lld", (long long int)[expiresDate timeIntervalSinceNow]]
                         forKey:NSHTTPCookieMaximumAge];
+    }
     if (cookieVersion == 0 && ![resultSet columnIsNull:@"expiresDate"])
         [cookieAttrs setObject:[resultSet dateForColumn:@"expiresDate"]
                         forKey:NSHTTPCookieExpires];
@@ -293,6 +299,8 @@ static NSMapTable *namedProfiles;
             
         }
         
+        [cookiePtr close];
+        
     }];
     
     [self touchCookies:cookies];
@@ -306,22 +314,26 @@ static NSMapTable *namedProfiles;
     
     NSString *domain = [[request URL] host];  NSString *path = [[request URL] path];
     if (!domain || !path)  return @[];
+    NSLog(@"Getting cookies for request at %@ %@", domain, path);
     
     [cookieJar inDatabase:^(FMDatabase *db) {
         FMResultSet *cookiePtr = [db executeQuery:@""
                                   " select * from  Cookie                                   "
                                   "         where  (session isnull or session = ?)          "
-                                  "           and  (domain = ?                              "
-                                  "                 or  ( domain like '.%' and              "
-                                  "                       '.' || ?  like  ('%' || domain) ) "
-                                  "                )                                        "
-                                  "           and  (? like (path || '%') )                  "
-                                  , @(presentSessionID), domain, domain, path];
+                                  "           and  (? like ('%' || domain))                 "
+//                                  "           and  (domain = ?                              "
+//                                  "                 or  ( domain like '.%' and              "
+//                                  "                       ?  like  ('%' || domain) ) "
+//                                  "                )                                        "
+//                                  "           and  (? like (path || '%') )                  "
+                                  , @(presentSessionID), domain/*, domain, path*/];
         while ([cookiePtr next]) {
             NSHTTPCookie *cookie = [self cookieForCurrentResultInResultSet:cookiePtr];
-            if (cookie)  [cookies addObject:cookie];
+            if ([cookie isForRequest:request])  [cookies addObject:cookie];
             
         }
+        
+        [cookiePtr close];
         
     }];
     
@@ -436,18 +448,21 @@ static NSMapTable *namedProfiles;
                                                   "  where  domain = ? ", [cookie domain]];
                     [domainCookies next];
                     long domainCookieCount = [domainCookies longForColumnIndex:0];
+                    [domainCookies close];
                     
                     FMResultSet *profileCookies = [db executeQuery:@""
                                                   " select  count(id)  "
                                                   "   from  Cookie     "];
                     [profileCookies next];
                     long profileCookieCount = [profileCookies longForColumnIndex:0];
+                    [profileCookies close];
                     
                     
                     if (domainCookieCount <= 30 && profileCookieCount <= 300)
                         break;  // Cookie count is good.
                     
                     // Cookie size is still too big.
+                    NSLog(@"Too many cookies in persona %@. Trimming out the last-used one.", [self name]);
                     [db executeUpdate:@""
                      " delete from  Cookie                  "
                      "       where  id in (                 "
@@ -488,7 +503,7 @@ static NSMapTable *namedProfiles;
                                        , @"domain": [cookie domain]
                                        , @"secure": @([cookie isSecure])
                                        , @"version": @([cookie version])
-                                       , @"lastUsed": [NSDate date]
+                                       , @"lastUsed": @( (NSInteger)[[NSDate date] timeIntervalSince1970] )
                                        }];
         if (!success)
             return whoopsie([db lastError]);
@@ -513,8 +528,8 @@ static NSMapTable *namedProfiles;
         if (([cookie expiresDate] || cookieProperties[NSHTTPCookieMaximumAge]) &&
             ![db executeUpdate:@" update Cookie set expiresDate = ? where id = ? "
               ,[cookie expiresDate] ?
-              [cookie expiresDate] :
-              [NSDate dateWithTimeIntervalSinceNow:[(NSString *)cookieProperties[NSHTTPCookieMaximumAge] integerValue]]
+              @( (NSInteger)[[cookie expiresDate] timeIntervalSince1970] ) :
+              @( (NSInteger)[(NSString *)cookieProperties[NSHTTPCookieMaximumAge] doubleValue] )
               , cookieID])
             return whoopsie([db lastError]);
         

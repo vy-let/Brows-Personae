@@ -34,7 +34,7 @@
         BOOL itWorked =
         [[[NSNib alloc] initWithNibNamed:@"TabCell" bundle:[NSBundle mainBundle]] instantiateWithOwner:self topLevelObjects:&topLevels];
         
-        if (!itWorked) {NSLog(@"Failed to make a dummy tab cell!!!!!!"); return;};
+        if (!itWorked)  return;
         
         for (id tlo in topLevels) {
             if ([tlo respondsToSelector:@selector(thumbnailView)]) {
@@ -42,9 +42,6 @@
                 break;
             }
         }
-        
-        if (!measurementTableCellView)
-            NSLog(@"Dummy tab cell nib didn't contain a BrowsTabTableCellView!!!!!!!!!!!!!!");
         
     });
     
@@ -60,7 +57,7 @@
     dispatch_once(&racObservationsDidInit, ^{
         
         RACSignal *repTab = [RACObserve(self, objectValue)
-                             filter:^BOOL(BrowsTab *applicableTab) {  NSLog(@"TCV is receiving tab %@.", applicableTab);  return !!applicableTab;  }];
+                             filter:^BOOL(BrowsTab *applicableTab) {  return !!applicableTab;  }];
         
         RAC([self thumbnailView], image, [NSImage imageNamed:@"NSMultipleDocuments"]) = [repTab map:^id(BrowsTab *applicableTab) {
             return [applicableTab thumbnail];

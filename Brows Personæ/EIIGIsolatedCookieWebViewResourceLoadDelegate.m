@@ -108,7 +108,7 @@ didReceiveResponse:(NSURLResponse *)response
 
 - (NSArray *)cookies
 {
-    NSLog(@"FETCHING ALL COOKIES.\nCookie store has %@\nand DB has %@", cookieStore, [[self siteProfile] cookies]);
+    
 #if __has_feature(objc_arc)
     return [cookieStore copy];
 #else
@@ -162,7 +162,11 @@ didReceiveResponse:(NSURLResponse *)response
             [cookiesToSend addObject:aCookie];
         }
     }
-    NSLog(@"FETCHING COOKIES FOR REQUEST.\nCookie store has %@\nand DB has %@", cookiesToSend, [[self siteProfile] cookiesForRequest:request]);
+    
+    if (![cookiesToSend isEqual:[[self siteProfile] cookiesForRequest:request]]) {
+        NSLog(@"COOKIES FOR REQUEST DIFFER:\nExpected: %@\nActual: %@", cookiesToSend, [[self siteProfile] cookiesForRequest:request]);
+    }
+    
     return [NSArray arrayWithArray:cookiesToSend];
 }
 

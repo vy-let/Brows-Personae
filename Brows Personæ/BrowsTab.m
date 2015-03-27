@@ -151,7 +151,6 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{  // Postpone until location editing session has fully popped.
             @strongify(self)
-            NSLog(@"Loading “%@”", requestURL);
             [self performStandardRequest:requestURL];
         });
         
@@ -215,12 +214,6 @@
     }];
     
     
-    [pageIsLoading subscribeNext:^(id x) {
-        NSLog(@"Is page loading? %@", x);
-    }];
-    [locationIsBeingEdited subscribeNext:^(id x) {
-        NSLog(@"Is location being edited? %@", x);
-    }];
     @weakify(goStopReloadButton)
     [[[pageIsLoading combineLatestWith:locationIsBeingEdited] map:^(RACTuple *isLoadingIsEditing) {
         return [NSImage imageNamed:( [[isLoadingIsEditing second] boolValue] ? @"NSMenuOnStateTemplate" :
@@ -327,8 +320,6 @@
     NSString *pageLoc = [[[[frame provisionalDataSource] request] URL] absoluteString];
     if (pageLoc) [locationBox setStringValue:pageLoc];
     
-    NSLog(@"Provisionally load with content inset top %f", [[pageView ei_scrollView] contentInsets].top);
-    
     [pageIsLoading sendNext:@(YES)];
     [pageLoadingProgress sendNext:@(-1)];  // Spin
     
@@ -337,8 +328,6 @@
 
 - (void)webView:(WebView *)sender didCommitLoadForFrame:(WebFrame *)frame {
     if (frame != [pageView mainFrame]) return;
-    
-    NSLog(@"Commit load with content inset top %f", [[pageView ei_scrollView] contentInsets].top);
     
     [pageLoadingProgress sendNext:@(0)];
     
@@ -351,16 +340,13 @@
     [pageLoadingProgress sendNext:@(1)];
     [pageIsLoading sendNext:@(NO)];
     
-    NSLog(@"Finish load %@ with content inset top %f", [pageView ei_scrollView], [[pageView ei_scrollView] contentInsets].top);
-    
 }
 
 - (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame {
     if (frame != [pageView mainFrame]) return;
     
     [pageIsLoading sendNext:@(NO)];
-    NSBeep();
-    NSLog(@"Did fail provisional load with error: %@", error);
+    // TODO Display error if necessary
     
 }
 
@@ -369,7 +355,7 @@
     
     [pageIsLoading sendNext:@(NO)];
     NSBeep();
-    NSLog(@"Did fail load with error: %@", error);
+    // TODO Display error if necessary
     
 }
 
