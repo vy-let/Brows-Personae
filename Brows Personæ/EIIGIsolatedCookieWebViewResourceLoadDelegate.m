@@ -26,7 +26,7 @@
  *********************************************************************************/
 
 // Class exploded by Talus Baddley out from IGIsolatedCookieWebView.m
-// to publish the private interface and aid in future customizations.
+// to publish the private interface and aid in customizations.
 
 #import "EIIGIsolatedCookieWebViewResourceLoadDelegate.h"
 #import "NSHTTPCookie+IGPropertyTesting.h"
