@@ -407,14 +407,19 @@ static NSMapTable *namedProfiles;
 
 - (void)removeAllCookiesForHost:(NSString *)host {
     NSLog(@"REMOVING ALL COOKIES FOR HOST “%@” IN PROFILE “%@”", host, [self name]);
-    [cookieJar inDatabase:^(FMDatabase *db) {
+    [cookieJar inTransaction:^(FMDatabase *db, BOOL *rollback) {
         
-        [db executeUpdate:@""
-         " delete from  Cookie                            "
-         "       where  domain = ?                        "
-         "          or  ( domain like '.%' and            "
-         "                '.' || ?  like  ('%' || domain) "
-         "              )                                 ", host, host];
+        [[[self cookies]
+          filterUsingBlock:^BOOL(NSHTTPCookie *cookie) {
+              return [cookie isForHost:host];
+              
+          }] applyBlock:^(NSHTTPCookie *delCookie) {
+              [db executeUpdate:@""
+               " delete from Cookie                         "
+               " where name = ? and domain = ? and path = ? ",
+               [delCookie name], [delCookie domain], [delCookie path]];
+              
+          }];
         
     }];
     
