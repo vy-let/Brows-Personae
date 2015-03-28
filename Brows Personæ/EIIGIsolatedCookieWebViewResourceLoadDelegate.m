@@ -41,17 +41,10 @@
 {
     self = [super init];
     if (self) {
-        cookieStore = [[NSMutableArray alloc] init];
+        
     }
     return self;
 }
-
-#if !__has_feature(objc_arc)
-- (void)dealloc {
-    [cookieStore release];
-    [super dealloc];
-}
-#endif
 
 - (void)pullCookiesFromResponse:(NSURLResponse *)response
 {
@@ -108,66 +101,33 @@ didReceiveResponse:(NSURLResponse *)response
 
 - (NSArray *)cookies
 {
-    
-#if __has_feature(objc_arc)
-    return [cookieStore copy];
-#else
-    return [[cookieStore copy] autorelease];
-#endif
+    return [[self siteProfile] cookies];
 }
 
 - (void) removeAllCookies
 {
-    [cookieStore removeAllObjects];
     [[self siteProfile] removeAllCookies];
 }
 
 - (void)removeAllCookiesForHost:(NSString *)host
 {
-    for (NSHTTPCookie *aCookie in [NSArray arrayWithArray:cookieStore]) {
-        if ([aCookie isForHost:host]) {
-            [cookieStore removeObject:aCookie];
-        }
-    }
     [[self siteProfile] removeAllCookiesForHost:host];
 }
 
 - (void)removeExpiredCookies
 {
-    for (NSHTTPCookie *aCookie in [NSArray arrayWithArray:cookieStore]) {
-        if ([aCookie isExpired]) {
-            [cookieStore removeObject:aCookie];
-        }
-    }
     [[self siteProfile] removeExpiredCookies];
 }
 
 - (void)setCookie:(NSHTTPCookie *)cookie
 {
-    //	NSLog(@"should be setting cookie with name '%@' and value '%@' for URL '%@'",
-    //		  [cookie name], [cookie value], [url absoluteString]);
-    if (cookie) {
-        [cookieStore removeObject:cookie];
-        [cookieStore addObject:cookie];
-    }
     [[self siteProfile] setCookie:cookie];
     [self removeExpiredCookies];
 }
 
 - (NSArray *)getCookieArrayForRequest:(NSURLRequest *)request
 {
-    NSMutableArray *cookiesToSend = [NSMutableArray array];
-    for (NSHTTPCookie *aCookie in cookieStore) {
-        if ([aCookie isForRequest:request]) {
-            [cookiesToSend addObject:aCookie];
-        }
-    }
-    
-    if (![cookiesToSend isEqual:[[self siteProfile] cookiesForRequest:request]]) {
-        NSLog(@"COOKIES FOR REQUEST DIFFER:\nExpected: %@\nActual: %@", cookiesToSend, [[self siteProfile] cookiesForRequest:request]);
-    }
-    
-    return [NSArray arrayWithArray:cookiesToSend];
+    return [[self siteProfile] cookiesForRequest:request];
 }
 
 @end

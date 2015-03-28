@@ -10,6 +10,7 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <FMDB/FMDB.h>
 #import "NSHTTPCookie+IGPropertyTesting.h"
+#import <NSArray+Functional/NSArray+Functional.h>
 
 
 const UInt32 SiteProfileStorePresentVersion = 1;
@@ -115,6 +116,7 @@ static NSMapTable *namedProfiles;
 
 - (BOOL)openDatabase {
     cookieJar = [FMDatabaseQueue databaseQueueWithPath:[diskLocation path]];
+    [cookieJar inDatabase:^(FMDatabase *db) {  [db setTraceExecution:YES];  }];
     
     BOOL success =
     [self migrateCookieJarIfNecessary];
@@ -242,7 +244,7 @@ static NSMapTable *namedProfiles;
     NSMutableDictionary *cookieAttrs = [NSMutableDictionary dictionaryWithCapacity:13];
     
     if (![resultSet columnIsNull:@"session"] && [resultSet longForColumn:@"session"] != presentSessionID) {
-        // Skipping stored cookie because its session does not match the present session.
+        NSLog(@"Skipping stored cookie because its session does not match the present session.");
         return nil;
     }
     
@@ -310,36 +312,12 @@ static NSMapTable *namedProfiles;
 
 
 - (NSArray *)cookiesForRequest:(NSURLRequest *)request {
-    NSMutableArray *cookies = [NSMutableArray array];
+    // SQL-native solution proving to be too finickey for the time being.
     
-    NSString *domain = [[request URL] host];  NSString *path = [[request URL] path];
-    if (!domain || !path)  return @[];
-    NSLog(@"Getting cookies for request at %@ %@", domain, path);
-    
-    [cookieJar inDatabase:^(FMDatabase *db) {
-        FMResultSet *cookiePtr = [db executeQuery:@""
-                                  " select * from  Cookie                                   "
-                                  "         where  (session isnull or session = ?)          "
-                                  "           and  (? like ('%' || domain))                 "
-//                                  "           and  (domain = ?                              "
-//                                  "                 or  ( domain like '.%' and              "
-//                                  "                       ?  like  ('%' || domain) ) "
-//                                  "                )                                        "
-//                                  "           and  (? like (path || '%') )                  "
-                                  , @(presentSessionID), domain/*, domain, path*/];
-        while ([cookiePtr next]) {
-            NSHTTPCookie *cookie = [self cookieForCurrentResultInResultSet:cookiePtr];
-            if ([cookie isForRequest:request])  [cookies addObject:cookie];
-            
-        }
-        
-        [cookiePtr close];
-        
+    return [[self cookies] filterUsingBlock:^BOOL(NSHTTPCookie *cookie) {
+        return [cookie isForRequest:request];
     }];
     
-    [self touchCookies:cookies];
-    
-    return cookies;
 }
 
 
@@ -375,6 +353,7 @@ static NSMapTable *namedProfiles;
 
 
 - (void)removeAllCookies {
+    NSLog(@"REMOVING ALL COOKIES FOR PROFILE “%@”", [self name]);
     [cookieJar inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"delete from Cookie"];
     }];
@@ -382,6 +361,7 @@ static NSMapTable *namedProfiles;
 
 
 - (void)removeAllCookiesForHost:(NSString *)host {
+    NSLog(@"REMOVING ALL COOKIES FOR HOST “%@” IN PROFILE “%@”", host, [self name]);
     [cookieJar inDatabase:^(FMDatabase *db) {
         
         [db executeUpdate:@""
@@ -402,6 +382,11 @@ static NSMapTable *namedProfiles;
         [db executeUpdate:@""
          " delete from  Cookie "
          "       where  expiresDate not null  and  expiresDate < ? ", expiry];
+        int changeCount = [db changes];
+        if (changeCount)
+            NSLog(@"Removing expired cookies, affecting %d rows.", changeCount);
+        else
+            NSLog(@"noop.");
         
     }];
 }
@@ -438,7 +423,7 @@ static NSMapTable *namedProfiles;
         
         // Sometime soon, trim out old cookies
         // if the cookie jar grows too full:
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [cookieJar inDatabase:^(FMDatabase *db) {
                 
                 for (;;) {
@@ -477,21 +462,32 @@ static NSMapTable *namedProfiles;
         });
         
         
-        // Make a session to attach to, if necessary.
-        NSError *sessionUpdateError = nil;
-        success = [db executeUpdate:@""
-                   " insert  or replace             "
-                   "   into  Session (id, lastUsed) "
-                   " values  (?, ?)                 "
-               withErrorAndBindings:&sessionUpdateError,  @(presentSessionID), [NSDate date]];
+        //
+        // Attempt to do a simple update of the present session's last-used date.
+        [db executeUpdate:@""
+         " update  Session      "
+         "    set  lastUsed = ? "
+         "  where  id = ?       ", @((NSInteger)[[NSDate date] timeIntervalSince1970]), @(presentSessionID)];
         
-        if (!success)
-            return whoopsie(sessionUpdateError);
+        // If no change was actually made, the session probably doesn't exist (or it already has the present date…)
+        // so insert it if necessary:
+        if (![db changes]) {
+            NSError *sessionUpdateError = nil;
+            success = [db executeUpdate:@""
+                       " insert  or ignore              "
+                       "   into  Session (id, lastUsed) "
+                       " values  (?, ?)                 "
+                   withErrorAndBindings:&sessionUpdateError,  @(presentSessionID), [NSDate date]];
+            
+            if (!success)
+                return whoopsie(sessionUpdateError);
+            
+        }
         
         
         // Insert the core cookie information:
         
-        NSAssert([cookie domain], @"A COOKIE CAME IN WITHOUT A DOMAIN! EVERYBODY GO NUTS!");
+        NSAssert(!![cookie domain], @"A COOKIE CAME IN WITHOUT A DOMAIN! EVERYBODY GO NUTS!");
         success = [db executeUpdate:@""
                    " insert  or replace "
                    "   into  Cookie ( session, path, name, value, domain, secure, version, lastUsed ) "
@@ -507,6 +503,16 @@ static NSMapTable *namedProfiles;
                                        }];
         if (!success)
             return whoopsie([db lastError]);
+        
+        NSLog(@"Set cookie with basic parameters: %@", @{ @"session": [cookie isSessionOnly] ? @(presentSessionID) : [NSNull null]
+                                                          , @"path": [cookie path]
+                                                          , @"name": [cookie name]
+                                                          , @"value": [cookie value]
+                                                          , @"domain": [cookie domain]
+                                                          , @"secure": @([cookie isSecure])
+                                                          , @"version": @([cookie version])
+                                                          , @"lastUsed": @( (NSInteger)[[NSDate date] timeIntervalSince1970] )
+                                                          });
         
         
         // Now update the auxilliary details:

@@ -37,7 +37,7 @@
 #pragma mark private resourceLoadDelegate class interface
 
 @interface EIIGIsolatedCookieWebViewResourceLoadDelegate : NSObject {
-    NSMutableArray *cookieStore;
+    
 }
 
 - (EIIGIsolatedCookieWebViewResourceLoadDelegate *)init;
