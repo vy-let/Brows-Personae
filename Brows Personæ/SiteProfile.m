@@ -22,6 +22,11 @@ const UInt32 SiteProfileStoreApplicationID = 625418296;  // irb> rand 2**31
     NSString *name;
     FMDatabaseQueue *cookieJar;
     u_int32_t presentSessionID;  // this type b/c of arc4random's behavior
+    
+    dispatch_queue_t backgroundCookieQueue;
+    dispatch_once_t backgroundCookieSetup;
+    RACSubject *cookieTouchPusher;  // Push arrays of cookies to update their last-used timestamps.
+    NSMutableSet *cookiesNeedingTouching;
 }
 
 @end
@@ -91,6 +96,7 @@ static NSMapTable *namedProfiles;
     diskLocation = file;
     name = [profileName copy];
     presentSessionID = arc4random();
+    backgroundCookieQueue = dispatch_queue_create(NULL, DISPATCH_QUEUE_SERIAL);
     
     BOOL looseDatabaseIntegrity =
     [self openDatabase];
@@ -305,8 +311,6 @@ static NSMapTable *namedProfiles;
         
     }];
     
-    [self touchCookies:cookies];
-    
     return cookies;
 }
 
@@ -314,39 +318,80 @@ static NSMapTable *namedProfiles;
 - (NSArray *)cookiesForRequest:(NSURLRequest *)request {
     // SQL-native solution proving to be too finickey for the time being.
     
-    return [[self cookies] filterUsingBlock:^BOOL(NSHTTPCookie *cookie) {
+    NSArray *applicableCookies = [[self cookies] filterUsingBlock:^BOOL(NSHTTPCookie *cookie) {
         return [cookie isForRequest:request];
     }];
+    
+    [self touchCookies:applicableCookies];
+    return applicableCookies;
     
 }
 
 
 - (void)touchCookies:(NSArray *)cookies {
-    NSDate *atime = [NSDate date];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    
+    dispatch_once(&backgroundCookieSetup, ^{
+        // Happens once per profile.
         
-        [cookieJar inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        cookiesNeedingTouching = [NSMutableSet set];
+        
+        //
+        // Immediately collect all cookie updates, but hash out duplicates.
+        cookieTouchPusher = [RACSubject subject];
+        @weakify(backgroundCookieQueue, cookiesNeedingTouching, cookieJar)
+        [cookieTouchPusher subscribeNext:^(NSArray *cookieIDs) {
+            @strongify(backgroundCookieQueue)
+            if (!backgroundCookieQueue) return;
             
-            for (NSHTTPCookie *cookie in cookies) {
-                BOOL worked = [db executeUpdate:@""
-                 " update Cookie set lastUsed = ? "
-                 " where name = ? and domain = ? and path = ? ",
-                 atime, [cookie name], [cookie domain], [cookie path]];
+            dispatch_async(backgroundCookieQueue, ^{
+                @strongify(cookiesNeedingTouching)
                 
-                if (!worked) {
-                    NSLog(@"Problem updating atime for %@: %@", cookie, [db lastError]);
-                    return;  // No need to roll back, really.
-                }
+                [cookiesNeedingTouching addObjectsFromArray:cookieIDs];
                 
-            }
+            });
             
         }];
         
+        
+        //
+        // Delay the actual touching by five seconds, ignoring further update signals in the meantime.
+        [[[cookieTouchPusher mapReplace:@YES] throttle:5.0] subscribeNext:^(id yyes) {
+            @strongify(backgroundCookieQueue)
+            if (!backgroundCookieQueue) return;
+            NSInteger updateDate = (NSInteger)[[NSDate date] timeIntervalSince1970] - 5;  // Throttled to five seconds ago
+            
+            dispatch_async(backgroundCookieQueue, ^{
+                @strongify(cookieJar, cookiesNeedingTouching)  if (!cookiesNeedingTouching) return;
+                
+                // Perform touch
+                [cookieJar inTransaction:^(FMDatabase *db, BOOL *rollback) {
+                    for (RACTuple *cookieID in cookiesNeedingTouching) {
+                        NSString *name = [cookieID first];  NSString *domain = [cookieID second];  NSString *path = [cookieID third];
+                        
+                        [db executeUpdate:@""
+                         " update Cookie set lastUsed = ?             "
+                         " where name = ? and domain = ? and path = ? ",
+                         @(updateDate), name, domain, path];
+                        
+                    }
+                }];
+                
+                // Reset batch for next round
+                [cookiesNeedingTouching removeAllObjects];
+                
+            });
+            
+        }];
+        
+        
     });
     
-    // References to self need not be weak: If the block keeps the profile alive for a few seconds longer after the tab has closed,
-    // it still has no reference to the tab; so the tab will dealloc, and then we can update the cookies and vacuum the DB
-    // when the background task fires.
+    
+    
+    [cookieTouchPusher sendNext:[cookies mapUsingBlock:^id(NSHTTPCookie *cookie) {
+        return [RACTuple tupleWithObjects:[cookie name], [cookie domain], [cookie path], nil];
+    }]];
+    
     
 }
 
@@ -372,6 +417,7 @@ static NSMapTable *namedProfiles;
          "              )                                 ", host, host];
         
     }];
+    
 }
 
 
