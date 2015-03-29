@@ -69,6 +69,7 @@
     [tooblar setMaterial:NSVisualEffectMaterialTitlebar];
     
     [pageView setCustomUserAgent:@"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"];
+    [pageView setShouldUpdateWhileOffscreen:NO];
     
     [self setUpRACListeners];
     [self pushInitialInterfaceState];  // Must happen *after* RAC is already listening, in some cases.
