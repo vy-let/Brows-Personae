@@ -109,6 +109,8 @@ static NSMapTable *namedProfiles;
 
 - (void)dealloc {
     FMDatabaseQueue *cookieTin = cookieJar;
+    NSLog(@"Profile for %@ is being deallocated; db will vacuum shortly.", name);
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [cookieTin inDatabase:^(FMDatabase *db) {
             [db executeUpdate:@"vacuum"];
@@ -122,7 +124,7 @@ static NSMapTable *namedProfiles;
 
 - (BOOL)openDatabase {
     cookieJar = [FMDatabaseQueue databaseQueueWithPath:[diskLocation path]];
-    [cookieJar inDatabase:^(FMDatabase *db) {  [db setTraceExecution:YES];  }];
+    //[cookieJar inDatabase:^(FMDatabase *db) {  [db setTraceExecution:YES];  }];
     
     BOOL success =
     [self migrateCookieJarIfNecessary];
@@ -433,11 +435,6 @@ static NSMapTable *namedProfiles;
         [db executeUpdate:@""
          " delete from  Cookie "
          "       where  expiresDate not null  and  expiresDate < ? ", expiry];
-        int changeCount = [db changes];
-        if (changeCount)
-            NSLog(@"Removing expired cookies, affecting %d rows.", changeCount);
-        else
-            NSLog(@"noop.");
         
     }];
 }
@@ -554,16 +551,6 @@ static NSMapTable *namedProfiles;
                                        }];
         if (!success)
             return whoopsie([db lastError]);
-        
-        NSLog(@"Set cookie with basic parameters: %@", @{ @"session": [cookie isSessionOnly] ? @(presentSessionID) : [NSNull null]
-                                                          , @"path": [cookie path]
-                                                          , @"name": [cookie name]
-                                                          , @"value": [cookie value]
-                                                          , @"domain": [cookie domain]
-                                                          , @"secure": @([cookie isSecure])
-                                                          , @"version": @([cookie version])
-                                                          , @"lastUsed": @( (NSInteger)[[NSDate date] timeIntervalSince1970] )
-                                                          });
         
         
         // Now update the auxilliary details:
