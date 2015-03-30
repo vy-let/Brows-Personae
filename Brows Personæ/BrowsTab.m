@@ -110,8 +110,8 @@
     
     
     RACSignal *locationEditEnd = [[locationBox rac_signalForSelector:@selector(textDidEndEditing:)
-                                             fromProtocol:@protocol(NSTextDelegate)]
-                       takeUntil:tabClosure];
+                                                        fromProtocol:@protocol(NSTextDelegate)]
+                                  takeUntil:tabClosure];
     RACSignal *locationEditStart = [[locationBox rac_signalForSelector:@selector(textDidBeginEditing:)
                                                           fromProtocol:@protocol(NSTextDelegate)]
                                     takeUntil:tabClosure];
