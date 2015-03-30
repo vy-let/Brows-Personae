@@ -167,17 +167,6 @@
     
     
     
-    // DEBUG-ONLY COLOR CHANGES
-    [locationIsBeingEdited subscribeNext:^(NSNumber *x) {
-        @strongify(locationBox)
-        [locationBox setBackgroundColor:([x boolValue] ?
-                                         [NSColor colorWithCalibratedRed:1 green:0.95 blue:0.95 alpha:1] :
-                                         [NSColor colorWithCalibratedRed:0.95 green:0.95 blue:1 alpha:1]
-                                         )];
-        
-    }];
-    
-    
     @weakify(pageSpinny)
     [pageLoadingProgress subscribeNext:^(NSNumber *prague) {
         @strongify(pageSpinny)
