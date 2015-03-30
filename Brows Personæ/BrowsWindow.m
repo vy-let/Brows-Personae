@@ -78,6 +78,7 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
+    [[self window] setDelegate:self];
     
     [[self window] setStyleMask: [[self window] styleMask] | NSFullSizeContentViewWindowMask ];  // Set here for easier layout in nib.
 //    [[self window] setTitleVisibility:NSWindowTitleHidden];
@@ -138,6 +139,13 @@
     }];
     
     
+}
+
+
+
+- (void)windowWillClose:(NSNotification *)notification {
+    [tabsListController swapTabs:@[]];
+    tabsListController = nil;
 }
 
 

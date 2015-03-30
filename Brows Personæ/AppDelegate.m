@@ -35,6 +35,16 @@
     
     [newWindow showWindow:sender];
     
+    @weakify(browsWindows)
+    [[[[NSNotificationCenter defaultCenter]
+       rac_addObserverForName:NSWindowWillCloseNotification object:[newWindow window]]
+      take:1]
+     subscribeNext:^(id x) {
+         @strongify(browsWindows)
+         NSLog(@"Removing window %@ from app list.", newWindow);
+         [browsWindows removeObject:newWindow];
+     }];
+    
 }
 
 - (IBAction)newTab:(id)sender {

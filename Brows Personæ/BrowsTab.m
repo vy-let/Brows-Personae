@@ -307,8 +307,7 @@
 - (void)webView:(WebView *)sender didStartProvisionalLoadForFrame:(WebFrame *)frame {
     if (frame != [pageView mainFrame]) return;
     
-    NSString *pageLoc = [[[[frame provisionalDataSource] request] URL] absoluteString];
-    if (pageLoc) [locationBox setStringValue:pageLoc];
+    [self updateActualLocation];
     
     [pageIsLoading sendNext:@(YES)];
     [pageLoadingProgress sendNext:@(-1)];  // Spin
@@ -346,6 +345,18 @@
     [pageIsLoading sendNext:@(NO)];
     NSBeep();
     // TODO Display error if necessary
+    
+}
+
+- (void)updateActualLocation {
+    NSURL *pageLoc = [[[[pageView mainFrame] provisionalDataSource] request] URL];
+    if (!pageLoc)  return;
+    
+    [locationBox setStringValue:[pageLoc absoluteString]];
+    [pageSecurityIndicator setImage:([[pageLoc scheme] isEqual:@"https"] ?
+                                     [NSImage imageNamed:@"NSLockLockedTemplate"] :
+                                     [NSImage imageNamed:@"NSLockUnlockedTemplate"]
+                                     )];
     
 }
 

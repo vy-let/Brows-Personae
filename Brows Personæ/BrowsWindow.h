@@ -11,7 +11,7 @@
 @class BrowsTab;
 @class BrowsTabList;
 
-@interface BrowsWindow : NSWindowController {
+@interface BrowsWindow : NSWindowController <NSWindowDelegate> {
     IBOutlet NSTableView *tabsList;
     IBOutlet BrowsTabList *tabsListController;
     IBOutlet NSButton *newTabButton;
