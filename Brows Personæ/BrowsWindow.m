@@ -11,6 +11,7 @@
 
 #import <tgmath.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import <NSArray+Functional/NSArray+Functional.h>
 #import "BrowsTab.h"
 #import "BrowsTabList.h"
 #import "BrowsTabTableCellView.h"
@@ -51,6 +52,15 @@
 
 - (id)init {
     return [self initWithTabs:@[ ]];
+}
+
+- (void)dealloc {
+    // This is getting really hackey. If we need to tab-will-close one more time,
+    // some serious refactor is in order.
+    [[tabsListController tabs] applyBlock:^(BrowsTab *tab) {
+        [tab tabWillClose];
+    }];
+    [tabsListController swapTabs:@[]];
 }
 
 

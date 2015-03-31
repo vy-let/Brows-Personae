@@ -70,6 +70,7 @@
     
     [pageView setCustomUserAgent:@"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"];
     [pageView setShouldUpdateWhileOffscreen:NO];
+    [pageView setShouldCloseWithWindow:NO];
     
     [self setUpRACListeners];
     [self pushInitialInterfaceState];  // Must happen *after* RAC is already listening, in some cases.
@@ -102,8 +103,11 @@
      }];
     
     
+    @weakify(pageView)
     RACSignal *tabClosure = [[self rac_signalForSelector:@selector(tabWillClose)] take:1];
     [tabClosure subscribeNext:^(id x) {
+        @strongify(pageView)
+        [pageView close];
         [@[locationDasu, pageIsLoading, pageLoadingProgress]
          makeObjectsPerformSelector:@selector(sendCompleted)];
     }];
@@ -124,7 +128,7 @@
                                                 ]]
                              startWith:@(NO)];
     
-    @weakify(tooblar) @weakify(pageView)
+    @weakify(tooblar)
     [[RACObserve([pageView ei_scrollView], contentInsets) takeUntil:tabClosure]
      subscribeNext:^(NSValue *edgeInsets) {
         @strongify(tooblar)
