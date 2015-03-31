@@ -58,6 +58,7 @@
 }
 
 - (void)dealloc {
+    [pageView close];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"Brows Tab for %@ at %@ is being deallocated.", [browsProfile name], [pageView mainFrameURL]);
 }
@@ -106,8 +107,6 @@
     @weakify(pageView)
     RACSignal *tabClosure = [[self rac_signalForSelector:@selector(tabWillClose)] take:1];
     [tabClosure subscribeNext:^(id x) {
-        @strongify(pageView)
-        [pageView close];
         [@[locationDasu, pageIsLoading, pageLoadingProgress]
          makeObjectsPerformSelector:@selector(sendCompleted)];
     }];
