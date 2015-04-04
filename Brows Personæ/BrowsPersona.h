@@ -13,7 +13,7 @@ const UInt32 SiteProfileStorePresentVersion;
 const UInt32 SiteProfileStoreApplicationID;
 
 
-@interface SiteProfile : NSObject
+@interface BrowsPersona : NSObject
 
 + (instancetype)named:(NSString *)profileName;
 + (NSURL *)mainProfileFolder;

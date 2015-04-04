@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Eightt. All rights reserved.
 //
 
-#import "SiteProfile.h"
+#import "BrowsPersona.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <FMDB/FMDB.h>
 #import "NSHTTPCookie+IGPropertyTesting.h"
@@ -17,7 +17,7 @@ const UInt32 SiteProfileStorePresentVersion = 1;
 const UInt32 SiteProfileStoreApplicationID = 625418296;  // irb> rand 2**31
 
 
-@interface SiteProfile () {
+@interface BrowsPersona () {
     NSURL *diskLocation;
     NSString *name;
     FMDatabaseQueue *cookieJar;
@@ -31,7 +31,7 @@ const UInt32 SiteProfileStoreApplicationID = 625418296;  // irb> rand 2**31
 
 @end
 
-@implementation SiteProfile
+@implementation BrowsPersona
 
 
 static dispatch_queue_t profileSanity;

@@ -30,7 +30,7 @@
 
 #import "EIIGIsolatedCookieWebViewResourceLoadDelegate.h"
 #import "NSHTTPCookie+IGPropertyTesting.h"
-#import "SiteProfile.h"
+#import "BrowsPersona.h"
 
 #pragma mark -
 #pragma mark private resourceLoadDelegate class implementation
@@ -101,33 +101,33 @@ didReceiveResponse:(NSURLResponse *)response
 
 - (NSArray *)cookies
 {
-    return [[self siteProfile] cookies];
+    return [[self browsPersona] cookies];
 }
 
 - (void) removeAllCookies
 {
-    [[self siteProfile] removeAllCookies];
+    [[self browsPersona] removeAllCookies];
 }
 
 - (void)removeAllCookiesForHost:(NSString *)host
 {
-    [[self siteProfile] removeAllCookiesForHost:host];
+    [[self browsPersona] removeAllCookiesForHost:host];
 }
 
 - (void)removeExpiredCookies
 {
-    [[self siteProfile] removeExpiredCookies];
+    [[self browsPersona] removeExpiredCookies];
 }
 
 - (void)setCookie:(NSHTTPCookie *)cookie
 {
-    [[self siteProfile] setCookie:cookie];
+    [[self browsPersona] setCookie:cookie];
     [self removeExpiredCookies];
 }
 
 - (NSArray *)getCookieArrayForRequest:(NSURLRequest *)request
 {
-    return [[self siteProfile] cookiesForRequest:request];
+    return [[self browsPersona] cookiesForRequest:request];
 }
 
 @end

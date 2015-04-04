@@ -37,7 +37,7 @@
 		9CDF345719EB30640040AA0F /* BrowsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF345519EB30640040AA0F /* BrowsWindow.m */; };
 		9CDF345819EB30640040AA0F /* BrowsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CDF345619EB30640040AA0F /* BrowsWindow.xib */; };
 		9CDF345C19EB53F40040AA0F /* BrowsTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF345B19EB53F40040AA0F /* BrowsTab.m */; };
-		9CDF346519EB94DF0040AA0F /* SiteProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF346419EB94DF0040AA0F /* SiteProfile.m */; };
+		9CDF346519EB94DF0040AA0F /* BrowsPersona.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF346419EB94DF0040AA0F /* BrowsPersona.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,8 +121,8 @@
 		9CDF345919EB4D0D0040AA0F /* Brows Personæ.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Brows Personæ.entitlements"; sourceTree = "<group>"; };
 		9CDF345A19EB53F40040AA0F /* BrowsTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsTab.h; sourceTree = "<group>"; };
 		9CDF345B19EB53F40040AA0F /* BrowsTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTab.m; sourceTree = "<group>"; };
-		9CDF346319EB94DF0040AA0F /* SiteProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteProfile.h; sourceTree = "<group>"; };
-		9CDF346419EB94DF0040AA0F /* SiteProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteProfile.m; sourceTree = "<group>"; };
+		9CDF346319EB94DF0040AA0F /* BrowsPersona.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsPersona.h; sourceTree = "<group>"; };
+		9CDF346419EB94DF0040AA0F /* BrowsPersona.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsPersona.m; sourceTree = "<group>"; };
 		CA9D62F45FCF9749E0E40652 /* Pods-Brows PersonæTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brows PersonæTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Brows PersonæTests/Pods-Brows PersonæTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,8 +150,8 @@
 		9C4EAAD41A82F31500E6CE03 /* COOOOKIES omm nomm */ = {
 			isa = PBXGroup;
 			children = (
-				9CDF346319EB94DF0040AA0F /* SiteProfile.h */,
-				9CDF346419EB94DF0040AA0F /* SiteProfile.m */,
+				9CDF346319EB94DF0040AA0F /* BrowsPersona.h */,
+				9CDF346419EB94DF0040AA0F /* BrowsPersona.m */,
 				9C4EAAD81A82F33800E6CE03 /* EIIGIsolatedCookieWebView.h */,
 				9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */,
 				9C4EAADE1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.h */,
@@ -471,7 +471,7 @@
 				9C0D93F31AA1226200728D2E /* PublicSuffixList.m in Sources */,
 				9CDF343A19EB2F4C0040AA0F /* main.m in Sources */,
 				9CD503001A927B9100AFE556 /* BrowsTabList.m in Sources */,
-				9CDF346519EB94DF0040AA0F /* SiteProfile.m in Sources */,
+				9CDF346519EB94DF0040AA0F /* BrowsPersona.m in Sources */,
 				9CDF343819EB2F4C0040AA0F /* AppDelegate.m in Sources */,
 				9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */,
 			);

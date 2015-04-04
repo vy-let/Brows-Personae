@@ -9,7 +9,7 @@
 #import "MktabController.h"
 #import "BrowsWindow.h"
 #import "BrowsTab.h"
-#import "SiteProfile.h"
+#import "BrowsPersona.h"
 #import "RACStream+SlidingWindow.h"
 #import "Helpies.h"
 #import "PublicSuffixList.h"
