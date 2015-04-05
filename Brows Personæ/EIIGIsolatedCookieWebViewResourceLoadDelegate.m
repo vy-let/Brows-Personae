@@ -52,9 +52,10 @@
         NSDictionary *allHeaders = [(NSHTTPURLResponse *)response allHeaderFields];
         NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:allHeaders
                                                                   forURL:[response URL]];
-        for (NSHTTPCookie *aCookie in cookies) {
-            [self setCookie:aCookie];
-        }
+        [self setCookies:cookies
+                  forURL:[response URL]
+         mainDocumentURL:[response URL]];  // We don't really look at the main document URL anyhow.
+        
         //		NSLog(@"%d %@",[(NSHTTPURLResponse *)response statusCode],[[response URL] absoluteURL]);
     }
 }
@@ -117,6 +118,15 @@ didReceiveResponse:(NSURLResponse *)response
 - (void)removeExpiredCookies
 {
     [[self browsPersona] removeExpiredCookies];
+}
+
+- (void)setCookies:(NSArray *)cookies forURL:(NSURL *)url mainDocumentURL:(NSURL *)mainDocumentURL {
+        [[self browsPersona] setCookies:cookies
+                                 forURL:url
+                        mainDocumentURL:mainDocumentURL];
+    
+        [self removeExpiredCookies];
+    
 }
 
 - (void)setCookie:(NSHTTPCookie *)cookie

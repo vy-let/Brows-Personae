@@ -440,6 +440,23 @@ static NSMapTable *namedProfiles;
 }
 
 
+
+- (void)setCookies:(NSArray *)cookies forURL:(NSURL *)url mainDocumentURL:(NSURL *)mainDocumentURL {
+    for (NSHTTPCookie *coookieeee in cookies) {
+        if ([coookieeee isForHost:[url host]])
+            [self setCookie:coookieeee];
+        else
+            NSLog(@"Rejecting cookie keyed (%@, %@, %@) because it doesn't match the source host %@."
+                  ,[coookieeee name], [coookieeee domain], [coookieeee path]
+                  ,[url host]);
+        
+    }
+    
+    // TODO Make this the designated cookie-setter, so we can do a single batch transaction.
+    
+}
+
+
 - (void)setCookie:(NSHTTPCookie *)cookie {
     if ([[cookie value] length] + [[cookie name] length] + [[cookie path] length]
         + [[cookie domain] length] + [[cookie properties][NSHTTPCookieOriginURL] length]

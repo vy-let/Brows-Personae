@@ -55,6 +55,7 @@ didReceiveResponse:(NSURLResponse *)response
 
 - (NSArray *)cookies;
 
+- (void)setCookies:(NSArray *)cookies forURL:(NSURL *)URL mainDocumentURL:(NSURL *)mainDocumentURL;
 - (void)setCookie:(NSHTTPCookie *)cookie;
 - (NSArray *)getCookieArrayForRequest:(NSURLRequest *)request;
 
