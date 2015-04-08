@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 
 
-const UInt32 SiteProfileStorePresentVersion;
-const UInt32 SiteProfileStoreApplicationID;
+//const UInt32 SiteProfileStorePresentVersion;
+//const UInt32 SiteProfileStoreApplicationID;
 
 
-@interface SiteProfile : NSObject
+@interface BrowsPersona : NSObject
 
 + (instancetype)named:(NSString *)profileName;
 + (NSURL *)mainProfileFolder;
@@ -27,7 +27,10 @@ const UInt32 SiteProfileStoreApplicationID;
 - (void)removeAllCookies;
 - (void)removeAllCookiesForHost:(NSString *)host;
 - (void)removeExpiredCookies;
+- (void)removeCookieWithName:(NSString *)name domain:(NSString *)domain path:(NSString *)path;
 - (void)setCookie:(NSHTTPCookie *)cookie;
+- (void)setCookies:(NSArray *)cookies forURL:(NSURL *)URL mainDocumentURL:(NSURL *)mainDocumentURL;
 - (NSArray *)cookiesForRequest:(NSURLRequest *)request;
+- (NSArray *)cookiesForRequestAtURL:(NSURL *)url;
 
 @end

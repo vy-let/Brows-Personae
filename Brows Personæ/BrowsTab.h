@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
-@class SiteProfile;
+@class BrowsPersona;
 @class EIIGIsolatedCookieWebView;
 
 
@@ -26,7 +26,7 @@
     
 }
 
-- (instancetype)initWithProfile:(SiteProfile *)profile initialLocation:(NSURL *)loc;
+- (instancetype)initWithProfile:(BrowsPersona *)profile initialLocation:(NSURL *)loc;
 - (instancetype)initWithProfileNamed:(NSString *)profileName initialLocation:(NSURL *)loc;
 
 - (IBAction)submitLocation:(id)sender;

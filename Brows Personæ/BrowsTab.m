@@ -10,7 +10,7 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
 #import "BrowsTab.h"
-#import "SiteProfile.h"
+#import "BrowsPersona.h"
 #import "EIIGIsolatedCookieWebView.h"
 #import "EIIGIsolatedCookieWebViewResourceLoadDelegate.h"
 #import "WebView+ScrollViewAccess.h"
@@ -19,7 +19,7 @@
 
 @interface BrowsTab () {
     NSObject *tabViewButtonThing;
-    SiteProfile *browsProfile;
+    BrowsPersona *browsProfile;
     RACSubject *locationDasu;  // Into which submit events are pushed.
     RACSubject *pageIsLoading;
     RACSubject *pageLoadingProgress;
@@ -34,7 +34,7 @@
 
 @implementation BrowsTab
 
-- (instancetype)initWithProfile:(SiteProfile *)profile initialLocation:(NSURL *)urlOrSearch {
+- (instancetype)initWithProfile:(BrowsPersona *)profile initialLocation:(NSURL *)urlOrSearch {
     if (!(self = [super initWithNibName:@"BrowsTab" bundle:nil])) return nil;
     
     browsProfile = profile;
@@ -49,7 +49,7 @@
 }
 
 - (instancetype)initWithProfileNamed:(NSString *)profileName initialLocation:(NSURL *)urlOrSearch {
-    return [self initWithProfile:[SiteProfile named:profileName] initialLocation:urlOrSearch];
+    return [self initWithProfile:[BrowsPersona named:profileName] initialLocation:urlOrSearch];
 }
 
 - (id)init {
@@ -69,6 +69,7 @@
     [tooblar setBlendingMode:NSVisualEffectBlendingModeWithinWindow];
     [tooblar setMaterial:NSVisualEffectMaterialTitlebar];
     
+    [[pageView mainFrame] setEi_browsPersona:browsProfile];
     [pageView setCustomUserAgent:@"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"];
     [pageView setShouldUpdateWhileOffscreen:NO];
     [pageView setShouldCloseWithWindow:NO];
@@ -94,13 +95,16 @@
     
     // As soon as the web view gains its final resource load delegate,
     // inform that delegate of the tab's site profile:
+    //
+    // TODO Have the resource load delegate fetch this from the WebView's mainFrame directly.
+    //
     @weakify(browsProfile)
     [[[[RACObserve(pageView, resourceLoadDelegate)
         startWith:[pageView resourceLoadDelegate]]  // Make sure we get the first one
-       skipUntilBlock:^BOOL(id resourceLoadDelegate) {  return [resourceLoadDelegate respondsToSelector:@selector(setSiteProfile:)];  }]
+       skipUntilBlock:^BOOL(id resourceLoadDelegate) {  return [resourceLoadDelegate respondsToSelector:@selector(setBrowsPersona:)];  }]
       take:1]  // Make sure it's our custom subclass, and just take that single one
      subscribeNext:^(EIIGIsolatedCookieWebViewResourceLoadDelegate *resourceLoadDelegate) {  @strongify(browsProfile)
-         [resourceLoadDelegate setSiteProfile:browsProfile];  // And inform the delegate.
+         [resourceLoadDelegate setBrowsPersona:browsProfile];  // And inform the delegate.
      }];
     
     
@@ -130,15 +134,15 @@
     @weakify(tooblar)
     [[RACObserve([pageView ei_scrollView], contentInsets) takeUntil:tabClosure]
      subscribeNext:^(NSValue *edgeInsets) {
-        @strongify(tooblar)
-        NSEdgeInsets contentInsets;  [edgeInsets getValue:&contentInsets];
-        CGFloat tooblarHeight = [tooblar frame].size.height;
-        
-        if (contentInsets.top != tooblarHeight) {
-            [[pageView ei_scrollView] setContentInsets:NSEdgeInsetsMake(tooblarHeight, 0, 0, 0)];
-            
-        }
-        
+         @strongify(tooblar)
+         NSEdgeInsets contentInsets;  [edgeInsets getValue:&contentInsets];
+         CGFloat tooblarHeight = [tooblar frame].size.height;
+         
+         if (contentInsets.top != tooblarHeight) {
+             [[pageView ei_scrollView] setContentInsets:NSEdgeInsetsMake(tooblarHeight, 0, 0, 0)];
+             
+         }
+         
     }];
     
 #pragma mark User Submits Page Location

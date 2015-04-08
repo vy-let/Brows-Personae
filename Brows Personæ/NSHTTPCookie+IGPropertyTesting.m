@@ -55,9 +55,13 @@
 
 - (BOOL)isForRequest:(NSURLRequest *)request
 {
+    return [self isForRequestAtURL:[request URL]];
+}
+
+- (BOOL)isForRequestAtURL:(NSURL *)url {
     return (![self isExpired]
-            && [self isForHost:[[request URL] host]]
-            && [self isForPath:[[request URL] path]]
+            && [self isForHost:[url host]]
+            && [self isForPath:[url path]]
             );
 }
 

@@ -29,9 +29,10 @@
 // to publish the private interface and aid in future customizations.
 
 #import <Cocoa/Cocoa.h>
-#import <WebKit/WebKit.h>
 
-@class SiteProfile;
+@class WebView;
+@class WebDataSource;
+@class BrowsPersona;
 
 #pragma mark -
 #pragma mark private resourceLoadDelegate class interface
@@ -55,6 +56,7 @@ didReceiveResponse:(NSURLResponse *)response
 
 - (NSArray *)cookies;
 
+- (void)setCookies:(NSArray *)cookies forURL:(NSURL *)URL mainDocumentURL:(NSURL *)mainDocumentURL;
 - (void)setCookie:(NSHTTPCookie *)cookie;
 - (NSArray *)getCookieArrayForRequest:(NSURLRequest *)request;
 
@@ -62,7 +64,7 @@ didReceiveResponse:(NSURLResponse *)response
 - (void)removeAllCookiesForHost:(NSString *)host;
 - (void)removeExpiredCookies;
 
-@property (nonatomic, weak) SiteProfile *siteProfile;
+@property (nonatomic, weak) BrowsPersona *browsPersona;
 
 @end
 

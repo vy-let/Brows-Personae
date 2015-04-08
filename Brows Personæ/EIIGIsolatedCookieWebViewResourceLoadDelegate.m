@@ -30,7 +30,7 @@
 
 #import "EIIGIsolatedCookieWebViewResourceLoadDelegate.h"
 #import "NSHTTPCookie+IGPropertyTesting.h"
-#import "SiteProfile.h"
+#import "BrowsPersona.h"
 
 #pragma mark -
 #pragma mark private resourceLoadDelegate class implementation
@@ -52,9 +52,10 @@
         NSDictionary *allHeaders = [(NSHTTPURLResponse *)response allHeaderFields];
         NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:allHeaders
                                                                   forURL:[response URL]];
-        for (NSHTTPCookie *aCookie in cookies) {
-            [self setCookie:aCookie];
-        }
+        [self setCookies:cookies
+                  forURL:[response URL]
+         mainDocumentURL:[response URL]];  // We don't really look at the main document URL anyhow.
+        
         //		NSLog(@"%d %@",[(NSHTTPURLResponse *)response statusCode],[[response URL] absoluteURL]);
     }
 }
@@ -101,33 +102,42 @@ didReceiveResponse:(NSURLResponse *)response
 
 - (NSArray *)cookies
 {
-    return [[self siteProfile] cookies];
+    return [[self browsPersona] cookies];
 }
 
 - (void) removeAllCookies
 {
-    [[self siteProfile] removeAllCookies];
+    [[self browsPersona] removeAllCookies];
 }
 
 - (void)removeAllCookiesForHost:(NSString *)host
 {
-    [[self siteProfile] removeAllCookiesForHost:host];
+    [[self browsPersona] removeAllCookiesForHost:host];
 }
 
 - (void)removeExpiredCookies
 {
-    [[self siteProfile] removeExpiredCookies];
+    [[self browsPersona] removeExpiredCookies];
+}
+
+- (void)setCookies:(NSArray *)cookies forURL:(NSURL *)url mainDocumentURL:(NSURL *)mainDocumentURL {
+        [[self browsPersona] setCookies:cookies
+                                 forURL:url
+                        mainDocumentURL:mainDocumentURL];
+    
+        [self removeExpiredCookies];
+    
 }
 
 - (void)setCookie:(NSHTTPCookie *)cookie
 {
-    [[self siteProfile] setCookie:cookie];
+    [[self browsPersona] setCookie:cookie];
     [self removeExpiredCookies];
 }
 
 - (NSArray *)getCookieArrayForRequest:(NSURLRequest *)request
 {
-    return [[self siteProfile] cookiesForRequest:request];
+    return [[self browsPersona] cookiesForRequest:request];
 }
 
 @end

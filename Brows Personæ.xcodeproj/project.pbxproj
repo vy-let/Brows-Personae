@@ -18,8 +18,13 @@
 		9C4EAADA1A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */; };
 		9C4EAAE01A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAADF1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */; };
 		9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */; };
-		9C6810F21A7CB76D008263A4 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6810F11A7CB76D008263A4 /* WebKit.framework */; };
 		9C68B11B1A9EA7D800F5C444 /* RACStream+SlidingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */; };
+		9C6EC1841ACC7517007A8E49 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C7CB2671ACC57FE00066E14 /* WebKit.framework */; };
+		9C6EC1861ACE5E61007A8E49 /* WebCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C6EC1851ACE5E61007A8E49 /* WebCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9C6EC1881ACE5E8B007A8E49 /* JavaScriptCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C6EC1871ACE5E8B007A8E49 /* JavaScriptCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9C6EC18F1ACE676E007A8E49 /* WebKit2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C6EC18E1ACE676E007A8E49 /* WebKit2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9C6EC1951ACF1187007A8E49 /* WebKitLegacy.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C6EC1941ACF1187007A8E49 /* WebKitLegacy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9C7CB2691ACC5AFD00066E14 /* WebKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C7CB2671ACC57FE00066E14 /* WebKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9CD502EC1A8AF31100AFE556 /* Helpies.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502EB1A8AF31100AFE556 /* Helpies.m */; };
 		9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */; };
 		9CD502F91A901A5800AFE556 /* MktabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502F71A901A5800AFE556 /* MktabController.m */; };
@@ -32,7 +37,7 @@
 		9CDF345719EB30640040AA0F /* BrowsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF345519EB30640040AA0F /* BrowsWindow.m */; };
 		9CDF345819EB30640040AA0F /* BrowsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CDF345619EB30640040AA0F /* BrowsWindow.xib */; };
 		9CDF345C19EB53F40040AA0F /* BrowsTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF345B19EB53F40040AA0F /* BrowsTab.m */; };
-		9CDF346519EB94DF0040AA0F /* SiteProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF346419EB94DF0040AA0F /* SiteProfile.m */; };
+		9CDF346519EB94DF0040AA0F /* BrowsPersona.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF346419EB94DF0040AA0F /* BrowsPersona.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +57,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				9C7CB2691ACC5AFD00066E14 /* WebKit.framework in CopyFiles */,
+				9C6EC1951ACF1187007A8E49 /* WebKitLegacy.framework in CopyFiles */,
+				9C6EC1861ACE5E61007A8E49 /* WebCore.framework in CopyFiles */,
+				9C6EC1881ACE5E8B007A8E49 /* JavaScriptCore.framework in CopyFiles */,
+				9C6EC18F1ACE676E007A8E49 /* WebKit2.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,9 +88,14 @@
 		9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSHTTPCookie+IGPropertyTesting.m"; sourceTree = "<group>"; };
 		9C4EAAE31A82FAED00E6CE03 /* NSHTTPCookie+IGPropertyTesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSHTTPCookie+IGPropertyTesting.h"; sourceTree = "<group>"; };
 		9C6810F01A7C6940008263A4 /* Personæ.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Personæ.pch"; sourceTree = "<group>"; };
-		9C6810F11A7CB76D008263A4 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		9C68B1191A9EA7D800F5C444 /* RACStream+SlidingWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACStream+SlidingWindow.h"; sourceTree = "<group>"; };
 		9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACStream+SlidingWindow.m"; sourceTree = "<group>"; };
+		9C6EC1851ACE5E61007A8E49 /* WebCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebCore.framework; path = ../../../Git/WebKit/WebKitBuild/Debug/WebCore.framework; sourceTree = "<group>"; };
+		9C6EC1871ACE5E8B007A8E49 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = ../../../Git/WebKit/WebKitBuild/Debug/JavaScriptCore.framework; sourceTree = "<group>"; };
+		9C6EC18C1ACE65CE007A8E49 /* WebKitLegacy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKitLegacy.framework; path = ../../../Git/WebKit/WebKitBuild/Debug/WebKitLegacy.framework; sourceTree = "<group>"; };
+		9C6EC18E1ACE676E007A8E49 /* WebKit2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit2.framework; path = ../../../Git/WebKit/WebKitBuild/Debug/WebKit2.framework; sourceTree = "<group>"; };
+		9C6EC1941ACF1187007A8E49 /* WebKitLegacy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKitLegacy.framework; path = ../../../Git/WebKit/WebKitBuild/Debug/WebKitLegacy.framework; sourceTree = "<group>"; };
+		9C7CB2671ACC57FE00066E14 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = ../../../Git/WebKit/WebKitBuild/Debug/WebKit.framework; sourceTree = "<group>"; };
 		9CD502EB1A8AF31100AFE556 /* Helpies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helpies.m; sourceTree = "<group>"; };
 		9CD502ED1A8AF33C00AFE556 /* Helpies.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helpies.h; sourceTree = "<group>"; };
 		9CD502F11A8C41BE00AFE556 /* WebView+ScrollViewAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebView+ScrollViewAccess.h"; sourceTree = "<group>"; };
@@ -106,8 +121,8 @@
 		9CDF345919EB4D0D0040AA0F /* Brows Personæ.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Brows Personæ.entitlements"; sourceTree = "<group>"; };
 		9CDF345A19EB53F40040AA0F /* BrowsTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsTab.h; sourceTree = "<group>"; };
 		9CDF345B19EB53F40040AA0F /* BrowsTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTab.m; sourceTree = "<group>"; };
-		9CDF346319EB94DF0040AA0F /* SiteProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteProfile.h; sourceTree = "<group>"; };
-		9CDF346419EB94DF0040AA0F /* SiteProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteProfile.m; sourceTree = "<group>"; };
+		9CDF346319EB94DF0040AA0F /* BrowsPersona.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsPersona.h; sourceTree = "<group>"; };
+		9CDF346419EB94DF0040AA0F /* BrowsPersona.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsPersona.m; sourceTree = "<group>"; };
 		CA9D62F45FCF9749E0E40652 /* Pods-Brows PersonæTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brows PersonæTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Brows PersonæTests/Pods-Brows PersonæTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,7 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C6810F21A7CB76D008263A4 /* WebKit.framework in Frameworks */,
+				9C6EC1841ACC7517007A8E49 /* WebKit.framework in Frameworks */,
 				8A305DD949511AA14CC1E705 /* libPods-Brows Personæ.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,8 +150,8 @@
 		9C4EAAD41A82F31500E6CE03 /* COOOOKIES omm nomm */ = {
 			isa = PBXGroup;
 			children = (
-				9CDF346319EB94DF0040AA0F /* SiteProfile.h */,
-				9CDF346419EB94DF0040AA0F /* SiteProfile.m */,
+				9CDF346319EB94DF0040AA0F /* BrowsPersona.h */,
+				9CDF346419EB94DF0040AA0F /* BrowsPersona.m */,
 				9C4EAAD81A82F33800E6CE03 /* EIIGIsolatedCookieWebView.h */,
 				9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */,
 				9C4EAADE1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.h */,
@@ -162,7 +177,6 @@
 		9CDF342819EB2F4C0040AA0F = {
 			isa = PBXGroup;
 			children = (
-				9C6810F11A7CB76D008263A4 /* WebKit.framework */,
 				9CDF343319EB2F4C0040AA0F /* Brows Personæ */,
 				9CDF344719EB2F4C0040AA0F /* Brows PersonæTests */,
 				9CDF343219EB2F4C0040AA0F /* Products */,
@@ -255,6 +269,12 @@
 		EC94D767FB5D04AC16D852C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9C7CB2671ACC57FE00066E14 /* WebKit.framework */,
+				9C6EC18E1ACE676E007A8E49 /* WebKit2.framework */,
+				9C6EC1941ACF1187007A8E49 /* WebKitLegacy.framework */,
+				9C6EC1851ACE5E61007A8E49 /* WebCore.framework */,
+				9C6EC1871ACE5E8B007A8E49 /* JavaScriptCore.framework */,
+				9C6EC18C1ACE65CE007A8E49 /* WebKitLegacy.framework */,
 				18D4ECB428A068EBE54D7A29 /* libPods-Brows Personæ.a */,
 				23F0E444F6523743D44743AC /* libPods-Brows PersonæTests.a */,
 			);
@@ -451,7 +471,7 @@
 				9C0D93F31AA1226200728D2E /* PublicSuffixList.m in Sources */,
 				9CDF343A19EB2F4C0040AA0F /* main.m in Sources */,
 				9CD503001A927B9100AFE556 /* BrowsTabList.m in Sources */,
-				9CDF346519EB94DF0040AA0F /* SiteProfile.m in Sources */,
+				9CDF346519EB94DF0040AA0F /* BrowsPersona.m in Sources */,
 				9CDF343819EB2F4C0040AA0F /* AppDelegate.m in Sources */,
 				9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */,
 			);
@@ -571,6 +591,10 @@
 				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Debug,
+				);
 				GCC_PREFIX_HEADER = "Brows Personæ/Personæ.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -578,7 +602,7 @@
 					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include",
 				);
 				INFOPLIST_FILE = "Brows Personæ/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
 				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -592,6 +616,10 @@
 				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Debug,
+				);
 				GCC_PREFIX_HEADER = "Brows Personæ/Personæ.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -599,7 +627,7 @@
 					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include",
 				);
 				INFOPLIST_FILE = "Brows Personæ/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks";
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
