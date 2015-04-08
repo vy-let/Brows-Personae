@@ -318,10 +318,16 @@ static NSMapTable *namedProfiles;
 
 
 - (NSArray *)cookiesForRequest:(NSURLRequest *)request {
+    return [self cookiesForRequestAtURL:[request URL]];
+    
+}
+
+
+- (NSArray *)cookiesForRequestAtURL:(NSURL *)url {
     // SQL-native solution proving to be too finickey for the time being.
     
     NSArray *applicableCookies = [[self cookies] filterUsingBlock:^BOOL(NSHTTPCookie *cookie) {
-        return [cookie isForRequest:request];
+        return [cookie isForHost:[url host]] && [cookie isForPath:[url path]];
     }];
     
     [self touchCookies:applicableCookies];
@@ -404,14 +410,16 @@ static NSMapTable *namedProfiles;
     [cookieJar inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"delete from Cookie"];
     }];
+    
 }
 
 
 - (void)removeAllCookiesForHost:(NSString *)host {
     NSLog(@"REMOVING ALL COOKIES FOR HOST “%@” IN PROFILE “%@”", host, [self name]);
+    NSArray *hostCookies = [self cookies];
     [cookieJar inTransaction:^(FMDatabase *db, BOOL *rollback) {
         
-        [[[self cookies]
+        [[hostCookies
           filterUsingBlock:^BOOL(NSHTTPCookie *cookie) {
               return [cookie isForHost:host];
               
@@ -423,6 +431,28 @@ static NSMapTable *namedProfiles;
               
           }];
         
+    }];
+    
+}
+
+
+- (void)removeCookieWithName:(NSString *)name domain:(NSString *)domain path:(NSString *)path {
+    NSMutableDictionary *removalKeys = [@{} mutableCopy];
+    if (name)    [removalKeys setObject:name   forKey:@"name"];
+    if (domain)  [removalKeys setObject:domain forKey:@"domain"];
+    if (path)    [removalKeys setObject:path   forKey:@"path"];
+    
+    NSMutableArray *conditions = [@[] mutableCopy];
+    if (name)    [conditions addObject:@" name = :name "];
+    if (domain)  [conditions addObject:@" domain = :domain "];
+    if (path)    [conditions addObject:@" path = :path "];
+    
+    NSMutableString *deletor = [@" delete from Cookie " mutableCopy];
+    if ([conditions count])
+        [deletor appendFormat:@" where %@ ", [conditions componentsJoinedByString:@" and "]];
+    
+    [cookieJar inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        [db executeUpdate:deletor withParameterDictionary:removalKeys];
     }];
     
 }

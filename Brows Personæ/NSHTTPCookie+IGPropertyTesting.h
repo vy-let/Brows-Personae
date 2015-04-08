@@ -40,6 +40,7 @@
 - (BOOL)isForHost:(NSString *)host;
 - (BOOL)isForPath:(NSString *)path;
 - (BOOL)isForRequest:(NSURLRequest *)request;
+- (BOOL)isForRequestAtURL:(NSURL *)url;
 
 - (BOOL)isEqual:(id)object;
 

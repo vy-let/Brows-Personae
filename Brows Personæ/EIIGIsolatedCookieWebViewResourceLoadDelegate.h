@@ -29,8 +29,9 @@
 // to publish the private interface and aid in future customizations.
 
 #import <Cocoa/Cocoa.h>
-#import <WebKit/WebKit.h>
 
+@class WebView;
+@class WebDataSource;
 @class BrowsPersona;
 
 #pragma mark -

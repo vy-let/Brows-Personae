@@ -27,8 +27,10 @@
 - (void)removeAllCookies;
 - (void)removeAllCookiesForHost:(NSString *)host;
 - (void)removeExpiredCookies;
+- (void)removeCookieWithName:(NSString *)name domain:(NSString *)domain path:(NSString *)path;
 - (void)setCookie:(NSHTTPCookie *)cookie;
 - (void)setCookies:(NSArray *)cookies forURL:(NSURL *)URL mainDocumentURL:(NSURL *)mainDocumentURL;
 - (NSArray *)cookiesForRequest:(NSURLRequest *)request;
+- (NSArray *)cookiesForRequestAtURL:(NSURL *)url;
 
 @end
