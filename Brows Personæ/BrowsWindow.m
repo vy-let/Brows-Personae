@@ -91,7 +91,7 @@
     [[self window] setDelegate:self];
     
     [[self window] setStyleMask: [[self window] styleMask] | NSFullSizeContentViewWindowMask ];  // Set here for easier layout in nib.
-//    [[self window] setTitleVisibility:NSWindowTitleHidden];
+    [[self window] setTitleVisibility:NSWindowTitleHidden];
     [[self window] setTitlebarAppearsTransparent:YES];
     
     NSRect windyFrame = [[self window] frame];
