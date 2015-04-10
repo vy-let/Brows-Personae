@@ -24,6 +24,9 @@
     RACSubject *pageIsLoading;
     RACSubject *pageLoadingProgress;
     
+    NSImage *latestThumbnail;
+    NSImage *latestFavicon;
+    
     NSURL *initialLocation;
     
 }
@@ -69,6 +72,7 @@
     [tooblar setBlendingMode:NSVisualEffectBlendingModeWithinWindow];
     [tooblar setMaterial:NSVisualEffectMaterialTitlebar];
     
+    [[pageView preferences] setPrivateBrowsingEnabled:YES];
     [[pageView mainFrame] setEi_browsPersona:browsProfile];
     [pageView setCustomUserAgent:@"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"];
     [pageView setShouldUpdateWhileOffscreen:NO];
@@ -92,6 +96,8 @@
 
 
 - (void)setUpRACListeners {
+    
+    RACSignal *pageViewSendEventSignal = [[[pageView ei_scrollView] documentView] rac_signalForSelector:@selector(sendEvent:)];
     
     // As soon as the web view gains its final resource load delegate,
     // inform that delegate of the tab's site profile:
@@ -145,7 +151,6 @@
          
     }];
     
-#pragma mark User Submits Page Location
     
     @weakify(locationBox) @weakify(self)
     [locationDasu subscribeNext:^(id x) {
@@ -180,7 +185,8 @@
         [[pageSpinny animator] setDoubleValue:[prague doubleValue]];
     }];
     
-    [[pageIsLoading combineLatestWith:pageLoadingProgress] subscribeNext:^(RACTuple *latest) {
+    RACSignal *pageLoadingStatusSignal = [pageIsLoading combineLatestWith:pageLoadingProgress];
+    [pageLoadingStatusSignal subscribeNext:^(RACTuple *latest) {
         @strongify(pageSpinny)
         double progress = [[latest second] doubleValue];
         BOOL isLoading = [[latest first] boolValue];
@@ -227,6 +233,24 @@
                                          [[isLoadingIsEditing first] boolValue] ? @selector(stopLoad:) :
                                                                                   @selector(reLoad:) )];
     }];
+    
+    
+    
+    [[[pageViewSendEventSignal throttle:3]
+      merge:[pageLoadingStatusSignal throttle:0.86400]]
+     subscribeNext:^(id x) {
+         @strongify(self)
+         [self _updateThumbnail];
+     }];
+    
+    [RACObserve(pageView, mainFrameIcon)
+     subscribeNext:^(NSImage *favicon) {
+         @strongify(self)
+         [self setFavicon:favicon];
+     }];
+    
+    
+    
     
 
 }
@@ -293,11 +317,70 @@
 #pragma mark - Properties
 
 - (NSImage *)favicon {
-    return [NSImage imageNamed:@"NSMobileMe"];
+    return latestFavicon ? latestFavicon : [NSImage imageNamed:@"NSNetwork"];
+}
+
+- (void)setFavicon:(NSImage *)favicon {
+    latestFavicon = favicon;
+}
+
+- (void)_updateThumbnail {
+    
+    if (!pageView) {
+        [self setThumbnail:[NSImage imageNamed:@"NSNetwork"]];
+        return;
+    }
+    
+    NSRect pageViewVisibleRect = [pageView visibleRect];
+    if (pageViewVisibleRect.size.width == 0 || pageViewVisibleRect.size.height == 0) {
+        pageViewVisibleRect = [pageView frame];
+    }
+    
+    //
+    // Scale the image into a maximum box of 512x512.
+    // First find the sizes:
+    CGFloat maxDimension = 512;
+    CGFloat largerWidth = pageViewVisibleRect.size.width;
+    CGFloat largerHeight = pageViewVisibleRect.size.height;
+    CGFloat scalingFactor = MIN( maxDimension / largerWidth,  maxDimension / largerHeight );
+    
+    CGFloat smallerWidth = (CGFloat)( (NSInteger)(largerWidth * scalingFactor) );  // Truncate to avoid 1px of extra white
+    CGFloat smallerHeight = (CGFloat)( (NSInteger)(largerHeight * scalingFactor) );
+    
+    // Establish the drawing context
+    CGColorSpaceRef sRGB = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+    CGContextRef thumbContext = CGBitmapContextCreate(NULL,
+                                                      smallerWidth, smallerHeight,
+                                                      8 /* bits per component */,
+                                                      4 * smallerWidth /* bytes per row */,
+                                                      sRGB,
+                                                      (CGBitmapInfo)kCGImageAlphaPremultipliedLast);
+    CGColorSpaceRelease(sRGB);
+    
+    // Scale the context...
+    CGContextSetInterpolationQuality(thumbContext, kCGInterpolationMedium);
+    CGContextScaleCTM(thumbContext, scalingFactor, scalingFactor);
+    
+    // ...so that drawing the webview will scale down natively:
+    [[pageView layer] renderInContext:thumbContext];
+    
+    // Frame the drawing and so on
+    CGImageRef nail = CGBitmapContextCreateImage(thumbContext);
+    NSImage *thumb = [[NSImage alloc] initWithCGImage:nail size:NSMakeSize(smallerWidth, smallerHeight)];
+    
+    CFRelease(nail);  CFRelease(thumbContext);
+    
+    [self setThumbnail:thumb];
+    
 }
 
 - (NSImage *)thumbnail {
-    return [NSImage imageNamed:@"NSMultipleDocuments"];
+    return latestThumbnail;
+}
+
+- (void)setThumbnail:(NSImage *)thumbnail {
+    // RAC observers of our thumbnail should be able to see these updates.
+    latestThumbnail = thumbnail;
 }
 
 

@@ -37,8 +37,8 @@
 
 - (void)tabWillClose;
 
-@property (nonatomic) NSImage *thumbnail;
-@property (nonatomic) NSImage *favicon;
+@property (nonatomic, readonly) NSImage *thumbnail;
+@property (nonatomic, readonly) NSImage *favicon;
 
 @end
 

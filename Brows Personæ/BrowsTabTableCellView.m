@@ -56,16 +56,22 @@
     
     dispatch_once(&racObservationsDidInit, ^{
         
-        RACSignal *repTab = [RACObserve(self, objectValue)
+        RACSignal *repTab = [[RACObserve(self, objectValue) logNext]
                              filter:^BOOL(BrowsTab *applicableTab) {  return !!applicableTab;  }];
         
-        RAC([self thumbnailView], image, [NSImage imageNamed:@"NSMultipleDocuments"]) = [repTab map:^id(BrowsTab *applicableTab) {
-            return [applicableTab thumbnail];
-        }];
+        RAC([self thumbnailView], image,
+            [NSImage imageNamed:@"NSMultipleDocuments"]) = [[[[repTab
+                                                             map:^id(BrowsTab *tab) {
+                                                                 return RACObserve(tab, thumbnail);
+                                                             }] logNext]
+                                                            switchToLatest] logNext];
         
-        RAC([self faviconView], image, [NSImage imageNamed:@"NSNetwork"]) = [repTab map:^id(BrowsTab *applicableTab) {
-            return [applicableTab favicon];
-        }];
+        RAC([self faviconView], image,
+            [NSImage imageNamed:@"NSNetwork"]) = [[repTab
+                                                   map:^id(BrowsTab *tab) {
+                                                       return RACObserve(tab, favicon);
+                                                   }]
+                                                  switchToLatest];
         
     });
     
