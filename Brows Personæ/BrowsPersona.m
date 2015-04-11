@@ -478,6 +478,76 @@ static NSMapTable *namedProfiles;
          " delete from  Cookie "
          "       where  expiresDate not null  and  expiresDate < ? ", expiry];
         
+        NSNumber *aWeekAgo = @((NSUInteger)[[NSDate dateWithTimeIntervalSinceNow:(-7 * 86400)] timeIntervalSince1970]);
+        [db executeUpdate:@""
+         " delete from  Session      "
+         "       where  lastUsed < ? ", aWeekAgo];
+        
+    }];
+}
+
+
+- (void)removeOverflowingCookiesFocusingOnDomain:(NSString *)host {
+    [cookieJar inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        
+        NSInteger maxDomainCookies = 30;
+        NSInteger maxJarCookies = 500;
+        
+        //
+        // First trim excessive domain-limited cookies.
+        // Outer loop prevents edge-case infinite loops; but
+        // should usually break out from the middle of the first or second pass.
+        for (int overrun = 0; overrun < maxDomainCookies * 2; overrun++) {
+            FMResultSet *domainCookies = [db executeQuery:@""
+                                          " select  count(id)  "
+                                          "   from  Cookie     "
+                                          "  where  domain = ? ", host];
+            [domainCookies next];
+            long domainCookieCount = [domainCookies longForColumnIndex:0];
+            [domainCookies close];
+            
+            if (domainCookieCount <= maxDomainCookies)
+                break;  // Domain cookie count is good.
+            
+            NSLog(@"Too many cookies in domain %@, persona %@. Trimming out the last-used one.", host, [self name]);
+            [db executeUpdate:@""
+             " delete from  Cookie                  "
+             "       where  domain = ?              "
+             "         and  id in (                 "
+             "                select id from Cookie "
+             "                  where domain = ?    "
+             "                order by lastUsed asc "
+             "                limit 1               "
+             "              )                       ", host, host];
+            
+        }
+        
+        //
+        // Next trim excessive jar-limited cookies.
+        // Same logic as above.
+        for (int overrun = 0; overrun < maxJarCookies * 1000; overrun++) {
+            FMResultSet *profileCookies = [db executeQuery:@""
+                                           " select  count(id)  "
+                                           "   from  Cookie     "];
+            [profileCookies next];
+            long profileCookieCount = [profileCookies longForColumnIndex:0];
+            [profileCookies close];
+            
+            if (profileCookieCount <= maxJarCookies)
+                break;  // Cookie count is good.
+            
+            // Cookie size is still too big.
+            NSLog(@"Too many cookies in persona %@. Trimming out the last-used one.", [self name]);
+            [db executeUpdate:@""
+             " delete from  Cookie                  "
+             "       where  id in (                 "
+             "                select id from Cookie "
+             "                order by lastUsed asc "
+             "                limit 1               "
+             "              )                       "];
+            
+        }
+        
     }];
 }
 
@@ -521,67 +591,7 @@ static NSMapTable *namedProfiles;
         // Sometime soon, trim out old cookies
         // if the cookie jar grows too full:
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            [cookieJar inDatabase:^(FMDatabase *db) {
-                
-                NSInteger maxDomainCookies = 30;
-                NSInteger maxJarCookies = 500;
-                
-                //
-                // First trim excessive domain-limited cookies.
-                // Outer loop prevents edge-case infinite loops; but
-                // should usually break out from the middle of the first or second pass.
-                for (int overrun = 0; overrun < maxDomainCookies * 2; overrun++) {
-                    FMResultSet *domainCookies = [db executeQuery:@""
-                                                  " select  count(id)  "
-                                                  "   from  Cookie     "
-                                                  "  where  domain = ? ", [cookie domain]];
-                    [domainCookies next];
-                    long domainCookieCount = [domainCookies longForColumnIndex:0];
-                    [domainCookies close];
-                    
-                    if (domainCookieCount <= maxDomainCookies)
-                        break;  // Domain cookie count is good.
-                    
-                    NSLog(@"Too many cookies in domain %@, persona %@. Trimming out the last-used one.", [cookie domain], [self name]);
-                    [db executeUpdate:@""
-                     " delete from  Cookie                  "
-                     "       where  domain = ?              "
-                     "         and  id in (                 "
-                     "                select id from Cookie "
-                     "                  where domain = ?    "
-                     "                order by lastUsed asc "
-                     "                limit 1               "
-                     "              )                       ", [cookie domain], [cookie domain]];
-                    
-                }
-                
-                //
-                // Next trim excessive jar-limited cookies.
-                // Same logic as above.
-                for (int overrun = 0; overrun < maxJarCookies * 1000; overrun++) {
-                    FMResultSet *profileCookies = [db executeQuery:@""
-                                                  " select  count(id)  "
-                                                  "   from  Cookie     "];
-                    [profileCookies next];
-                    long profileCookieCount = [profileCookies longForColumnIndex:0];
-                    [profileCookies close];
-                    
-                    if (profileCookieCount <= maxJarCookies)
-                        break;  // Cookie count is good.
-                    
-                    // Cookie size is still too big.
-                    NSLog(@"Too many cookies in persona %@. Trimming out the last-used one.", [self name]);
-                    [db executeUpdate:@""
-                     " delete from  Cookie                  "
-                     "       where  id in (                 "
-                     "                select id from Cookie "
-                     "                order by lastUsed asc "
-                     "                limit 1               "
-                     "              )                       "];
-                    
-                }
-                
-            }];
+            [self removeOverflowingCookiesFocusingOnDomain:[cookie domain]];
         });
         
         
