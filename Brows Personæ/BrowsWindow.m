@@ -57,10 +57,14 @@
 - (void)dealloc {
     // This is getting really hackey. If we need to tab-will-close one more time,
     // some serious refactor is in order.
-    [[tabsListController tabs] applyBlock:^(BrowsTab *tab) {
-        [tab tabWillClose];
-    }];
-    [tabsListController swapTabs:@[]];
+    NSLog(@"BrowsWindow (controller) will dealloc.");
+    
+//    [[tabsListController tabs] applyBlock:^(BrowsTab *tab) {
+//        [tab tabWillClose];
+//    }];
+//    [tabsListController swapTabs:@[]];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -111,6 +115,11 @@
         
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(ei_windowWillClose:)
+                                                 name:NSWindowWillCloseNotification
+                                               object:[self window]];
+    
     @weakify(noTabPlaceholder)
     @weakify(multiTabsPlaceholder)
     RACSignal *viewForTabSelection =[[tabsListController tabSelection] map:^id(NSArray *selTabs) {
@@ -153,9 +162,14 @@
 
 
 
-- (void)windowWillClose:(NSNotification *)notification {
-    [tabsListController swapTabs:@[]];
-    tabsListController = nil;
+// For some reason this is not called by the window, even though we're the delegate.
+// So we use manual notifications instead, and this method is prefixed to avoid possible duplicate calls.
+- (void)ei_windowWillClose:(NSNotification *)notification {
+    if ([notification object] != [self window]) {
+        NSLog(@"Receiving window-will-close for the wrong window");
+        return;
+    }
+    NSLog(@"BrowsWindow will close");
 }
 
 

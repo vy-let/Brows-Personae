@@ -151,6 +151,9 @@
                     <constraint firstAttribute="bottom" secondItem="m5q-nw-N9A" secondAttribute="bottom" id="NiK-eE-49Y"/>
                 </constraints>
             </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="Rd8-XT-uqw"/>
+            </connections>
             <point key="canvasLocation" x="483" y="553"/>
         </window>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="wia-Ri-hZh">

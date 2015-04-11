@@ -35,6 +35,19 @@
     return self;
 }
 
+- (void)dealloc {
+    NSLog(@"BrowsTabList will dealloc with browsTabs: %@", browsTabs);
+    [browsTabs enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(BrowsTab *tab, NSUInteger idex, BOOL *stop) {
+        NSLog(@"Closing tab completely: %@", tab);
+        [self _closeTabCompletely:tab animate:NO];
+    }];
+    [tabsList enumerateAvailableRowViewsUsingBlock:^(NSTableRowView *rowView, NSInteger row) {
+        BrowsTabTableCellView *retainer = [rowView viewAtColumn:0];
+        NSLog(@"Removing tab from its last (?) leash: %@", retainer);
+        [retainer setObjectValue:nil];
+    }];
+}
+
 
 
 - (void)awakeFromNib {
@@ -84,10 +97,10 @@
     [self putTab:tab atIndex:0];
 }
 
-- (void)pullTabsFromIndices:(NSIndexSet *)idices {
+- (void)pullTabsFromIndices:(NSIndexSet *)idices animate:(BOOL)shouldAnimate {
     [tabsList beginUpdates];
     [browsTabs removeObjectsAtIndexes:idices];
-    [tabsList removeRowsAtIndexes:idices withAnimation:NSTableViewAnimationSlideLeft | NSTableViewAnimationEffectFade];
+    [tabsList removeRowsAtIndexes:idices withAnimation:( shouldAnimate ? (NSTableViewAnimationSlideLeft | NSTableViewAnimationEffectFade) : NSTableViewAnimationEffectNone)];
     [tabsList endUpdates];
 }
 
@@ -108,17 +121,19 @@
     
     BrowsTab *applicableTab = [(BrowsTabTableCellView *)[sender superview] representedTab];
     
-//    if ([applicableTab respondsToSelector:@selector(shouldClose)]) {
-//        if ( ![applicableTab shouldClose] )  return;
-//    }
+    if (applicableTab)
+        [self _closeTabCompletely:applicableTab animate:YES];
     
-    if (applicableTab) {
-        [applicableTab tabWillClose];
-        
-        NSUInteger tabidex = [browsTabs indexOfObject:applicableTab];
-        if (tabidex != NSNotFound)
-            [self pullTabsFromIndices:[NSIndexSet indexSetWithIndex:tabidex]];
-    }
+}
+
+- (void)_closeTabCompletely:(BrowsTab *)applicableTab animate:(BOOL)shouldAnimate {
+    [applicableTab tabWillClose];
+    
+    NSUInteger tabidex = [browsTabs indexOfObject:applicableTab];
+    if (tabidex == NSNotFound)
+        return;
+    
+    [self pullTabsFromIndices:[NSIndexSet indexSetWithIndex:tabidex] animate:shouldAnimate];
     
 }
 
