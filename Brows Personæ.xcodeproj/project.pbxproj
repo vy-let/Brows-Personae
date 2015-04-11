@@ -20,11 +20,11 @@
 		9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */; };
 		9C68B11B1A9EA7D800F5C444 /* RACStream+SlidingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */; };
 		9CC542FE1AD5FF2500CFC096 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC542F91AD5FF2500CFC096 /* WebKit.framework */; };
-		9CC543011AD5FF2C00CFC096 /* JavaScriptCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542F71AD5FF2500CFC096 /* JavaScriptCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9CC543021AD5FF2C00CFC096 /* WebCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542F81AD5FF2500CFC096 /* WebCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9CC543031AD5FF2C00CFC096 /* WebKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542F91AD5FF2500CFC096 /* WebKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9CC543041AD5FF2C00CFC096 /* WebKit2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542FA1AD5FF2500CFC096 /* WebKit2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9CC543051AD5FF2C00CFC096 /* WebKitLegacy.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542FB1AD5FF2500CFC096 /* WebKitLegacy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9CC543011AD5FF2C00CFC096 /* JavaScriptCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542F71AD5FF2500CFC096 /* JavaScriptCore.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9CC543021AD5FF2C00CFC096 /* WebCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542F81AD5FF2500CFC096 /* WebCore.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9CC543031AD5FF2C00CFC096 /* WebKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542F91AD5FF2500CFC096 /* WebKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9CC543041AD5FF2C00CFC096 /* WebKit2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542FA1AD5FF2500CFC096 /* WebKit2.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9CC543051AD5FF2C00CFC096 /* WebKitLegacy.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542FB1AD5FF2500CFC096 /* WebKitLegacy.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9CD502EC1A8AF31100AFE556 /* Helpies.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502EB1A8AF31100AFE556 /* Helpies.m */; };
 		9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */; };
 		9CD502F91A901A5800AFE556 /* MktabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502F71A901A5800AFE556 /* MktabController.m */; };
