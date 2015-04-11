@@ -129,17 +129,7 @@
         // Avoid unnecessarily waiting for the PSL on the main thread before any text is entered:
         if (!dest)  return nil;
         
-        NSArray *privatePublicParts = [[PublicSuffixList suffixList] partition:[dest host]];
-        NSString *lastPrivatePart = [[[PublicSuffixList suffixList]
-                                      domainLabels:[privatePublicParts firstObject]]
-                                     lastObject];
-        
-        NSMutableArray *registrableParts = [@[] mutableCopy];
-        if ([lastPrivatePart length])  [registrableParts addObject:lastPrivatePart];
-        if ([[privatePublicParts lastObject] length])  [registrableParts addObject:[privatePublicParts lastObject]];
-        NSString *registrableDomain = [registrableParts componentsJoinedByString:@"."];
-        
-        return registrableDomain;
+        return [[PublicSuffixList suffixList] publiclyRegistrableDomain:[dest host]];
         
     }];
     

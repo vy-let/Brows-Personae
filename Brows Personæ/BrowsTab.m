@@ -15,6 +15,7 @@
 #import "EIIGIsolatedCookieWebViewResourceLoadDelegate.h"
 #import "WebView+ScrollViewAccess.h"
 #import "Helpies.h"
+#import "PublicSuffixList.h"
 
 
 @interface BrowsTab () {
@@ -52,7 +53,11 @@
 }
 
 - (instancetype)initWithProfileNamed:(NSString *)profileName initialLocation:(NSURL *)urlOrSearch {
-    return [self initWithProfile:[BrowsPersona named:profileName] initialLocation:urlOrSearch];
+    NSString *rootHost = [[PublicSuffixList suffixList] publiclyRegistrableDomain:[urlOrSearch host]];
+    if (!rootHost)  rootHost = [urlOrSearch host];
+    
+    return [self initWithProfile:[BrowsPersona named:profileName withRootHost:rootHost]
+                 initialLocation:urlOrSearch];
 }
 
 - (id)init {
@@ -152,7 +157,7 @@
     }];
     
     
-    @weakify(locationBox) @weakify(self)
+    @weakify(locationBox, self)
     [locationDasu subscribeNext:^(id x) {
         @strongify(locationBox)
         
@@ -169,6 +174,33 @@
         
     }];
     
+    RACSignal *actualPageURL = [[RACObserve(pageView, mainFrameURL)
+                                 map:^id(NSString *stringURL) {
+                                     return [NSURL URLWithString:stringURL];
+                                     
+                                 }] filter:^BOOL(id value) {
+                                     return !!value;
+                                     
+                                 }];
+    
+    [actualPageURL subscribeNext:^(NSURL *url) {
+        @strongify(locationBox)
+        [locationBox setStringValue:[url absoluteString]];
+    }];
+    
+    RACSignal *pageURLMatchesPersona = [[actualPageURL logNext] map:^id(NSURL *url) {
+        @strongify(browsProfile)
+        NSString *rootHost = [[PublicSuffixList suffixList] publiclyRegistrableDomain:[url host]];
+        return @([rootHost isEqualToString:[browsProfile rootHost]]);
+    }];
+    
+    @weakify(personaIndicator)
+    [[pageURLMatchesPersona map:^id(NSNumber *itMatches) {
+        return [itMatches boolValue] ? [NSColor controlTextColor] : [NSColor colorWithCalibratedRed:233/255.0 green:0 blue:14/255.0 alpha:1];
+    }] subscribeNext:^(NSColor *matchingColor) {
+        @strongify(personaIndicator)
+        [personaIndicator setTextColor:matchingColor];
+    }];
     
     
     [locationEditEnd subscribeNext:^(id x) {
@@ -439,6 +471,8 @@
 }
 
 - (void)updateActualLocation {
+    return; // debug
+    
     NSURL *pageLoc = [[[[pageView mainFrame] provisionalDataSource] request] URL];
     if (!pageLoc)  return;
     

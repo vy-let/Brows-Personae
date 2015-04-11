@@ -20,6 +20,7 @@ const UInt32 SiteProfileStoreApplicationID = 625418296;  // irb> rand 2**31
 @interface BrowsPersona () {
     NSURL *diskLocation;
     NSString *name;
+    NSString *rootHost;
     FMDatabaseQueue *cookieJar;
     u_int32_t presentSessionID;  // this type b/c of arc4random's behavior
     
@@ -69,7 +70,7 @@ static NSMapTable *namedProfiles;
 }
 
 
-+ (instancetype)named:(NSString *)profileName {
++ (instancetype)named:(NSString *)profileName withRootHost:(NSString *)baseHost {
     __block id result;
     
     dispatch_sync(profileSanity, ^{
@@ -77,7 +78,8 @@ static NSMapTable *namedProfiles;
         if (!result) {
             NSString *profileFilename = [NSString stringWithFormat:@"%@.browspersona", profileName];
             result = [[[self class] alloc] initAtURL:[[[self class] mainProfileFolder] URLByAppendingPathComponent:profileFilename]
-                                            withName:profileName];
+                                            withName:profileName
+                                            rootHost:baseHost];
             
             if (result)
                 [namedProfiles setObject:result forKey:profileName];
@@ -89,12 +91,18 @@ static NSMapTable *namedProfiles;
 }
 
 
++ (instancetype)named:(NSString *)profileName {
+    return [self named:profileName withRootHost:profileName];
+}
 
-- (instancetype)initAtURL:(NSURL *)file withName:(NSString *)profileName {
+
+
+- (instancetype)initAtURL:(NSURL *)file withName:(NSString *)profileName rootHost:(NSString *)host {
     if (!(self = [super init])) return nil;
     
     diskLocation = file;
     name = [profileName copy];
+    rootHost = [host copy];
     presentSessionID = arc4random();
     backgroundCookieQueue = dispatch_queue_create(NULL, DISPATCH_QUEUE_SERIAL);
     
@@ -237,6 +245,10 @@ static NSMapTable *namedProfiles;
 
 - (NSString *)name {
     return name;
+}
+
+- (NSString *)rootHost {
+    return rootHost;
 }
 
 

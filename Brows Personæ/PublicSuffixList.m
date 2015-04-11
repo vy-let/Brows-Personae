@@ -204,6 +204,21 @@ static dispatch_block_t ei_mkPSLSingleton = ^{
 
 
 
+- (NSString *)publiclyRegistrableDomain:(NSString *)domain {
+    NSArray *privatePublicParts = [self partition:domain];
+    NSString *lastPrivatePart = [[self domainLabels:[privatePublicParts firstObject]]
+                                 lastObject];
+    
+    NSMutableArray *registrableParts = [@[] mutableCopy];
+    if ([lastPrivatePart length])  [registrableParts addObject:lastPrivatePart];
+    if ([[privatePublicParts lastObject] length])  [registrableParts addObject:[privatePublicParts lastObject]];
+    
+    return [registrableParts componentsJoinedByString:@"."];
+    
+}
+
+
+
 - (BOOL)domainHasPublicSuffix:(NSString *)domain {
     return !![[[self partition:domain] lastObject] length];
 }

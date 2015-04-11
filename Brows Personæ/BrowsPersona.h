@@ -15,10 +15,12 @@
 
 @interface BrowsPersona : NSObject
 
++ (instancetype)named:(NSString *)profileName withRootHost:(NSString *)baseHost;
 + (instancetype)named:(NSString *)profileName;
 + (NSURL *)mainProfileFolder;
 
 @property (readonly) NSString *name;
+@property (readonly) NSString *rootHost;
 
 
 #pragma mark Cookie Data Source

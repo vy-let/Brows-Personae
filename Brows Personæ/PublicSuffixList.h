@@ -26,6 +26,12 @@
 - (NSArray *)partition:(NSString *)domain;
 
 //
+// Identify the publicly registrable part of a given domain name,
+// which is the public suffix and the last label of the private portion.
+// @"foo.bar.co.uk" => @"bar.co.uk"
+- (NSString *)publiclyRegistrableDomain:(NSString *)domain;
+
+//
 // Ask whether a domain name has a public suffix.
 // In other words, is the public partition (of the host) nonzero in length?
 - (BOOL)domainHasPublicSuffix:(NSString *)domain;
