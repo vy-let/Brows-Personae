@@ -96,6 +96,32 @@ static NSMapTable *namedProfiles;
 }
 
 
++ (NSArray *)allLocalPersonæ {
+    NSError *dirScanError = nil;
+    NSArray *browspersonaFiles = [[[NSFileManager defaultManager] contentsOfDirectoryAtURL:[self mainProfileFolder]
+                                                               includingPropertiesForKeys:@[]
+                                                                                  options:0
+                                                                                    error:&dirScanError]
+                                  filterUsingBlock:^BOOL(NSURL *containedFile) {
+                                      return [[containedFile pathExtension] isEqual:@"browspersona"];
+                                  }];
+    if (!browspersonaFiles) {
+        NSLog(@"Couldn't scan for known brows personæ: %@", dirScanError);
+        return @[];
+    }
+    
+    return [[browspersonaFiles
+             mapUsingBlock:^id(NSURL *browspersonaFile) {
+                 BrowsPersona *persona = [self named:[[browspersonaFile URLByDeletingPathExtension] lastPathComponent]];
+                 return persona ? persona : [NSNull null];
+                 
+             }] filterUsingBlock:^BOOL(id obj) {
+                 return obj != [NSNull null];
+             }];
+    
+}
+
+
 
 - (instancetype)initAtURL:(NSURL *)file withName:(NSString *)profileName rootHost:(NSString *)host {
     if (!(self = [super init])) return nil;
@@ -117,12 +143,13 @@ static NSMapTable *namedProfiles;
 
 - (void)dealloc {
     FMDatabaseQueue *cookieTin = cookieJar;
-    NSLog(@"Profile for %@ is being deallocated; db will vacuum shortly.", name);
+    NSLog(@"Profile for %@ is being deallocated; db may vacuum shortly.", name);
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [cookieTin inDatabase:^(FMDatabase *db) {
-            [db executeUpdate:@"vacuum"];
-        }];
+        if (arc4random_uniform(30) == 0)
+            [cookieTin inDatabase:^(FMDatabase *db) {
+                [db executeUpdate:@"vacuum"];
+            }];
         [cookieTin close];
     });
     
@@ -219,13 +246,22 @@ static NSMapTable *namedProfiles;
          
          "  , unique (path, name, domain) )"];  // unique by standard design
         
+//        [db executeUpdate:@""
+//         " create table DomainFavicon (         "
+//         "    id            integer primary key "
+//         "  , domain        text not null       "
+//         "  , favicon       blob                "
+//         "  , unique (domain)         )"];
+        
         [db executeUpdate:
          @"create table HistoryItem ("
          "    id            integer primary key"
-         "  , previousItem  integer references HistoryItem (id) on delete set null"
+         //"  , previousItem  integer references HistoryItem (id) on delete set null"
          "  , pageTitle     text not null"
          "  , pageURL       text not null"
          "  , visitedDate   integer not null"
+//         "  , favicon       integer references DomainFavicon (id) on delete set null"
+         "  , unique (pageURL)    "
          ")"];
         
         
@@ -681,6 +717,249 @@ static NSMapTable *namedProfiles;
         
     }];
 }
+
+
+
+
+
+
+
+#pragma mark History Data Source
+
+
+
+
+// Expects columns
+// pageTitle, pageURL, visitedDate
+- (NSArray *)_historyItemFromCurrentRowInResultSet:(FMResultSet *)row {
+    NSString *pageTitle = [row stringForColumn:@"pageTitle"];
+    NSString *pageURLString = [row stringForColumn:@"pageURL"];
+    NSDate *visitedDate = [NSDate dateWithTimeIntervalSince1970:[row unsignedLongLongIntForColumn:@"visitedDate"]];
+    
+    // Threading! boo!
+    //return [[WebHistoryItem alloc] initWithURLString:pageURLString title:pageTitle lastVisitedTimeInterval:[visitedDate timeIntervalSinceReferenceDate]];
+    return @[pageURLString, pageTitle, visitedDate];
+    
+}
+
+
+- (NSArray *)history {
+    NSMutableArray *cum = [NSMutableArray array];
+    [cookieJar inDatabase:^(FMDatabase *db) {
+        FMResultSet *historyPtr = [db executeQuery:@""
+                                   "   select  pageTitle, pageURL, visitedDate "
+                                   "     from  HistoryItem "
+                                   " order by  visitedDate asc "];  // Chronologically means oldest first
+        
+        while ([historyPtr next])
+            [cum addObject:[self _historyItemFromCurrentRowInResultSet:historyPtr]];
+        
+    }];
+    
+    return cum;
+    
+}
+
+
+- (NSArray *)historyBetweenDate:(NSDate *)startDate andDate:(NSDate *)endDate {
+    NSUInteger startTime = (NSUInteger)[startDate timeIntervalSince1970];
+    NSUInteger endTime = (NSUInteger)[endDate timeIntervalSince1970];
+    
+    NSMutableArray *cum = [NSMutableArray array];
+    [cookieJar inDatabase:^(FMDatabase *db) {
+        FMResultSet *historyPtr = [db executeQuery:@""
+                                   "   select  pageTitle, pageURL, visitedDate "
+                                   "     from  HistoryItem "
+                                   "    where  visitedDate >= ? "
+                                   "      and  visitedDate < ? "
+                                   " order by  visitedDate asc ", @(startTime), @(endTime)];  // Chronologically; oldest first
+        
+        while ([historyPtr next])
+            [cum addObject:[self _historyItemFromCurrentRowInResultSet:historyPtr]];
+        
+    }];
+    
+    return cum;
+    
+}
+
+
+- (void)findHistoryItemsMatching:(NSString *)fuzzyPattern deliveringResultsToMainQueueByDoing:(void (^)(NSArray *results, BOOL *stop))resultsBlock {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSArray *query = [self _lowercaseTokensInString:fuzzyPattern];
+        
+        [cookieJar inDatabase:^(FMDatabase *db) {
+            FMResultSet *historyPtr = [db executeQuery:@""
+                                       "   select  pageTitle, pageURL, visitedDate "
+                                       "     from  HistoryItem "
+                                       " order by  visitedDate desc "];  // We want the most recent (likely relevant) first, in this case.
+            
+            //
+            // Collect <a number of> good results at a time.
+            int bufCapacity = 5;
+            NSMutableArray *rotatingResultsBuf = [NSMutableArray arrayWithCapacity:bufCapacity];
+            __block BOOL shouldStop = NO;
+            
+            //
+            // For each row...
+            while ([historyPtr next]) {
+                if (shouldStop)  break;  // Not threadsafe; just a boolean check, prob. won't set the printer on fire.
+                
+                NSString *pageTitle = [historyPtr stringForColumn:@"pageTitle"];
+                NSString *pageURL = [historyPtr stringForColumn:@"pageURL"];
+                
+                NSUInteger matchQuality = ([self _matchScoreForCandidateTokens:[self _lowercaseTokensInString:pageTitle] againstQuery:query] +
+                                           [self _matchScoreForCandidateTokens:[self _lowercaseTokensInString:pageURL]   againstQuery:query]   );
+                if (!matchQuality)
+                    continue;  // Ignore dud rows
+                
+                //
+                // Collect this valid result:
+                [rotatingResultsBuf addObject:@[ @(matchQuality), [self _historyItemFromCurrentRowInResultSet:historyPtr] ]];
+                
+                //
+                // Once we've had a number of valid results, dispatch them off to the caller:
+                if ([rotatingResultsBuf count] >= bufCapacity) {
+                    NSArray *runningResults = [rotatingResultsBuf copy];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        NSArray *webHistoryItemifiedResults = [runningResults mapUsingBlock:^id(NSArray *tuple) {
+                            NSArray *webHistoryTuple = [tuple lastObject];
+                            return @[[tuple firstObject], [[WebHistoryItem alloc] initWithURLString:webHistoryTuple[0]
+                                                                                              title:webHistoryTuple[1]
+                                                                            lastVisitedTimeInterval:[webHistoryTuple[2] timeIntervalSinceReferenceDate]]];
+                        }];
+                        resultsBlock(webHistoryItemifiedResults, &shouldStop);
+                    });
+                    
+                    [rotatingResultsBuf removeAllObjects];
+                    
+                }
+                
+            }
+            
+            //
+            // Send of the last trailing bits
+            NSArray *lastResults = [rotatingResultsBuf copy];
+            if ([lastResults count])
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSArray *webHistoryItemifiedResults = [lastResults mapUsingBlock:^id(NSArray *tuple) {
+                        NSArray *webHistoryTuple = [tuple lastObject];
+                        return @[[tuple firstObject], [[WebHistoryItem alloc] initWithURLString:webHistoryTuple[0]
+                                                                                          title:webHistoryTuple[1]
+                                                                        lastVisitedTimeInterval:[webHistoryTuple[2] timeIntervalSinceReferenceDate]]];
+                    }];
+                    resultsBlock(webHistoryItemifiedResults, &shouldStop);
+                });
+            
+            [historyPtr close];
+            
+        }];
+        
+    });
+}
+
+
+- (void)putHistoryItem:(WebHistoryItem *)item {
+    NSString *urlString = [item URLString];
+    NSString *title = [item title] ? [item title] : @"";
+    NSUInteger visitedDate = (NSUInteger)[[NSDate dateWithTimeIntervalSinceReferenceDate:[item lastVisitedTimeInterval]] timeIntervalSince1970];
+    
+    if (!urlString)
+        return;
+    
+    [cookieJar inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        [db executeUpdate:@""
+         " insert or replace into  HistoryItem (pageTitle, pageURL, visitedDate) "
+         "                 values  (?, ?, ?) ", title, urlString, @(visitedDate)];
+        
+    }];
+    
+    if (arc4random_uniform(30) == 0)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [self _sweepHistoryItems];
+        });
+    
+}
+
+
+- (void)_sweepHistoryItems {
+    NSUInteger oneYearAgo = (NSUInteger)[[NSDate dateWithTimeIntervalSinceNow:(-365.22 * 86400)] timeIntervalSince1970];
+    
+    [cookieJar inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        [db executeUpdate:@""
+         " delete from  HistoryItem "
+         "       where  visitedDate < ? ", @(oneYearAgo)];
+        
+    }];
+    
+}
+
+
+- (void)deleteHistoryItemForURL:(NSURL *)url {
+    [cookieJar inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@""
+         " delete from  HistoryItem "
+         "       where  pageURL = ? ", [url absoluteString]];
+    }];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [self _sweepHistoryItems];
+    });
+    
+}
+
+
+
+static NSCharacterSet *ei_wordBoundaryCharacters;
+static dispatch_once_t ei_initWordBoundaries;
+
+- (NSArray *)_lowercaseTokensInString:(NSString *)input {
+    dispatch_once(&ei_initWordBoundaries, ^{
+        ei_wordBoundaryCharacters = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+    });
+    
+    return [[[input componentsSeparatedByCharactersInSet:ei_wordBoundaryCharacters]
+             filterUsingBlock:^BOOL(NSString *component) {
+                 return !![component length];
+             }] mapUsingBlock:^id(NSString *token) {
+                 return [token lowercaseString];
+             }];
+    
+}
+
+- (NSUInteger)_matchScoreForCandidateTokens:(NSArray *)candidate againstQuery:(NSArray *)query {
+    NSArray *lowercaseCandidate = [candidate mapUsingBlock:^id(NSString *tok) {  return [tok lowercaseString];  }];
+    __block NSUInteger runningTotal = 0;
+    
+    NSArray *matchingParts = [[lowercaseCandidate mapUsingBlock:^id(NSString *candidateToken) {
+        for (NSString *queryToken in query) {
+            
+            if ([candidateToken containsString:queryToken]) {
+                if ([candidateToken hasPrefix:queryToken])
+                    runningTotal++;             // +1 pt extra for prefix match
+                
+                return queryToken;
+                
+            }
+            
+        }
+        return [NSNull null];
+        
+    }] filterUsingBlock:^BOOL(id stringOrNSNull) {
+        return stringOrNSNull != [NSNull null];
+    }];
+    
+    runningTotal += [matchingParts count];      // +1 pt for each match above
+    
+    // TODO Account for candidates with duplicate tokens:
+    if ([query isEqual:matchingParts])
+        runningTotal += [query count];          // +1 pt for each token if match is in order
+    
+    return runningTotal;
+    
+}
+
 
 
 

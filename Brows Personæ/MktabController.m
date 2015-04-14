@@ -7,6 +7,7 @@
 //
 
 #import "MktabController.h"
+#import <NSArray+Functional/NSArray+Functional.h>
 #import "BrowsWindow.h"
 #import "BrowsTab.h"
 #import "BrowsPersona.h"
@@ -17,6 +18,7 @@
 @interface MktabController () {
     __weak BrowsWindow *browsWindow;
     NSDate *lastClosed;
+    NSArray *orderedSuggestions;
 }
 
 @end
@@ -140,6 +142,54 @@
     }];
     
     
+    
+    @weakify(locationBox)
+    [locationSignal subscribeNext:^(NSString *ipnut) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSMutableArray *mainThreadResults = [NSMutableArray array];
+            
+            [[BrowsPersona allLocalPersonæ] applyBlock:^(BrowsPersona *persona) {
+                [persona findHistoryItemsMatching:ipnut deliveringResultsToMainQueueByDoing:^(NSArray *results, BOOL *stop) {
+                    @strongify(locationBox, self)
+                    
+                    if (![[locationBox stringValue] isEqual:ipnut]) {
+                        // User has moved on. Do not process results, pass go, or collect $200. Tear it down, we're done.
+                        *stop = YES;
+                        return;
+                    }
+                    
+                    for (NSArray *resultTuple in results) {
+                        // Main thread results will contain a new @[rank, history item, persona] tuple for the suggestion.
+                        [mainThreadResults addObject:[resultTuple arrayByAddingObject:persona]];
+                        
+                        // Now use that structure to sort as a sort of proto-priority queue.
+                        [mainThreadResults sortUsingComparator:^NSComparisonResult(NSArray *leftTuple, NSArray *rightTuple) {
+                            
+                            // Do rankwise comparison first, as priority.
+                            NSComparisonResult rankwiseComparison = [leftTuple[0] compare: rightTuple[0]];
+                            if (rankwiseComparison != NSOrderedSame)
+                                return rankwiseComparison;
+                            
+                            // Elsewise do most recent first.
+                            NSTimeInterval leftAtime = [leftTuple[1] lastVisitedTimeInterval];  NSTimeInterval rightAtime = [rightTuple[1] lastVisitedTimeInterval];
+                            return (  leftAtime > rightAtime ? NSOrderedDescending
+                                    : leftAtime < rightAtime ? NSOrderedAscending
+                                    :                          NSOrderedSame      );
+                            
+                        }];
+                        
+                    }
+                    
+                    [self _updateHistoryResults:mainThreadResults];
+                    
+                    
+                }];
+            }];
+            
+        });
+    }];
+    
+    
 }
 
 
@@ -184,6 +234,13 @@
 }
 
 
+
+- (void)_updateHistoryResults:(NSArray *)rankedResults {
+    orderedSuggestions = rankedResults;  // Yes, it really is actually mutated after assignment---but only on the main thread (-_^)!
+    [suggestionsList reloadData];
+}
+
+
 - (void)clear {
     // Clear out the text-boxes and let the suggestions fall away.
     // Should also scroll the bookmarks list to the top.
@@ -193,6 +250,52 @@
     [personaBox setStringValue:@""];
     
 }
+
+
+
+
+
+
+
+#pragma mark History Suggestions View Data Source
+
+
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    return [orderedSuggestions count];
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    NSArray *relevantSuggestion = [orderedSuggestions objectAtIndex:row];
+    WebHistoryItem *relevantHistoryItem = relevantSuggestion[1];
+    BrowsPersona *relevantPersona = relevantSuggestion[2];
+    
+    if (tableColumn == locationSuggestionColumn) {
+        return [NSString stringWithFormat:@"%@ — %@", [relevantHistoryItem title], [relevantHistoryItem URLString]];
+        
+    } else if (tableColumn == personaSuggestionColumn) {
+        return [relevantPersona name];
+        
+    }
+    
+    return @"";
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @end

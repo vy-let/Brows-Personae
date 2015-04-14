@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 @class BrowsWindow;
 
-@interface MktabController : NSViewController {
+@interface MktabController : NSViewController <NSTableViewDataSource, NSTableViewDelegate> {
     IBOutlet NSTextField *locationBox;
     IBOutlet NSTextField *personaBox;
     IBOutlet NSButton *gotoButton;
@@ -20,6 +20,8 @@
     
     IBOutlet NSView *suggestionsView;
     IBOutlet NSTableView *suggestionsList;
+    IBOutlet NSTableColumn *locationSuggestionColumn;
+    IBOutlet NSTableColumn *personaSuggestionColumn;
     
 }
 

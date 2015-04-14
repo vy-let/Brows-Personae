@@ -56,15 +56,15 @@
     
     dispatch_once(&racObservationsDidInit, ^{
         
-        RACSignal *repTab = [[RACObserve(self, objectValue) logNext]
+        RACSignal *repTab = [RACObserve(self, objectValue)
                              filter:^BOOL(BrowsTab *applicableTab) {  return !!applicableTab;  }];
         
         RAC([self thumbnailView], image,
-            [NSImage imageNamed:@"NSMultipleDocuments"]) = [[[[repTab
+            [NSImage imageNamed:@"NSMultipleDocuments"]) = [[repTab
                                                              map:^id(BrowsTab *tab) {
                                                                  return RACObserve(tab, thumbnail);
-                                                             }] logNext]
-                                                            switchToLatest] logNext];
+                                                             }]
+                                                            switchToLatest];
         
         RAC([self faviconView], image,
             [NSImage imageNamed:@"NSNetwork"]) = [[repTab

@@ -188,7 +188,7 @@
         [locationBox setStringValue:[url absoluteString]];
     }];
     
-    RACSignal *pageURLMatchesPersona = [[actualPageURL logNext] map:^id(NSURL *url) {
+    RACSignal *pageURLMatchesPersona = [actualPageURL map:^id(NSURL *url) {
         @strongify(browsProfile)
         NSString *rootHost = [[PublicSuffixList suffixList] publiclyRegistrableDomain:[url host]];
         return @([rootHost isEqualToString:[browsProfile rootHost]]);
@@ -429,8 +429,6 @@
 - (void)webView:(WebView *)sender didStartProvisionalLoadForFrame:(WebFrame *)frame {
     if (frame != [pageView mainFrame]) return;
     
-    [self updateActualLocation];
-    
     [pageIsLoading sendNext:@(YES)];
     [pageLoadingProgress sendNext:@(-1)];  // Spin
     
@@ -441,6 +439,7 @@
     if (frame != [pageView mainFrame]) return;
     
     [pageLoadingProgress sendNext:@(0)];
+    [self _commitLocationToHistory];  // Record in history as soon as we put a foot down.
     
 }
 
@@ -450,6 +449,7 @@
     
     [pageLoadingProgress sendNext:@(1)];
     [pageIsLoading sendNext:@(NO)];
+    [self _commitLocationToHistory];  // Make sure we get the final URL and title.
     
 }
 
@@ -465,22 +465,22 @@
     if (frame != [pageView mainFrame]) return;
     
     [pageIsLoading sendNext:@(NO)];
-    NSBeep();
     // TODO Display error if necessary
+    
+    // Record the load that failed.
+    // If we're at a page that can't be reached at all, the extra history item won't harm anyone.
+    // If the page stalled out, we still want to record it in history.
+    // If the page was still loading and we navigated through it (e.g. clicking a google search result)
+    // then we want to make sure we recorded the title of the page that was loading, if it was available.
+    // The title won't be available on commit-load, and is normally recorded on finish-load.
+    [self _commitLocationToHistory];
     
 }
 
-- (void)updateActualLocation {
-    return; // debug
-    
-    NSURL *pageLoc = [[[[pageView mainFrame] provisionalDataSource] request] URL];
-    if (!pageLoc)  return;
-    
-    [locationBox setStringValue:[pageLoc absoluteString]];
-    [pageSecurityIndicator setImage:([[pageLoc scheme] isEqual:@"https"] ?
-                                     [NSImage imageNamed:@"NSLockLockedTemplate"] :
-                                     [NSImage imageNamed:@"NSLockUnlockedTemplate"]
-                                     )];
+- (void)_commitLocationToHistory {
+    WebHistoryItem *pageLocation = [[pageView backForwardList] currentItem];
+    if (pageLocation)
+        [browsProfile putHistoryItem:pageLocation];
     
 }
 
