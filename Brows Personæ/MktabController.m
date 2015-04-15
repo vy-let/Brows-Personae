@@ -249,6 +249,8 @@
     // May not be needed if RAC updates it for us:
     [personaBox setStringValue:@""];
     
+    [self _updateHistoryResults:@[]];
+    
 }
 
 
@@ -279,6 +281,24 @@
     }
     
     return @"";
+    
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    NSInteger selectedRow = [suggestionsList selectedRow];
+    if (selectedRow == -1)
+        return;
+    else if (selectedRow >= [orderedSuggestions count]) {
+        NSLog(@"Selection did change to a nonexistant row!");
+        return;
+    }
+    
+    NSArray *selectedResultTuple = [orderedSuggestions objectAtIndex:selectedRow];
+    NSString *location = [(WebHistoryItem *)selectedResultTuple[1] URLString];
+    BrowsPersona *persona = selectedResultTuple[2];
+    
+    [locationBox setStringValue:location];
+    [personaBox setStringValue:[persona name]];
     
 }
 
