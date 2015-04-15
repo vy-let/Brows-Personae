@@ -913,6 +913,7 @@ static NSMapTable *namedProfiles;
 
 static NSCharacterSet *ei_wordBoundaryCharacters;
 static dispatch_once_t ei_initWordBoundaries;
+static const float ei_matchThreshold = 3/5.0;
 
 - (NSArray *)_lowercaseTokensInString:(NSString *)input {
     dispatch_once(&ei_initWordBoundaries, ^{
@@ -949,6 +950,10 @@ static dispatch_once_t ei_initWordBoundaries;
     }] filterUsingBlock:^BOOL(id stringOrNSNull) {
         return stringOrNSNull != [NSNull null];
     }];
+    
+    // Require a proportion of the query tokens to have been matched
+    if ((float)[matchingParts count] / [query count] < ei_matchThreshold)
+        return 0;
     
     runningTotal += [matchingParts count];      // +1 pt for each match above
     
