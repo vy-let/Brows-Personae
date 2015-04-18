@@ -15,6 +15,7 @@
 		9C0D93F51AA124B300728D2E /* PSL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9C0D93F41AA124B300728D2E /* PSL.txt */; };
 		9C3071511A71D1C800AAA4F5 /* TabCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C3071501A71D1C800AAA4F5 /* TabCell.xib */; };
 		9C3071571A71DCBB00AAA4F5 /* BrowsTabTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */; };
+		9C345D351AE0E0E00010744F /* Brows.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9C345D341AE0E0E00010744F /* Brows.icns */; };
 		9C4EAADA1A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */; };
 		9C4EAAE01A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAADF1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */; };
 		9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */; };
@@ -81,6 +82,7 @@
 		9C3071501A71D1C800AAA4F5 /* TabCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabCell.xib; sourceTree = "<group>"; };
 		9C3071551A71DCBB00AAA4F5 /* BrowsTabTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsTabTableCellView.h; sourceTree = "<group>"; };
 		9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTabTableCellView.m; sourceTree = "<group>"; };
+		9C345D341AE0E0E00010744F /* Brows.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Brows.icns; sourceTree = "<group>"; };
 		9C4EAAD81A82F33800E6CE03 /* EIIGIsolatedCookieWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EIIGIsolatedCookieWebView.h; sourceTree = "<group>"; };
 		9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EIIGIsolatedCookieWebView.m; sourceTree = "<group>"; };
 		9C4EAADE1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EIIGIsolatedCookieWebViewResourceLoadDelegate.h; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			children = (
 				9C0D93F41AA124B300728D2E /* PSL.txt */,
 				9CD502F41A8C41C800AFE556 /* Categories */,
+				9C345D341AE0E0E00010744F /* Brows.icns */,
 				9C6810F01A7C6940008263A4 /* Personæ.pch */,
 				9CDF343519EB2F4C0040AA0F /* Info.plist */,
 				9CDF343919EB2F4C0040AA0F /* main.m */,
@@ -372,6 +375,7 @@
 			files = (
 				9C3071511A71D1C800AAA4F5 /* TabCell.xib in Resources */,
 				9C0D93F51AA124B300728D2E /* PSL.txt in Resources */,
+				9C345D351AE0E0E00010744F /* Brows.icns in Resources */,
 				9CDF345819EB30640040AA0F /* BrowsWindow.xib in Resources */,
 				9C0C53C819F480A3003E0984 /* BrowsTab.xib in Resources */,
 				9C0C53C619F38DC3003E0984 /* Texpert.xib in Resources */,
