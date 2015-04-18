@@ -168,12 +168,12 @@
                             // Do rankwise comparison first, as priority.
                             NSComparisonResult rankwiseComparison = [leftTuple[0] compare: rightTuple[0]];
                             if (rankwiseComparison != NSOrderedSame)
-                                return rankwiseComparison;
+                                return -1 * rankwiseComparison;
                             
                             // Elsewise do most recent first.
                             NSTimeInterval leftAtime = [leftTuple[1] lastVisitedTimeInterval];  NSTimeInterval rightAtime = [rightTuple[1] lastVisitedTimeInterval];
-                            return (  leftAtime > rightAtime ? NSOrderedDescending
-                                    : leftAtime < rightAtime ? NSOrderedAscending
+                            return (  leftAtime < rightAtime ? NSOrderedDescending
+                                    : leftAtime > rightAtime ? NSOrderedAscending
                                     :                          NSOrderedSame      );
                             
                         }];
