@@ -13,7 +13,7 @@
 
 
 @interface BrowsTab : NSViewController {
-    IBOutlet EIIGIsolatedCookieWebView *pageView;
+    IBOutlet WKWebView *pageView;
     
     IBOutlet NSVisualEffectView *tooblar;
     IBOutlet NSImageView *pageSecurityIndicator;

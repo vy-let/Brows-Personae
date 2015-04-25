@@ -25,7 +25,7 @@
         <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
             <rect key="frame" x="0.0" y="0.0" width="884" height="960"/>
             <subviews>
-                <webView translatesAutoresizingMaskIntoConstraints="NO" id="Os0-Ec-xeC" customClass="EIIGIsolatedCookieWebView">
+                <webView translatesAutoresizingMaskIntoConstraints="NO" id="Os0-Ec-xeC" customClass="WKWebView">
                     <rect key="frame" x="0.0" y="0.0" width="884" height="960"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="5ak-oa-1Kh"/>

@@ -66,9 +66,9 @@
 }
 
 - (void)dealloc {
-    [pageView close];
+    //[pageView close];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    NSLog(@"Brows Tab for %@ at %@ is being deallocated.", [browsProfile name], [pageView mainFrameURL]);
+    NSLog(@"Brows Tab for %@ at %@ is being deallocated.", [browsProfile name], [pageView URL]);
 }
 
 
