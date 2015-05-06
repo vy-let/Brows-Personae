@@ -16,16 +16,16 @@
 		9C3071511A71D1C800AAA4F5 /* TabCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C3071501A71D1C800AAA4F5 /* TabCell.xib */; };
 		9C3071571A71DCBB00AAA4F5 /* BrowsTabTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */; };
 		9C345D351AE0E0E00010744F /* Brows.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9C345D341AE0E0E00010744F /* Brows.icns */; };
+		9C3B19271AF9737600FA4AAB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3B19221AF9737500FA4AAB /* WebKit.framework */; };
+		9C3B192A1AF9737D00FA4AAB /* JavaScriptCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C3B19201AF9737500FA4AAB /* JavaScriptCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9C3B192B1AF9737D00FA4AAB /* WebCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C3B19211AF9737500FA4AAB /* WebCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9C3B192C1AF9737D00FA4AAB /* WebKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C3B19221AF9737500FA4AAB /* WebKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9C3B192D1AF9737D00FA4AAB /* WebKit2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C3B19231AF9737500FA4AAB /* WebKit2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9C3B192E1AF9737D00FA4AAB /* WebKitLegacy.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C3B19241AF9737500FA4AAB /* WebKitLegacy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C4EAADA1A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */; };
 		9C4EAAE01A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAADF1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */; };
 		9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */; };
 		9C68B11B1A9EA7D800F5C444 /* RACStream+SlidingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */; };
-		9CC542FE1AD5FF2500CFC096 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC542F91AD5FF2500CFC096 /* WebKit.framework */; };
-		9CC543011AD5FF2C00CFC096 /* JavaScriptCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542F71AD5FF2500CFC096 /* JavaScriptCore.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		9CC543021AD5FF2C00CFC096 /* WebCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542F81AD5FF2500CFC096 /* WebCore.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		9CC543031AD5FF2C00CFC096 /* WebKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542F91AD5FF2500CFC096 /* WebKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		9CC543041AD5FF2C00CFC096 /* WebKit2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542FA1AD5FF2500CFC096 /* WebKit2.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		9CC543051AD5FF2C00CFC096 /* WebKitLegacy.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9CC542FB1AD5FF2500CFC096 /* WebKitLegacy.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9CD502EC1A8AF31100AFE556 /* Helpies.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502EB1A8AF31100AFE556 /* Helpies.m */; };
 		9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */; };
 		9CD502F91A901A5800AFE556 /* MktabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502F71A901A5800AFE556 /* MktabController.m */; };
@@ -58,11 +58,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9CC543011AD5FF2C00CFC096 /* JavaScriptCore.framework in CopyFiles */,
-				9CC543021AD5FF2C00CFC096 /* WebCore.framework in CopyFiles */,
-				9CC543031AD5FF2C00CFC096 /* WebKit.framework in CopyFiles */,
-				9CC543041AD5FF2C00CFC096 /* WebKit2.framework in CopyFiles */,
-				9CC543051AD5FF2C00CFC096 /* WebKitLegacy.framework in CopyFiles */,
+				9C3B192A1AF9737D00FA4AAB /* JavaScriptCore.framework in CopyFiles */,
+				9C3B192B1AF9737D00FA4AAB /* WebCore.framework in CopyFiles */,
+				9C3B192C1AF9737D00FA4AAB /* WebKit.framework in CopyFiles */,
+				9C3B192D1AF9737D00FA4AAB /* WebKit2.framework in CopyFiles */,
+				9C3B192E1AF9737D00FA4AAB /* WebKitLegacy.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +83,11 @@
 		9C3071551A71DCBB00AAA4F5 /* BrowsTabTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsTabTableCellView.h; sourceTree = "<group>"; };
 		9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTabTableCellView.m; sourceTree = "<group>"; };
 		9C345D341AE0E0E00010744F /* Brows.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Brows.icns; sourceTree = "<group>"; };
+		9C3B19201AF9737500FA4AAB /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = WebKit/WebKitBuild/Release/JavaScriptCore.framework; sourceTree = "<group>"; };
+		9C3B19211AF9737500FA4AAB /* WebCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebCore.framework; path = WebKit/WebKitBuild/Release/WebCore.framework; sourceTree = "<group>"; };
+		9C3B19221AF9737500FA4AAB /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = WebKit/WebKitBuild/Release/WebKit.framework; sourceTree = "<group>"; };
+		9C3B19231AF9737500FA4AAB /* WebKit2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit2.framework; path = WebKit/WebKitBuild/Release/WebKit2.framework; sourceTree = "<group>"; };
+		9C3B19241AF9737500FA4AAB /* WebKitLegacy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKitLegacy.framework; path = WebKit/WebKitBuild/Release/WebKitLegacy.framework; sourceTree = "<group>"; };
 		9C4EAAD81A82F33800E6CE03 /* EIIGIsolatedCookieWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EIIGIsolatedCookieWebView.h; sourceTree = "<group>"; };
 		9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EIIGIsolatedCookieWebView.m; sourceTree = "<group>"; };
 		9C4EAADE1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EIIGIsolatedCookieWebViewResourceLoadDelegate.h; sourceTree = "<group>"; };
@@ -92,11 +97,6 @@
 		9C6810F01A7C6940008263A4 /* Personæ.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Personæ.pch"; sourceTree = "<group>"; };
 		9C68B1191A9EA7D800F5C444 /* RACStream+SlidingWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACStream+SlidingWindow.h"; sourceTree = "<group>"; };
 		9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACStream+SlidingWindow.m"; sourceTree = "<group>"; };
-		9CC542F71AD5FF2500CFC096 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = ../../../Git/WebKit/WebKitBuild/Release/JavaScriptCore.framework; sourceTree = "<group>"; };
-		9CC542F81AD5FF2500CFC096 /* WebCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebCore.framework; path = ../../../Git/WebKit/WebKitBuild/Release/WebCore.framework; sourceTree = "<group>"; };
-		9CC542F91AD5FF2500CFC096 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = ../../../Git/WebKit/WebKitBuild/Release/WebKit.framework; sourceTree = "<group>"; };
-		9CC542FA1AD5FF2500CFC096 /* WebKit2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit2.framework; path = ../../../Git/WebKit/WebKitBuild/Release/WebKit2.framework; sourceTree = "<group>"; };
-		9CC542FB1AD5FF2500CFC096 /* WebKitLegacy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKitLegacy.framework; path = ../../../Git/WebKit/WebKitBuild/Release/WebKitLegacy.framework; sourceTree = "<group>"; };
 		9CD502EB1A8AF31100AFE556 /* Helpies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helpies.m; sourceTree = "<group>"; };
 		9CD502ED1A8AF33C00AFE556 /* Helpies.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helpies.h; sourceTree = "<group>"; };
 		9CD502F11A8C41BE00AFE556 /* WebView+ScrollViewAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebView+ScrollViewAccess.h"; sourceTree = "<group>"; };
@@ -132,7 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CC542FE1AD5FF2500CFC096 /* WebKit.framework in Frameworks */,
+				9C3B19271AF9737600FA4AAB /* WebKit.framework in Frameworks */,
 				8A305DD949511AA14CC1E705 /* libPods-Brows Personæ.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,11 +271,11 @@
 		EC94D767FB5D04AC16D852C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9CC542F71AD5FF2500CFC096 /* JavaScriptCore.framework */,
-				9CC542F81AD5FF2500CFC096 /* WebCore.framework */,
-				9CC542F91AD5FF2500CFC096 /* WebKit.framework */,
-				9CC542FA1AD5FF2500CFC096 /* WebKit2.framework */,
-				9CC542FB1AD5FF2500CFC096 /* WebKitLegacy.framework */,
+				9C3B19201AF9737500FA4AAB /* JavaScriptCore.framework */,
+				9C3B19211AF9737500FA4AAB /* WebCore.framework */,
+				9C3B19221AF9737500FA4AAB /* WebKit.framework */,
+				9C3B19231AF9737500FA4AAB /* WebKit2.framework */,
+				9C3B19241AF9737500FA4AAB /* WebKitLegacy.framework */,
 				18D4ECB428A068EBE54D7A29 /* libPods-Brows Personæ.a */,
 				23F0E444F6523743D44743AC /* libPods-Brows PersonæTests.a */,
 			);
@@ -597,6 +597,7 @@
 					"$(inherited)",
 					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Debug,
 					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Release,
+					"$(PROJECT_DIR)/WebKit/WebKitBuild/Release",
 				);
 				GCC_PREFIX_HEADER = "Brows Personæ/Personæ.pch";
 				HEADER_SEARCH_PATHS = (
@@ -623,6 +624,7 @@
 					"$(inherited)",
 					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Debug,
 					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Release,
+					"$(PROJECT_DIR)/WebKit/WebKitBuild/Release",
 				);
 				GCC_PREFIX_HEADER = "Brows Personæ/Personæ.pch";
 				HEADER_SEARCH_PATHS = (
