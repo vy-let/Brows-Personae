@@ -4,10 +4,10 @@ The concept is simple: When you browse the web with Brows Personæ, you do so un
 
 ## Release Status and Building
 
-Brows Personæ is currently in active development in preparation for an alpha release. There is no signed and compiled app bundle yet, and building is—an interesting process. You're encouraged to try, though…
+Brows Personæ is currently in active development in preparation for an alpha release. There is no signed and compiled app bundle yet, and building is—an interesting process. You’re encouraged to try, though…
 
-1. pull the WebKit submodule
-1. ensure there are no spaces or special shell characters in the path to WebKit
+1. be sure you’ve pulled the WebKit submodule
+    - ensure there are no spaces or special shell characters in the path to WebKit—stupid, yes, but it’s WebKit’s problem
 2. find all references to my code signing identity and replace them with yours
 2. compile the WebKit xcworkspace **using Xcode,** in **Release** mode
 3. build Brows Personæ
