@@ -1,4 +1,4 @@
 [submodule "WebKit"]
 	path = WebKit
-	url = https://github.com/talusbb/WebKit-Persona.git
+	url = git@github.com:talusbb/WebKit-Persona.git
 	branch = brows-master
