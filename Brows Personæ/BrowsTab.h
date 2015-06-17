@@ -13,7 +13,7 @@
 
 
 @interface BrowsTab : NSViewController {
-    IBOutlet WKWebView *pageView;
+    IBOutlet WKWebView *pageView;  // still IBOutlet---wishful thinking, I suppose.
     
     IBOutlet NSVisualEffectView *tooblar;
     IBOutlet NSImageView *pageSecurityIndicator;

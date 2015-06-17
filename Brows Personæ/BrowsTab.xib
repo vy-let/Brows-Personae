@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
-        <plugIn identifier="com.apple.WebKitIBPlugin" version="6751"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -14,7 +13,6 @@
                 <outlet property="locationBox" destination="Jjb-3b-eS6" id="XPS-zF-sZo"/>
                 <outlet property="pageSecurityIndicator" destination="hkU-KP-lEa" id="TPV-9M-g2v"/>
                 <outlet property="pageSpinny" destination="c77-HL-ODd" id="ir1-SW-wz7"/>
-                <outlet property="pageView" destination="Os0-Ec-xeC" id="7Wv-jh-wQa"/>
                 <outlet property="personaIndicator" destination="Wau-Sp-3wN" id="JtB-2P-me6"/>
                 <outlet property="tooblar" destination="yQk-ri-Ojl" id="PFO-dm-EfT"/>
                 <outlet property="view" destination="c22-O7-iKe" id="jyp-Vp-0zi"/>
@@ -25,20 +23,6 @@
         <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
             <rect key="frame" x="0.0" y="0.0" width="884" height="960"/>
             <subviews>
-                <webView translatesAutoresizingMaskIntoConstraints="NO" id="Os0-Ec-xeC" customClass="WKWebView">
-                    <rect key="frame" x="0.0" y="0.0" width="884" height="960"/>
-                    <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="5ak-oa-1Kh"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="9WE-rM-N5G"/>
-                    </constraints>
-                    <webPreferences key="preferences" defaultFontSize="16" defaultFixedFontSize="12" plugInsEnabled="NO" javaEnabled="NO">
-                        <nil key="identifier"/>
-                    </webPreferences>
-                    <connections>
-                        <outlet property="UIDelegate" destination="-2" id="hJt-Ni-eDI"/>
-                        <outlet property="frameLoadDelegate" destination="-2" id="cyZ-hj-jEj"/>
-                    </connections>
-                </webView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="yQk-ri-Ojl" customClass="NSVisualEffectView">
                     <rect key="frame" x="0.0" y="921" width="884" height="39"/>
                     <subviews>
@@ -177,12 +161,8 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="yQk-ri-Ojl" secondAttribute="trailing" id="0dD-TM-SGL"/>
-                <constraint firstItem="Os0-Ec-xeC" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="60N-T3-Owj"/>
-                <constraint firstAttribute="trailing" secondItem="Os0-Ec-xeC" secondAttribute="trailing" id="CIo-EO-8Iq"/>
                 <constraint firstItem="yQk-ri-Ojl" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="Cxc-9K-57I"/>
-                <constraint firstItem="Os0-Ec-xeC" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="Ip1-jk-xWF"/>
                 <constraint firstItem="yQk-ri-Ojl" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="ftd-AM-BdZ"/>
-                <constraint firstAttribute="bottom" secondItem="Os0-Ec-xeC" secondAttribute="bottom" id="lob-0p-w9Q"/>
             </constraints>
             <point key="canvasLocation" x="702" y="625"/>
         </customView>

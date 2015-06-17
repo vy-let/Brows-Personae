@@ -21,6 +21,7 @@ const UInt32 SiteProfileStoreApplicationID = 625418296;  // irb> rand 2**31
     NSURL *diskLocation;
     NSString *name;
     NSString *rootHost;
+    WKProcessPool *processPool;  dispatch_once_t didInitProcessPool;
     FMDatabaseQueue *cookieJar;
     u_int32_t presentSessionID;  // this type b/c of arc4random's behavior
     
@@ -285,6 +286,15 @@ static NSMapTable *namedProfiles;
 
 - (NSString *)rootHost {
     return rootHost;
+}
+
+- (WKProcessPool *)webProcessPool {
+    dispatch_once(&didInitProcessPool, ^{
+        processPool = [[WKProcessPool alloc] init];
+    });
+    
+    return processPool;
+    
 }
 
 

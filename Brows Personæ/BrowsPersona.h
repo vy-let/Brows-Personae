@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <WebKit/WebKit.h>
 
 @class WebHistoryItem;
 
@@ -24,6 +25,8 @@
 
 @property (readonly) NSString *name;
 @property (readonly) NSString *rootHost;
+
+@property (readonly) WKProcessPool *webProcessPool;
 
 
 #pragma mark Cookie Data Source

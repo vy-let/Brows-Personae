@@ -18,6 +18,15 @@
 #import "PublicSuffixList.h"
 
 
+@interface WKWebView (WKPrivate)
+@property (nonatomic, setter=_setTopContentInset:) CGFloat _topContentInset;
+@end
+
+@implementation WKWebView (WKPrivate)
+@dynamic _topContentInset;
+@end
+
+
 @interface BrowsTab () {
     NSObject *tabViewButtonThing;
     BrowsPersona *browsProfile;
@@ -68,7 +77,7 @@
 - (void)dealloc {
     //[pageView close];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    NSLog(@"Brows Tab for %@ at %@ is being deallocated.", [browsProfile name], [pageView URL]);
+    NSLog(@"Brows Tab for %@ at %@ is being deallocated.", [browsProfile name], [[pageView URL] absoluteString]);
 }
 
 
@@ -77,11 +86,14 @@
     [tooblar setBlendingMode:NSVisualEffectBlendingModeWithinWindow];
     [tooblar setMaterial:NSVisualEffectMaterialTitlebar];
     
-    [[pageView preferences] setPrivateBrowsingEnabled:YES];
-    [[pageView mainFrame] setEi_browsPersona:browsProfile];
+    [self placePageView];
+    
+    // The following settings were from WebKitLegacy:
+    //[[pageView preferences] setPrivateBrowsingEnabled:YES];
+    //[[pageView mainFrame] setEi_browsPersona:browsProfile];
     [pageView setCustomUserAgent:@"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"];
-    [pageView setShouldUpdateWhileOffscreen:NO];
-    [pageView setShouldCloseWithWindow:NO];
+    //[pageView setShouldUpdateWhileOffscreen:NO];
+    //[pageView setShouldCloseWithWindow:NO];
     
     [self setUpRACListeners];
     [self pushInitialInterfaceState];  // Must happen *after* RAC is already listening, in some cases.
@@ -100,9 +112,53 @@
 
 
 
+- (void)placePageView {
+    // Ya know, there's a REASON we have nib files. There's a fucking reason.
+    // Ugh.
+    
+    WKPreferences *webPrefs = [[WKPreferences alloc] init];
+    [webPrefs setJavaEnabled:NO];
+    [webPrefs setJavaScriptEnabled:YES];
+    [webPrefs setJavaScriptCanOpenWindowsAutomatically:YES];
+    [webPrefs setPlugInsEnabled:NO];
+    
+    WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+    [config setProcessPool:[browsProfile webProcessPool]];  // Usually, making the tab (as here) will be the first time the profile is asked for its process pool, which should be lazily created.
+    [config setPreferences:webPrefs];
+    [config setSuppressesIncrementalRendering:NO];
+    
+    
+    pageView = [[WKWebView alloc] initWithFrame:NSMakeRect(0, 0, 500, 500)
+                                  configuration:config];
+    [pageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [[self view] addSubview:pageView
+                 positioned:NSWindowBelow
+                 relativeTo:tooblar];
+    
+    
+    NSDictionary *applicableParties = NSDictionaryOfVariableBindings(pageView);
+    [NSLayoutConstraint activateConstraints:
+     [[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[pageView]|"
+                                              options:0
+                                              metrics:nil
+                                                views:applicableParties]
+      arrayByAddingObjectsFromArray:
+      [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[pageView]|"
+                                              options:0
+                                              metrics:nil
+                                                views:applicableParties]]];
+    
+    
+}
+
+
+
 - (void)setUpRACListeners {
     
-    RACSignal *pageViewSendEventSignal = [[[pageView ei_scrollView] documentView] rac_signalForSelector:@selector(sendEvent:)];
+    // TODO Listen for page changes and interaction
+    //RACSignal *pageViewSendEventSignal = [[[pageView ei_scrollView] documentView] rac_signalForSelector:@selector(sendEvent:)];
+    RACSignal *pageViewSendEventSignal = [RACSignal never];  // TODO unstub
     
     // As soon as the web view gains its final resource load delegate,
     // inform that delegate of the tab's site profile:
@@ -110,13 +166,13 @@
     // TODO Have the resource load delegate fetch this from the WebView's mainFrame directly.
     //
     @weakify(browsProfile)
-    [[[[RACObserve(pageView, resourceLoadDelegate)
-        startWith:[pageView resourceLoadDelegate]]  // Make sure we get the first one
-       skipUntilBlock:^BOOL(id resourceLoadDelegate) {  return [resourceLoadDelegate respondsToSelector:@selector(setBrowsPersona:)];  }]
-      take:1]  // Make sure it's our custom subclass, and just take that single one
-     subscribeNext:^(EIIGIsolatedCookieWebViewResourceLoadDelegate *resourceLoadDelegate) {  @strongify(browsProfile)
-         [resourceLoadDelegate setBrowsPersona:browsProfile];  // And inform the delegate.
-     }];
+//    [[[[RACObserve(pageView, resourceLoadDelegate)
+//        startWith:[pageView resourceLoadDelegate]]  // Make sure we get the first one
+//       skipUntilBlock:^BOOL(id resourceLoadDelegate) {  return [resourceLoadDelegate respondsToSelector:@selector(setBrowsPersona:)];  }]
+//      take:1]  // Make sure it's our custom subclass, and just take that single one
+//     subscribeNext:^(EIIGIsolatedCookieWebViewResourceLoadDelegate *resourceLoadDelegate) {  @strongify(browsProfile)
+//         [resourceLoadDelegate setBrowsPersona:browsProfile];  // And inform the delegate.
+//     }];
     
     
     @weakify(pageView)
@@ -143,14 +199,15 @@
                              startWith:@(NO)];
     
     @weakify(tooblar)
-    [[RACObserve([pageView ei_scrollView], contentInsets) takeUntil:tabClosure]
+    [[RACObserve(pageView, _topContentInset) takeUntil:tabClosure]
      subscribeNext:^(NSValue *edgeInsets) {
          @strongify(tooblar)
-         NSEdgeInsets contentInsets;  [edgeInsets getValue:&contentInsets];
+         CGFloat contentInsetsTop;  [edgeInsets getValue:&contentInsetsTop];
          CGFloat tooblarHeight = [tooblar frame].size.height;
+         NSLog(@"Content inset top was %f should be %f", contentInsetsTop, tooblarHeight);
          
-         if (contentInsets.top != tooblarHeight) {
-             [[pageView ei_scrollView] setContentInsets:NSEdgeInsetsMake(tooblarHeight, 0, 0, 0)];
+         if (contentInsetsTop != tooblarHeight) {
+             [pageView _setTopContentInset:tooblarHeight];
              
          }
          
@@ -174,14 +231,11 @@
         
     }];
     
-    RACSignal *actualPageURL = [[RACObserve(pageView, mainFrameURL)
-                                 map:^id(NSString *stringURL) {
-                                     return [NSURL URLWithString:stringURL];
-                                     
-                                 }] filter:^BOOL(id value) {
-                                     return !!value;
-                                     
-                                 }];
+    RACSignal *actualPageURL = [RACObserve(pageView, URL)
+                                filter:^BOOL(id value) {
+                                    return !!value;
+                                    
+                                }];
     
     [actualPageURL subscribeNext:^(NSURL *url) {
         @strongify(locationBox)
@@ -205,8 +259,8 @@
     
     [locationEditEnd subscribeNext:^(id x) {
         @strongify(locationBox) @strongify(pageView)
-        if ([pageView mainFrameURL])
-            [locationBox setStringValue:[pageView mainFrameURL]];
+        if ([pageView URL])
+            [locationBox setStringValue:[[pageView URL] absoluteString]];
     }];
     
     
@@ -275,7 +329,8 @@
          [self _updateThumbnail];
      }];
     
-    [RACObserve(pageView, mainFrameIcon)
+    // TODO figure out how the hell to get the favicon.
+    [[RACSignal return:[NSImage imageNamed:@"NSNetwork"]]
      subscribeNext:^(NSImage *favicon) {
          @strongify(self)
          [self setFavicon:favicon];
@@ -294,7 +349,7 @@
     [personaIndicator setStringValue:[browsProfile name]];
     
     // This will trigger a listener (above) to say 'no no no, that should be x instead!':
-    [[pageView ei_scrollView] setContentInsets:NSEdgeInsetsMake(0, 0, 0, 0)];
+    [pageView _setTopContentInset:0];
     
     // Fragile RACSubjects should be init'd here:
     [pageIsLoading sendNext:@(0)];
@@ -338,9 +393,9 @@
 
 
 - (void)performStandardRequest:(NSURL *)location {
-    [[pageView mainFrame] loadRequest:[NSURLRequest requestWithURL:location
-                                                       cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                                                   timeoutInterval:30]];
+    [pageView loadRequest:[NSURLRequest requestWithURL:location
+                                           cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                       timeoutInterval:30]];
 }
 
 
@@ -426,56 +481,59 @@
 #pragma mark Frame Load Delegate
 
 
-- (void)webView:(WebView *)sender didStartProvisionalLoadForFrame:(WebFrame *)frame {
-    if (frame != [pageView mainFrame]) return;
-    
-    [pageIsLoading sendNext:@(YES)];
-    [pageLoadingProgress sendNext:@(-1)];  // Spin
-    
-}
+// TODO implementate this shit
 
 
-- (void)webView:(WebView *)sender didCommitLoadForFrame:(WebFrame *)frame {
-    if (frame != [pageView mainFrame]) return;
-    
-    [pageLoadingProgress sendNext:@(0)];
-    [self _commitLocationToHistory];  // Record in history as soon as we put a foot down.
-    
-}
-
-
-- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame {
-    if (frame != [pageView mainFrame]) return;
-    
-    [pageLoadingProgress sendNext:@(1)];
-    [pageIsLoading sendNext:@(NO)];
-    [self _commitLocationToHistory];  // Make sure we get the final URL and title.
-    
-}
-
-- (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame {
-    if (frame != [pageView mainFrame]) return;
-    
-    [pageIsLoading sendNext:@(NO)];
-    // TODO Display error if necessary
-    
-}
-
-- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame {
-    if (frame != [pageView mainFrame]) return;
-    
-    [pageIsLoading sendNext:@(NO)];
-    // TODO Display error if necessary
-    
-    // Record the load that failed.
-    // If we're at a page that can't be reached at all, the extra history item won't harm anyone.
-    // If the page stalled out, we still want to record it in history.
-    // If the page was still loading and we navigated through it (e.g. clicking a google search result)
-    // then we want to make sure we recorded the title of the page that was loading, if it was available.
-    // The title won't be available on commit-load, and is normally recorded on finish-load.
-    [self _commitLocationToHistory];
-    
-}
+//- (void)webView:(WebView *)sender didStartProvisionalLoadForFrame:(WebFrame *)frame {
+//    if (frame != [pageView mainFrame]) return;
+//    
+//    [pageIsLoading sendNext:@(YES)];
+//    [pageLoadingProgress sendNext:@(-1)];  // Spin
+//    
+//}
+//
+//
+//- (void)webView:(WebView *)sender didCommitLoadForFrame:(WebFrame *)frame {
+//    if (frame != [pageView mainFrame]) return;
+//    
+//    [pageLoadingProgress sendNext:@(0)];
+//    [self _commitLocationToHistory];  // Record in history as soon as we put a foot down.
+//    
+//}
+//
+//
+//- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame {
+//    if (frame != [pageView mainFrame]) return;
+//    
+//    [pageLoadingProgress sendNext:@(1)];
+//    [pageIsLoading sendNext:@(NO)];
+//    [self _commitLocationToHistory];  // Make sure we get the final URL and title.
+//    
+//}
+//
+//- (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame {
+//    if (frame != [pageView mainFrame]) return;
+//    
+//    [pageIsLoading sendNext:@(NO)];
+//    // TODO Display error if necessary
+//    
+//}
+//
+//- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame {
+//    if (frame != [pageView mainFrame]) return;
+//    
+//    [pageIsLoading sendNext:@(NO)];
+//    // TODO Display error if necessary
+//    
+//    // Record the load that failed.
+//    // If we're at a page that can't be reached at all, the extra history item won't harm anyone.
+//    // If the page stalled out, we still want to record it in history.
+//    // If the page was still loading and we navigated through it (e.g. clicking a google search result)
+//    // then we want to make sure we recorded the title of the page that was loading, if it was available.
+//    // The title won't be available on commit-load, and is normally recorded on finish-load.
+//    [self _commitLocationToHistory];
+//    
+//}
 
 - (void)_commitLocationToHistory {
     WebHistoryItem *pageLocation = [[pageView backForwardList] currentItem];
