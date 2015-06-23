@@ -590,6 +590,8 @@
 			baseConfigurationReference = 6C602256BEB395FA9B77249E /* Pods-Brows Personæ.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application: TALUS BADDLEY";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -617,6 +619,8 @@
 			baseConfigurationReference = 850D133ECA2DDC9E9AB30124 /* Pods-Brows Personæ.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application: TALUS BADDLEY";
 				COMBINE_HIDPI_IMAGES = YES;

@@ -199,19 +199,20 @@
                              startWith:@(NO)];
     
     @weakify(tooblar)
-    [[RACObserve(pageView, _topContentInset) takeUntil:tabClosure]
-     subscribeNext:^(NSValue *edgeInsets) {
-         @strongify(tooblar)
-         CGFloat contentInsetsTop;  [edgeInsets getValue:&contentInsetsTop];
+    // Whenever the page view has some sort of loading change, or the tooblar changes height, make sure we've fixed the content inset.
+    [[[[RACObserve(pageView, loading) merge:RACObserve(tooblar, frame)]
+       delay:0.01]
+      takeUntil:tabClosure]
+     subscribeNext:^(id someBooleanOrBullshit) {
+         @strongify(tooblar, pageView)
          CGFloat tooblarHeight = [tooblar frame].size.height;
-         NSLog(@"Content inset top was %f should be %f", contentInsetsTop, tooblarHeight);
          
-         if (contentInsetsTop != tooblarHeight) {
-             [pageView _setTopContentInset:tooblarHeight];
+         //if ([pageView ei_topContentInset] != tooblarHeight)
+             [pageView setEi_topContentInset:tooblarHeight];
              
-         }
          
-    }];
+         
+     }];
     
     
     @weakify(locationBox, self)
@@ -349,7 +350,7 @@
     [personaIndicator setStringValue:[browsProfile name]];
     
     // This will trigger a listener (above) to say 'no no no, that should be x instead!':
-    [pageView _setTopContentInset:0];
+    //[pageView _setTopContentInset:0];
     
     // Fragile RACSubjects should be init'd here:
     [pageIsLoading sendNext:@(0)];
