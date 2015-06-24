@@ -287,25 +287,6 @@
         
     }];
     
-//    RACSignal *pageLoadingStatusSignal = [pageIsLoading combineLatestWith:pageLoadingProgress];
-//    [pageLoadingStatusSignal subscribeNext:^(RACTuple *latest) {
-//        @strongify(pageSpinny)
-//        double progress = [[latest second] doubleValue];
-//        BOOL isLoading = [[latest first] boolValue];
-//        
-//        if (!isLoading) {
-//            [pageSpinny setIndeterminate:YES];  [pageSpinny stopAnimation:nil];
-//            
-//        } else if (progress < 0 || progress > 1) {
-//            [pageSpinny setIndeterminate:YES];  [pageSpinny startAnimation:nil];
-//            
-//        } else {
-//            [pageSpinny setIndeterminate:NO];  [pageSpinny startAnimation:nil];
-//            
-//        }
-//        
-//    }];
-    
     @weakify(gotoTheBackwardButton, goFrothButton)
     [[[RACObserve(pageView, canGoBack) startWith:@(NO)] takeUntil:tabClosure]
      subscribeNext:^(NSNumber *canI) {
