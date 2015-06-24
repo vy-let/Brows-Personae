@@ -31,8 +31,6 @@
     NSObject *tabViewButtonThing;
     BrowsPersona *browsProfile;
     RACSubject *locationDasu;  // Into which submit events are pushed.
-    RACSubject *pageIsLoading;
-    RACSubject *pageLoadingProgress;
     
     NSImage *latestThumbnail;
     NSImage *latestFavicon;
@@ -52,8 +50,6 @@
     
     browsProfile = profile;
     locationDasu = [RACSubject subject];
-    pageIsLoading = [RACSubject subject];
-    pageLoadingProgress = [RACSubject subject];
     
     initialLocation = urlOrSearch;
     
@@ -179,7 +175,7 @@
     @weakify(pageView)
     RACSignal *tabClosure = [[self rac_signalForSelector:@selector(tabWillClose)] take:1];
     [tabClosure subscribeNext:^(id x) {
-        [@[locationDasu, pageIsLoading, pageLoadingProgress]
+        [@[locationDasu]
          makeObjectsPerformSelector:@selector(sendCompleted)];
     }];
     
@@ -191,7 +187,6 @@
                                                           fromProtocol:@protocol(NSTextDelegate)]
                                     takeUntil:tabClosure];
     
-    [pageIsLoading sendNext:@(NO)];
     RACSignal *locationIsBeingEdited = [[RACSignal merge:@[
                                                 [locationEditStart mapReplace:@(YES)]
                                                 ,[locationEditEnd mapReplace:@(NO)]
@@ -268,29 +263,42 @@
     
     
     @weakify(pageSpinny)
-    [pageLoadingProgress subscribeNext:^(NSNumber *prague) {
+    
+    RACSignal *pageLoadingProgress = [RACObserve(pageView, estimatedProgress) startWith:@(0.0)];
+    [pageLoadingProgress subscribeNext:^(NSNumber *latest) {
         @strongify(pageSpinny)
-        [[pageSpinny animator] setDoubleValue:[prague doubleValue]];
+        [pageSpinny setDoubleValue:[latest doubleValue]];
+        
     }];
     
-    RACSignal *pageLoadingStatusSignal = [pageIsLoading combineLatestWith:pageLoadingProgress];
-    [pageLoadingStatusSignal subscribeNext:^(RACTuple *latest) {
-        @strongify(pageSpinny)
-        double progress = [[latest second] doubleValue];
-        BOOL isLoading = [[latest first] boolValue];
-        
-        if (!isLoading) {
-            [pageSpinny setIndeterminate:YES];  [pageSpinny stopAnimation:nil];
-            
-        } else if (progress < 0 || progress > 1) {
-            [pageSpinny setIndeterminate:YES];  [pageSpinny startAnimation:nil];
-            
-        } else {
-            [pageSpinny setIndeterminate:NO];  [pageSpinny startAnimation:nil];
-            
-        }
+    RACSignal *pageIsLoading = [RACObserve(pageView, loading) startWith:@NO];
+    [pageIsLoading subscribeNext:^(NSNumber *latest) {
+        @strongify(pageSpinny, pageView)
+        if ([latest boolValue])
+            [pageSpinny startAnimation:pageView];
+        else
+            [pageSpinny stopAnimation:pageView];
         
     }];
+    
+//    RACSignal *pageLoadingStatusSignal = [pageIsLoading combineLatestWith:pageLoadingProgress];
+//    [pageLoadingStatusSignal subscribeNext:^(RACTuple *latest) {
+//        @strongify(pageSpinny)
+//        double progress = [[latest second] doubleValue];
+//        BOOL isLoading = [[latest first] boolValue];
+//        
+//        if (!isLoading) {
+//            [pageSpinny setIndeterminate:YES];  [pageSpinny stopAnimation:nil];
+//            
+//        } else if (progress < 0 || progress > 1) {
+//            [pageSpinny setIndeterminate:YES];  [pageSpinny startAnimation:nil];
+//            
+//        } else {
+//            [pageSpinny setIndeterminate:NO];  [pageSpinny startAnimation:nil];
+//            
+//        }
+//        
+//    }];
     
     @weakify(gotoTheBackwardButton, goFrothButton)
     [[[RACObserve(pageView, canGoBack) startWith:@(NO)] takeUntil:tabClosure]
@@ -325,7 +333,7 @@
     
     
     [[[pageViewSendEventSignal throttle:3]
-      merge:[pageLoadingStatusSignal throttle:0.86400]]
+      merge:[pageLoadingProgress throttle:0.86400]]
      subscribeNext:^(id x) {
          @strongify(self)
          [self _updateThumbnail];
@@ -354,8 +362,6 @@
     //[pageView _setTopContentInset:0];
     
     // Fragile RACSubjects should be init'd here:
-    [pageIsLoading sendNext:@(0)];
-    [pageLoadingProgress sendNext:@(-1)];
     
     // Set initial location:
     if (initialLocation) {
@@ -538,14 +544,14 @@
 //}
 
 - (void)_commitLocationToHistory {
-    WebHistoryItem *pageLocation = [[pageView backForwardList] currentItem];
+    WKBackForwardListItem *pageLocation = [[pageView backForwardList] currentItem];
     if (pageLocation)
         [browsProfile putHistoryItem:pageLocation];
     
 }
 
 - (void)updateProgress:(NSNotification *)note {
-    [pageLoadingProgress sendNext:@([pageView estimatedProgress])];
+    
 }
 
 

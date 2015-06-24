@@ -884,10 +884,10 @@ static NSMapTable *namedProfiles;
 }
 
 
-- (void)putHistoryItem:(WebHistoryItem *)item {
-    NSString *urlString = [item URLString];
+- (void)putHistoryItem:(WKBackForwardListItem *)item {
+    NSString *urlString = [[item URL] absoluteString];
     NSString *title = [item title] ? [item title] : @"";
-    NSUInteger visitedDate = (NSUInteger)[[NSDate dateWithTimeIntervalSinceReferenceDate:[item lastVisitedTimeInterval]] timeIntervalSince1970];
+    NSUInteger visitedDate = (NSUInteger)[[NSDate date] timeIntervalSince1970];
     
     if (!urlString)
         return;

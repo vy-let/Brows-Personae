@@ -70,7 +70,7 @@ deliveringResultsToMainQueueByDoing:(void (^)(NSArray *results, BOOL *stop))resu
 // perform the necessary checks. You can never count on the object-
 // identity of a WebHistoryItem being the same on the way into and
 // out of a Brows Persona.
-- (void)putHistoryItem:(WebHistoryItem *)item;
+- (void)putHistoryItem:(WKBackForwardListItem *)item;
 
 //
 - (void)deleteHistoryItemForURL:(NSURL *)url;
