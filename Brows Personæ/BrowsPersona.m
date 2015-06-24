@@ -614,6 +614,8 @@ static NSMapTable *namedProfiles;
 
 
 - (void)setCookies:(NSArray *)cookies forURL:(NSURL *)url mainDocumentURL:(NSURL *)mainDocumentURL {
+    NSLog(@"\n\n\n\n\n OH NOES! USING THE OLD COOKIE MECHANISMS!\n\n\n\n\n");
+    
     for (NSHTTPCookie *coookieeee in cookies) {
         if ([coookieeee isForHost:[url host]])
             [self setCookie:coookieeee];
@@ -630,6 +632,8 @@ static NSMapTable *namedProfiles;
 
 
 - (void)setCookie:(NSHTTPCookie *)cookie {
+    NSLog(@"\n\n\n\n\n OH NOES! USING THE OLD COOKIE MECHANISMS!\n\n\n\n\n");
+    
     if ([[cookie value] length] + [[cookie name] length] + [[cookie path] length]
         + [[cookie domain] length] + [[cookie properties][NSHTTPCookieOriginURL] length]
         + [[cookie comment] length] + [[[cookie commentURL] absoluteString] length]       > 4096) {
