@@ -126,6 +126,7 @@
     [config setProcessPool:[browsProfile webProcessPool]];  // Usually, making the tab (as here) will be the first time the profile is asked for its process pool, which should be lazily created.
     [config setPreferences:webPrefs];
     [config setSuppressesIncrementalRendering:NO];
+    [config setWebsiteDataStore:[browsProfile webkitDataBacking]];
     
     
     pageView = [[WKWebView alloc] initWithFrame:NSMakeRect(0, 0, 500, 500)

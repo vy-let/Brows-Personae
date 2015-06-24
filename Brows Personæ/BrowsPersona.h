@@ -26,6 +26,7 @@
 @property (readonly) NSString *name;
 @property (readonly) NSString *rootHost;
 
+@property (readonly) WKWebsiteDataStore *webkitDataBacking;
 @property (readonly) WKProcessPool *webProcessPool;
 
 

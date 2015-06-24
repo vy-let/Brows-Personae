@@ -27,6 +27,8 @@ const UInt32 SiteProfileStoreApplicationID = 625418296;  // irb> rand 2**31
     
     dispatch_queue_t backgroundCookieQueue;
     dispatch_once_t backgroundCookieSetup;
+    dispatch_once_t webkitDataBackingSetup;
+    WKWebsiteDataStore *wkWebkitDataBacking;
     RACSubject *cookieTouchPusher;  // Push arrays of cookies to update their last-used timestamps.
     NSMutableSet *cookiesNeedingTouching;
 }
@@ -153,6 +155,18 @@ static NSMapTable *namedProfiles;
             }];
         [cookieTin close];
     });
+    
+}
+
+
+
+- (WKWebsiteDataStore *)webkitDataBacking {
+    dispatch_once(&webkitDataBackingSetup, ^{
+        NSURL *baseURL = [[[self class] mainProfileFolder] URLByAppendingPathComponent:[self name] isDirectory:YES];
+        wkWebkitDataBacking = [WKWebsiteDataStore ei_dataStoreWithBaseURL:baseURL];
+    });
+    
+    return wkWebkitDataBacking;
     
 }
 
