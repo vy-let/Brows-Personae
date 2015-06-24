@@ -267,7 +267,13 @@
     RACSignal *pageLoadingProgress = [RACObserve(pageView, estimatedProgress) startWith:@(0.0)];
     [pageLoadingProgress subscribeNext:^(NSNumber *latest) {
         @strongify(pageSpinny)
-        [pageSpinny setDoubleValue:[latest doubleValue]];
+        double latestValue = [latest doubleValue];
+        
+        [pageSpinny setDoubleValue:latestValue];
+        [pageSpinny setIndeterminate:(  latestValue < 0.101 || latestValue >= 1  )];
+        
+        // When the page starts loading, it reports its progress as "0.1," which is awful to test against.
+        // Presumably it's always less than 0.101. So that's what I'm saying.
         
     }];
     
