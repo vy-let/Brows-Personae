@@ -13,6 +13,7 @@
 		9C0C53C819F480A3003E0984 /* BrowsTab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C0C53C719F480A3003E0984 /* BrowsTab.xib */; };
 		9C0D93F31AA1226200728D2E /* PublicSuffixList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0D93F21AA1226200728D2E /* PublicSuffixList.m */; };
 		9C0D93F51AA124B300728D2E /* PSL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9C0D93F41AA124B300728D2E /* PSL.txt */; };
+		9C15D2B81B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C15D2B71B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m */; };
 		9C3071511A71D1C800AAA4F5 /* TabCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C3071501A71D1C800AAA4F5 /* TabCell.xib */; };
 		9C3071571A71DCBB00AAA4F5 /* BrowsTabTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */; };
 		9C345D351AE0E0E00010744F /* Brows.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9C345D341AE0E0E00010744F /* Brows.icns */; };
@@ -79,6 +80,8 @@
 		9C0D93F11AA1226200728D2E /* PublicSuffixList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicSuffixList.h; sourceTree = "<group>"; };
 		9C0D93F21AA1226200728D2E /* PublicSuffixList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicSuffixList.m; sourceTree = "<group>"; };
 		9C0D93F41AA124B300728D2E /* PSL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PSL.txt; sourceTree = "<group>"; };
+		9C15D2B61B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EINoClickthroughVisualEffectView.h; sourceTree = "<group>"; };
+		9C15D2B71B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EINoClickthroughVisualEffectView.m; sourceTree = "<group>"; };
 		9C3071501A71D1C800AAA4F5 /* TabCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabCell.xib; sourceTree = "<group>"; };
 		9C3071551A71DCBB00AAA4F5 /* BrowsTabTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsTabTableCellView.h; sourceTree = "<group>"; };
 		9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTabTableCellView.m; sourceTree = "<group>"; };
@@ -232,6 +235,8 @@
 			children = (
 				9C0D93F41AA124B300728D2E /* PSL.txt */,
 				9CD502F41A8C41C800AFE556 /* Categories */,
+				9C15D2B61B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.h */,
+				9C15D2B71B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m */,
 				9C345D341AE0E0E00010744F /* Brows.icns */,
 				9C6810F01A7C6940008263A4 /* Personæ.pch */,
 				9CDF343519EB2F4C0040AA0F /* Info.plist */,
@@ -468,6 +473,7 @@
 				9CD502F91A901A5800AFE556 /* MktabController.m in Sources */,
 				9C3071571A71DCBB00AAA4F5 /* BrowsTabTableCellView.m in Sources */,
 				9CDF345C19EB53F40040AA0F /* BrowsTab.m in Sources */,
+				9C15D2B81B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m in Sources */,
 				9C4EAAE01A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */,
 				9C4EAADA1A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m in Sources */,
 				9C0D93F31AA1226200728D2E /* PublicSuffixList.m in Sources */,

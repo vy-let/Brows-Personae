@@ -21,10 +21,12 @@
 - (void)swapTabs:(NSArray *)newTabs;
 - (void)putTab:(BrowsTab *)tab;
 - (void)putTab:(BrowsTab *)tab atIndex:(NSUInteger)idex;
+- (NSUInteger)indexOfTab:(BrowsTab *)tab;
 
 - (IBAction)closeSelectedTab:(id)sender;
 - (IBAction)closeTab:(id)sender;
 
 - (RACSignal *)tabSelection;
+- (void)selectTabsAtIndices:(NSIndexSet *)idices;
 
 @end

@@ -12,7 +12,7 @@
 @class EIIGIsolatedCookieWebView;
 
 
-@interface BrowsTab : NSViewController {
+@interface BrowsTab : NSViewController <WKNavigationDelegate, WKUIDelegate> {
     IBOutlet WKWebView *pageView;  // still IBOutlet---wishful thinking, I suppose.
     
     IBOutlet NSVisualEffectView *tooblar;
@@ -24,8 +24,19 @@
     IBOutlet NSButton *goStopReloadButton;
     IBOutlet NSTextField *personaIndicator;
     
+    IBOutlet NSVisualEffectView *jsAlertPane;
+    IBOutlet NSTextField *jsAlertHeader;
+    IBOutlet NSTextField *jsAlertMessage;
+    IBOutlet NSButton *jsAlertCancelButton;
+    
+    IBOutlet NSVisualEffectView *jsQueryPane;
+    IBOutlet NSTextField *jsQueryHeader;
+    IBOutlet NSTextField *jsQueryMessage;
+    IBOutlet NSTextField *jsQueryResponseField;
+    
 }
 
+- (instancetype)initWithProfile:(BrowsPersona *)profile webViewConfiguration:(WKWebViewConfiguration *)conf;
 - (instancetype)initWithProfile:(BrowsPersona *)profile initialLocation:(NSURL *)loc;
 - (instancetype)initWithProfileNamed:(NSString *)profileName initialLocation:(NSURL *)loc;
 
@@ -35,8 +46,12 @@
 - (IBAction)stopLoad:(id)sender;
 - (IBAction)reLoad:(id)sender;
 
+- (IBAction)finishJSAlertPanelAffirmatively:(id)sender;
+- (IBAction)finishJSAlertPanelNegatively:(id)sender;
+
 - (void)tabWillClose;
 
+@property (nonatomic, readonly) WKWebView *pageView;
 @property (nonatomic, readonly) NSImage *thumbnail;
 @property (nonatomic, readonly) NSImage *favicon;
 

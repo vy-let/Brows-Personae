@@ -9,11 +9,14 @@
 #import <WebKit/WebKit.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
+#import "BrowsWindow.h"
+#import "BrowsTabList.h"
 #import "BrowsTab.h"
 #import "BrowsPersona.h"
 #import "EIIGIsolatedCookieWebView.h"
 #import "EIIGIsolatedCookieWebViewResourceLoadDelegate.h"
 #import "WebView+ScrollViewAccess.h"
+#import <NSArray+Functional/NSArray+Functional.h>
 #import "Helpies.h"
 #import "PublicSuffixList.h"
 
@@ -37,6 +40,9 @@
     
     NSURL *initialLocation;
     
+    NSView *jsOverlayPane;
+    void (^jsFinishOverlay)(BOOL wasAffirmative);
+    
 }
 
 @end
@@ -53,8 +59,17 @@
     
     initialLocation = urlOrSearch;
     
+    [self _setPageViewWithConfiguration:nil];
+    
     return self;
     
+}
+
+- (instancetype)initWithProfile:(BrowsPersona *)profile webViewConfiguration:(WKWebViewConfiguration *)conf {
+    if (!(self = [self initWithProfile:profile initialLocation:nil]))  return nil;
+    [self _setPageViewWithConfiguration:conf];
+    
+    return self;
 }
 
 - (instancetype)initWithProfileNamed:(NSString *)profileName initialLocation:(NSURL *)urlOrSearch {
@@ -73,6 +88,7 @@
 - (void)dealloc {
     //[pageView close];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self _dismissPriorAlertHandler];
     NSLog(@"Brows Tab for %@ at %@ is being deallocated.", [browsProfile name], [[pageView URL] absoluteString]);
 }
 
@@ -81,6 +97,12 @@
     [super awakeFromNib];
     [tooblar setBlendingMode:NSVisualEffectBlendingModeWithinWindow];
     [tooblar setMaterial:NSVisualEffectMaterialTitlebar];
+    
+    [@[jsAlertPane, jsQueryPane] applyBlock:^(NSVisualEffectView *pane) {
+        [pane setBlendingMode:NSVisualEffectBlendingModeWithinWindow];
+        [pane setMaterial:NSVisualEffectMaterialLight];
+        [pane setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+    }];
     
     [self placePageView];
     
@@ -108,26 +130,34 @@
 
 
 
-- (void)placePageView {
-    // Ya know, there's a REASON we have nib files. There's a fucking reason.
-    // Ugh.
-    
+- (void)_setPageViewWithConfiguration:(WKWebViewConfiguration *)config {
     WKPreferences *webPrefs = [[WKPreferences alloc] init];
     [webPrefs setJavaEnabled:NO];
     [webPrefs setJavaScriptEnabled:YES];
     [webPrefs setJavaScriptCanOpenWindowsAutomatically:YES];
     [webPrefs setPlugInsEnabled:NO];
     
-    WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-    [config setProcessPool:[browsProfile webProcessPool]];  // Usually, making the tab (as here) will be the first time the profile is asked for its process pool, which should be lazily created.
-    [config setPreferences:webPrefs];
-    [config setSuppressesIncrementalRendering:NO];
-    [config setWebsiteDataStore:[browsProfile webkitDataBacking]];
+    if (!config) {
+        config = [[WKWebViewConfiguration alloc] init];
+        [config setProcessPool:[browsProfile webProcessPool]];  // Usually, making the tab (as here) will be the first time the profile is asked for its process pool, which should be lazily created.
+        [config setPreferences:webPrefs];
+        [config setSuppressesIncrementalRendering:NO];
+        [config setWebsiteDataStore:[browsProfile webkitDataBacking]];
+    }
     
     
     pageView = [[WKWebView alloc] initWithFrame:NSMakeRect(0, 0, 500, 500)
                                   configuration:config];
+    
+}
+
+- (void)placePageView {
+    // Ya know, there's a REASON we have nib files. There's a fucking reason.
+    // Ugh.
+    
     [pageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    //[pageView setNavigationDelegate:self];
+    [pageView setUIDelegate:self];
     
     [[self view] addSubview:pageView
                  positioned:NSWindowBelow
@@ -194,24 +224,33 @@
                                                 ]]
                              startWith:@(NO)];
     
-    @weakify(tooblar)
+    @weakify(tooblar, self)
     // Whenever the page view has some sort of loading change, or the tooblar changes height, make sure we've fixed the content inset.
-    [[[[RACObserve(pageView, loading) merge:RACObserve(tooblar, frame)]
-       delay:0.01]
-      takeUntil:tabClosure]
-     subscribeNext:^(id someBooleanOrBullshit) {
-         @strongify(tooblar, pageView)
-         CGFloat tooblarHeight = [tooblar frame].size.height;
-         
-         //if ([pageView ei_topContentInset] != tooblarHeight)
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Do this later so that we can refer to the tab selection signal,
+        // after the view has attached to the window hierarchy.
+        
+        [[[[RACSignal merge:@[RACObserve(pageView, loading),
+                              RACObserve(tooblar, frame),
+                              [[[[[[self view] window] windowController] tabListController] tabSelection] filter:^BOOL(BrowsTab *newSelTab) { @strongify(self)  return newSelTab == self;  }]
+                              ]]
+           delay:0.01]
+          takeUntil:tabClosure]
+         subscribeNext:^(id someBooleanOrBullshit) {
+             @strongify(tooblar, pageView)
+             CGFloat tooblarHeight = [tooblar frame].size.height;
+             
+             //if ([pageView ei_topContentInset] != tooblarHeight)
              [pageView setEi_topContentInset:tooblarHeight];
              
-         
-         
-     }];
+             
+             
+         }];
+        
+    });
     
     
-    @weakify(locationBox, self)
+    @weakify(locationBox)
     [locationDasu subscribeNext:^(id x) {
         @strongify(locationBox)
         
@@ -463,6 +502,154 @@
 - (void)setThumbnail:(NSImage *)thumbnail {
     // RAC observers of our thumbnail should be able to see these updates.
     latestThumbnail = thumbnail;
+}
+
+- (WKWebView *)pageView {
+    return pageView;
+}
+
+
+
+
+
+
+
+
+#pragma mark -
+#pragma mark UI Delegate
+
+
+- (nullable WKWebView *)webView:(WKWebView *)webView
+ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
+            forNavigationAction:(WKNavigationAction *)navigationAction
+                 windowFeatures:(WKWindowFeatures *)windowFeatures {
+    
+    BrowsWindow *parentWindow = [[[self view] window] windowController];
+    BrowsTabList *tabsListController = [parentWindow tabListController];
+    NSUInteger ourPresentIndex = [tabsListController indexOfTab:self];
+    
+    BrowsTab *newTab = [[BrowsTab alloc] initWithProfile:browsProfile
+                                         webViewConfiguration:configuration];
+    
+    [tabsListController putTab:newTab atIndex:ourPresentIndex];
+    [tabsListController selectTabsAtIndices:[NSIndexSet indexSetWithIndex:ourPresentIndex]];
+    
+    
+    return [newTab pageView];
+    
+}
+
+
+
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
+    
+    [self _dismissPriorAlertHandler];
+    
+    // TODO LOCALIZE THIS!!!
+    [jsAlertHeader setStringValue:[NSString stringWithFormat:@"The page at %@ says:", [[[frame request] URL] host]]];
+    [jsAlertMessage setStringValue:(message ? message : @"")];
+    [jsAlertCancelButton setHidden:YES];
+    
+    [[self view] addSubview:jsAlertPane positioned:NSWindowAbove relativeTo:pageView];
+    [self _bindPaneToTab:jsAlertPane];
+    
+    @weakify(jsAlertPane)
+    jsFinishOverlay = [^(BOOL wasAffirmative){
+        @strongify(jsAlertPane)
+        completionHandler();
+        [jsAlertPane removeFromSuperview];
+        
+    } copy];
+    
+}
+
+
+
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler {
+    
+    [self _dismissPriorAlertHandler];
+    
+    // TODO LOCALIZE THIS!!!
+    [jsAlertHeader setStringValue:[NSString stringWithFormat:@"The page at %@ asks:", [[[frame request] URL] host]]];
+    [jsAlertMessage setStringValue:(message ? message : @"")];
+    [jsAlertCancelButton setHidden:NO];
+    
+    [[self view] addSubview:jsAlertPane positioned:NSWindowAbove relativeTo:pageView];
+    [self _bindPaneToTab:jsAlertPane];
+    
+    @weakify(jsAlertPane)
+    jsFinishOverlay = [^(BOOL wasAffirmative){
+        @strongify(jsAlertPane)
+        completionHandler(wasAffirmative);
+        [jsAlertPane removeFromSuperview];
+        
+    } copy];
+    
+}
+
+
+
+- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString *))completionHandler {
+    
+    [self _dismissPriorAlertHandler];
+    
+    // TODO LOCALIZE THIS!!!
+    [jsQueryHeader setStringValue:[NSString stringWithFormat:@"The page at %@ asks:", [[[frame request] URL] host]]];
+    [jsQueryMessage setStringValue:(prompt ? prompt : @"")];
+    [jsQueryResponseField setStringValue:(defaultText ? defaultText : @"")];
+    
+    [[self view] addSubview:jsQueryPane positioned:NSWindowAbove relativeTo:pageView];
+    [self _bindPaneToTab:jsQueryPane];
+    
+    @weakify(jsQueryPane, jsQueryResponseField)
+    jsFinishOverlay = [^(BOOL wasAffirmative){
+        @strongify(jsQueryPane, jsQueryResponseField)
+        completionHandler(wasAffirmative ? [jsQueryResponseField stringValue] : nil);
+        
+        [jsQueryPane removeFromSuperview];
+        
+    } copy];
+    
+}
+
+
+
+- (IBAction)finishJSAlertPanelAffirmatively:(id)sender {
+    if (!jsFinishOverlay)
+        return;
+    
+    jsFinishOverlay(YES);
+    jsFinishOverlay = nil;
+    
+}
+
+- (IBAction)finishJSAlertPanelNegatively:(id)sender {
+    if (!jsFinishOverlay)
+        return;
+    
+    jsFinishOverlay(NO);
+    jsFinishOverlay = nil;
+    
+}
+
+
+
+- (void)_dismissPriorAlertHandler {
+    [self finishJSAlertPanelNegatively:nil];
+}
+
+- (void)_bindPaneToTab:(NSView *)bindPane {
+    NSDictionary *applicableParties = NSDictionaryOfVariableBindings(bindPane);
+    [NSLayoutConstraint activateConstraints:
+     [[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bindPane]|"
+                                              options:0
+                                              metrics:nil
+                                                views:applicableParties]
+      arrayByAddingObjectsFromArray:
+      [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[bindPane]|"
+                                              options:0
+                                              metrics:nil
+                                                views:applicableParties]]];
 }
 
 

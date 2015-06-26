@@ -10,6 +10,14 @@
                 <outlet property="goFrothButton" destination="6qb-g7-UYF" id="e9X-SQ-ZPC"/>
                 <outlet property="goStopReloadButton" destination="nbI-S6-HGb" id="fIx-ik-Did"/>
                 <outlet property="gotoTheBackwardButton" destination="Fzo-bD-6On" id="sHy-pp-0iq"/>
+                <outlet property="jsAlertCancelButton" destination="p4B-uf-DKG" id="c2E-E3-Zda"/>
+                <outlet property="jsAlertHeader" destination="ly8-Aw-8C4" id="rQE-97-KCJ"/>
+                <outlet property="jsAlertMessage" destination="av9-8y-RDY" id="typ-IR-EIR"/>
+                <outlet property="jsAlertPane" destination="jZi-Le-Q99" id="sAZ-JE-Xr2"/>
+                <outlet property="jsQueryHeader" destination="WBx-Au-nUD" id="54p-VH-xRc"/>
+                <outlet property="jsQueryMessage" destination="Gtw-ah-0q4" id="GYI-rb-iUA"/>
+                <outlet property="jsQueryPane" destination="Ibx-dq-hQO" id="9G3-gu-eOa"/>
+                <outlet property="jsQueryResponseField" destination="sme-1f-pI9" id="73e-ub-aFM"/>
                 <outlet property="locationBox" destination="Jjb-3b-eS6" id="XPS-zF-sZo"/>
                 <outlet property="pageSecurityIndicator" destination="hkU-KP-lEa" id="TPV-9M-g2v"/>
                 <outlet property="pageSpinny" destination="c77-HL-ODd" id="ir1-SW-wz7"/>
@@ -165,6 +173,153 @@
                 <constraint firstItem="yQk-ri-Ojl" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="ftd-AM-BdZ"/>
             </constraints>
             <point key="canvasLocation" x="702" y="625"/>
+        </customView>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="jZi-Le-Q99" customClass="EINoClickthroughVisualEffectView">
+            <rect key="frame" x="0.0" y="0.0" width="767" height="960"/>
+            <subviews>
+                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ly8-Aw-8C4">
+                    <rect key="frame" x="269" y="613" width="229" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="The page at xyz.foo says:" id="vML-JO-kx7">
+                        <font key="font" metaFont="systemBold" size="18"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="999" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="av9-8y-RDY">
+                    <rect key="frame" x="232" y="571" width="304" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="300" id="V1C-Y4-2BO"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="500" id="bXP-zc-LhC"/>
+                    </constraints>
+                    <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="This is a bit of text, which, in fact, may be quite long indeed. Might it even have a question?" id="lmi-mL-wWN">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5O1-xx-FWU">
+                    <rect key="frame" x="458" y="531" width="82" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="9go-Ce-c0A"/>
+                    </constraints>
+                    <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WFd-Pg-Sg2">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="finishJSAlertPanelAffirmatively:" target="-2" id="7nd-Yc-xZj"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p4B-uf-DKG">
+                    <rect key="frame" x="376" y="531" width="82" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="OHY-Kq-RMc"/>
+                    </constraints>
+                    <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dEk-Ts-zgr">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="finishJSAlertPanelNegatively:" target="-2" id="mm5-Rd-4UY"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="p4B-uf-DKG" firstAttribute="baseline" secondItem="5O1-xx-FWU" secondAttribute="baseline" id="9Fx-7o-Tt1"/>
+                <constraint firstItem="5O1-xx-FWU" firstAttribute="leading" secondItem="p4B-uf-DKG" secondAttribute="trailing" constant="12" id="HRq-Cs-NiO"/>
+                <constraint firstItem="ly8-Aw-8C4" firstAttribute="centerX" secondItem="av9-8y-RDY" secondAttribute="centerX" id="IGy-4a-CrB"/>
+                <constraint firstItem="av9-8y-RDY" firstAttribute="trailing" secondItem="5O1-xx-FWU" secondAttribute="trailing" id="hed-Ae-jVg"/>
+                <constraint firstItem="5O1-xx-FWU" firstAttribute="top" secondItem="av9-8y-RDY" secondAttribute="bottom" constant="12" id="knK-Ok-8Hy"/>
+                <constraint firstItem="av9-8y-RDY" firstAttribute="top" secondItem="ly8-Aw-8C4" secondAttribute="bottom" constant="8" id="o2m-VA-wMY"/>
+                <constraint firstItem="ly8-Aw-8C4" firstAttribute="centerY" secondItem="jZi-Le-Q99" secondAttribute="bottom" multiplier="0.35" id="tSy-yL-rco"/>
+                <constraint firstAttribute="centerX" secondItem="ly8-Aw-8C4" secondAttribute="centerX" id="waI-Ux-tGb"/>
+            </constraints>
+            <point key="canvasLocation" x="1701.5" y="625"/>
+        </customView>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ibx-dq-hQO" customClass="EINoClickthroughVisualEffectView">
+            <rect key="frame" x="0.0" y="0.0" width="767" height="960"/>
+            <subviews>
+                <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="WBx-Au-nUD">
+                    <rect key="frame" x="269" y="613" width="230" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="The page at xyz.foo asks:" id="Yfq-0a-hKs">
+                        <font key="font" metaFont="systemBold" size="18"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="999" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gtw-ah-0q4">
+                    <rect key="frame" x="232" y="571" width="304" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="300" id="0mD-EF-MyE"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="500" id="NfO-EC-Jlh"/>
+                    </constraints>
+                    <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="Is this where the lorem ipsum dolor, sit elit amet?" id="BdX-RX-b1e">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sme-1f-pI9">
+                    <rect key="frame" x="234" y="541" width="300" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="Default response text" drawsBackground="YES" id="mGR-FJ-HD3">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gqr-BV-rK2">
+                    <rect key="frame" x="458" y="501" width="82" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="1b8-s4-wY3"/>
+                    </constraints>
+                    <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ztj-5T-wSv">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="finishJSAlertPanelAffirmatively:" target="-2" id="c8T-8V-Bek"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WxD-4U-L9G">
+                    <rect key="frame" x="376" y="501" width="82" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="OKb-4J-K7c"/>
+                    </constraints>
+                    <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hin-cE-4Ic">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="finishJSAlertPanelNegatively:" target="-2" id="jKT-6h-oRH"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Gqr-BV-rK2" firstAttribute="top" secondItem="sme-1f-pI9" secondAttribute="bottom" constant="12" id="1PW-bj-LWs"/>
+                <constraint firstAttribute="centerX" secondItem="WBx-Au-nUD" secondAttribute="centerX" id="3xK-Uc-wVJ"/>
+                <constraint firstItem="Gtw-ah-0q4" firstAttribute="trailing" secondItem="Gqr-BV-rK2" secondAttribute="trailing" id="CYL-7W-zWt"/>
+                <constraint firstItem="sme-1f-pI9" firstAttribute="top" secondItem="Gtw-ah-0q4" secondAttribute="bottom" constant="8" id="Emr-bV-wR6"/>
+                <constraint firstItem="Gtw-ah-0q4" firstAttribute="width" secondItem="sme-1f-pI9" secondAttribute="width" id="bPJ-jd-xEV"/>
+                <constraint firstItem="Gqr-BV-rK2" firstAttribute="leading" secondItem="WxD-4U-L9G" secondAttribute="trailing" constant="12" id="hP5-5U-Nlr"/>
+                <constraint firstItem="sme-1f-pI9" firstAttribute="centerX" secondItem="WBx-Au-nUD" secondAttribute="centerX" id="nBT-go-7KD"/>
+                <constraint firstItem="WBx-Au-nUD" firstAttribute="centerY" secondItem="Ibx-dq-hQO" secondAttribute="bottom" multiplier="0.35" id="pQJ-i3-NsL"/>
+                <constraint firstItem="WxD-4U-L9G" firstAttribute="baseline" secondItem="Gqr-BV-rK2" secondAttribute="baseline" id="qUv-La-XzU"/>
+                <constraint firstItem="Gtw-ah-0q4" firstAttribute="top" secondItem="WBx-Au-nUD" secondAttribute="bottom" constant="8" id="tit-0H-RO2"/>
+                <constraint firstItem="WBx-Au-nUD" firstAttribute="centerX" secondItem="Gtw-ah-0q4" secondAttribute="centerX" id="vUK-vg-qVM"/>
+            </constraints>
+            <point key="canvasLocation" x="2572.5" y="625"/>
         </customView>
     </objects>
     <resources>

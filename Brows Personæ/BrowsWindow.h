@@ -25,6 +25,7 @@
 - (void)finalizeNewTabPanelWithTab:(BrowsTab *)tab;
 
 - (NSArray *)tabs;
+- (BrowsTabList *)tabListController;
 
 
 

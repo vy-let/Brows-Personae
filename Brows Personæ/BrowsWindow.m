@@ -73,6 +73,10 @@
     return [tabsListController tabs];
 }
 
+- (BrowsTabList *)tabListController {
+    return tabsListController;
+}
+
 
 
 - (void)awakeFromNib {

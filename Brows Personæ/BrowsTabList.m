@@ -106,6 +106,15 @@
 
 - (RACSignal *)tabSelection { return tabSelection; }
 
+- (void)selectTabsAtIndices:(NSIndexSet *)idices {
+    [tabsList selectRowIndexes:idices byExtendingSelection:NO];
+}
+
+- (NSUInteger)indexOfTab:(BrowsTab *)tab {
+    return [browsTabs indexOfObject:tab];
+    
+}
+
 
 
 - (IBAction)closeSelectedTab:(id)sender {
