@@ -15,14 +15,9 @@
 @interface BrowsTab : NSViewController <WKNavigationDelegate, WKUIDelegate> {
     IBOutlet WKWebView *pageView;  // still IBOutlet---wishful thinking, I suppose.
     
-    IBOutlet NSVisualEffectView *tooblar;
-    IBOutlet NSImageView *pageSecurityIndicator;
-    IBOutlet NSProgressIndicator *pageSpinny;
-    IBOutlet NSButton *gotoTheBackwardButton;
-    IBOutlet NSButton *goFrothButton;
-    IBOutlet NSTextField *locationBox;
-    IBOutlet NSButton *goStopReloadButton;
-    IBOutlet NSTextField *personaIndicator;
+    IBOutlet NSLayoutConstraint *tooblarBackingHeightStrut;
+    
+    IBOutlet NSVisualEffectView *tooblarBacking;
     
     IBOutlet NSVisualEffectView *jsAlertPane;
     IBOutlet NSTextField *jsAlertHeader;
@@ -51,9 +46,11 @@
 
 - (void)tabWillClose;
 
+@property (nonatomic, readonly) BrowsPersona *browsProfile;
 @property (nonatomic, readonly) WKWebView *pageView;
 @property (nonatomic, readonly) NSImage *thumbnail;
 @property (nonatomic, readonly) NSImage *favicon;
+@property (nonatomic, readonly) RACSignal *tabState;
 
 @end
 

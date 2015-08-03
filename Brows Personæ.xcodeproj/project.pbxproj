@@ -14,6 +14,7 @@
 		9C0D93F31AA1226200728D2E /* PublicSuffixList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0D93F21AA1226200728D2E /* PublicSuffixList.m */; };
 		9C0D93F51AA124B300728D2E /* PSL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9C0D93F41AA124B300728D2E /* PSL.txt */; };
 		9C15D2B81B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C15D2B71B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m */; };
+		9C18A7821B4110020085BA47 /* BrowsTabState.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C18A7811B4110020085BA47 /* BrowsTabState.m */; };
 		9C3071511A71D1C800AAA4F5 /* TabCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C3071501A71D1C800AAA4F5 /* TabCell.xib */; };
 		9C3071571A71DCBB00AAA4F5 /* BrowsTabTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */; };
 		9C345D351AE0E0E00010744F /* Brows.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9C345D341AE0E0E00010744F /* Brows.icns */; };
@@ -82,6 +83,8 @@
 		9C0D93F41AA124B300728D2E /* PSL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PSL.txt; sourceTree = "<group>"; };
 		9C15D2B61B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EINoClickthroughVisualEffectView.h; sourceTree = "<group>"; };
 		9C15D2B71B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EINoClickthroughVisualEffectView.m; sourceTree = "<group>"; };
+		9C18A7801B4110020085BA47 /* BrowsTabState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsTabState.h; sourceTree = "<group>"; };
+		9C18A7811B4110020085BA47 /* BrowsTabState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTabState.m; sourceTree = "<group>"; };
 		9C3071501A71D1C800AAA4F5 /* TabCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabCell.xib; sourceTree = "<group>"; };
 		9C3071551A71DCBB00AAA4F5 /* BrowsTabTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsTabTableCellView.h; sourceTree = "<group>"; };
 		9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTabTableCellView.m; sourceTree = "<group>"; };
@@ -234,6 +237,8 @@
 			isa = PBXGroup;
 			children = (
 				9C0D93F41AA124B300728D2E /* PSL.txt */,
+				9C18A7801B4110020085BA47 /* BrowsTabState.h */,
+				9C18A7811B4110020085BA47 /* BrowsTabState.m */,
 				9CD502F41A8C41C800AFE556 /* Categories */,
 				9C15D2B61B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.h */,
 				9C15D2B71B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m */,
@@ -468,6 +473,7 @@
 			files = (
 				9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */,
 				9CDF345719EB30640040AA0F /* BrowsWindow.m in Sources */,
+				9C18A7821B4110020085BA47 /* BrowsTabState.m in Sources */,
 				9CD502EC1A8AF31100AFE556 /* Helpies.m in Sources */,
 				9C68B11B1A9EA7D800F5C444 /* RACStream+SlidingWindow.m in Sources */,
 				9CD502F91A901A5800AFE556 /* MktabController.m in Sources */,
@@ -603,8 +609,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Debug,
-					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Release,
 					"$(PROJECT_DIR)/WebKit/WebKitBuild/Release",
 				);
 				GCC_PREFIX_HEADER = "Brows Personæ/Personæ.pch";
@@ -632,8 +636,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Debug,
-					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Release,
 					"$(PROJECT_DIR)/WebKit/WebKitBuild/Release",
 				);
 				GCC_PREFIX_HEADER = "Brows Personæ/Personæ.pch";

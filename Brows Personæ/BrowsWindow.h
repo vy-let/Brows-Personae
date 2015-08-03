@@ -18,6 +18,14 @@
     IBOutlet NSView *windowBody;
     IBOutlet NSView *noTabPlaceholder;
     IBOutlet NSView *multiTabsPlaceholder;
+    
+    IBOutlet NSSegmentedControl *forwardBackwardButton;
+    IBOutlet NSTextField *locationBox;
+    IBOutlet NSButton *goStopReloadButton;
+    IBOutlet NSTextField *pageTitleField;
+    IBOutlet NSTextField *personaIndicator;
+    IBOutlet NSButton *securityIndicator;
+    
 }
 
 
@@ -26,6 +34,13 @@
 
 - (NSArray *)tabs;
 - (BrowsTabList *)tabListController;
+
+
+- (IBAction)goToLocation:(id)sender;
+- (IBAction)stopLoading:(id)sender;
+- (IBAction)reload:(id)sender;
+
+// - (IBAction)revealPageCertificateInformation:(id)sender;  // TODO un-unimplement this.
 
 
 

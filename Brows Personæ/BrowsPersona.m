@@ -146,7 +146,7 @@ static NSMapTable *namedProfiles;
 
 - (void)dealloc {
     FMDatabaseQueue *cookieTin = cookieJar;
-    NSLog(@"Profile for %@ is being deallocated; db may vacuum shortly.", name);
+    //NSLog(@"Profile for %@ is being deallocated; db may vacuum shortly.", name);
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         if (arc4random_uniform(30) == 0)
