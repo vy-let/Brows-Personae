@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "493A41E4B5B5EFE1529AFDC61EF3FC0E799F55C8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "493A41E4B5B5EFE1529AFDC61EF3FC0E799F55C8" : 0,
+    "94D753953040122F76D30FC1464B1B4DCE436F58" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C7166896-D0AC-42EA-8A99-FB7156B735D3",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "493A41E4B5B5EFE1529AFDC61EF3FC0E799F55C8" : "Brows%20Person%C3%A6",
+    "94D753953040122F76D30FC1464B1B4DCE436F58" : "Git\/WebKit"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Brows Personæ",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Brows Personæ.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "ssh:\/\/cerberus.westminstercollege.edu:2222\/home\/tbaddley\/Documents\/Personae.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "493A41E4B5B5EFE1529AFDC61EF3FC0E799F55C8"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/git.webkit.org\/WebKit.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "94D753953040122F76D30FC1464B1B4DCE436F58"
+    }
+  ]
+}
