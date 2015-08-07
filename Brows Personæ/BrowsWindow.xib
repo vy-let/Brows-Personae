@@ -177,6 +177,9 @@
                                     <segment toolTip="Go Forward" image="NSGoRightTemplate" width="26" tag="1"/>
                                 </segments>
                             </segmentedCell>
+                            <connections>
+                                <action selector="goForwardOrBack:" target="-2" id="0s7-vd-E7H"/>
+                            </connections>
                         </segmentedControl>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="A2C8B50E-612A-42B2-8FB7-207256BB53A2" label="Title" paletteLabel="Page Title" id="vyY-RN-jHI">
@@ -205,6 +208,9 @@
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
+                            <connections>
+                                <action selector="goToLocation:" target="-2" id="WzU-J4-pEq"/>
+                            </connections>
                         </textField>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="DB330ED0-6CA9-406D-A3BD-4378AB7E0166" label="Go/Stop/Reload" paletteLabel="Go / Stop / Reload" image="NSRefreshTemplate" id="acn-QW-LDh">
@@ -218,6 +224,9 @@
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <connections>
+                                <action selector="reload:" target="-2" id="zC9-Qu-WzL"/>
+                            </connections>
                         </button>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="A2B31BA5-21FA-460E-BA11-8EC847BB9EF5" label="Persona" paletteLabel="Persona Indicator" id="xr6-xF-mjD">

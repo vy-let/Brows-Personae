@@ -30,6 +30,8 @@
     MktabController *newtabController;
     __weak NSPopover *newtabPopover;
     
+    __weak BrowsTab *singleSelectedTab;
+    
 }
 
 @end
@@ -174,16 +176,19 @@
 - (void)_bindTooblarControlsToPresentTab {
     RACSignal *presentTab = [[tabsListController tabSelection] distinctUntilChanged];
     @weakify(forwardBackwardButton, locationBox, goStopReloadButton, pageTitleField, personaIndicator, securityIndicator)
+    @weakify(self)
     
     [presentTab subscribeNext:^(NSArray *selTabs) {
         // None of these controls should be nil unless all of them are. For succinctness, we’ll just check one.
         @strongify(forwardBackwardButton, locationBox, goStopReloadButton, pageTitleField, personaIndicator, securityIndicator)
+        @strongify(self)
         if (!forwardBackwardButton)
             return;
         
         BrowsTab *selTab = nil;
         if ([selTabs count] == 1)
             selTab = [selTabs objectAtIndex:0];
+        self->singleSelectedTab = selTab;
         
         BOOL enableControls = !!selTab;
         
@@ -260,9 +265,9 @@
                                                              [[isLoadingIsEditing first] boolValue] ? @"NSStopProgressTemplate" :
                                                                                                       @"NSReloadTemplate" )]];
          
-         [goStopReloadButton setAction:( [[isLoadingIsEditing second] boolValue] ? @selector(submitLocation:) :
-                                          [[isLoadingIsEditing first] boolValue] ? @selector(stopLoad:) :
-                                                                                   @selector(reLoad:) )];
+         [goStopReloadButton setAction:( [[isLoadingIsEditing second] boolValue] ? @selector(goToLocation:) :
+                                          [[isLoadingIsEditing first] boolValue] ? @selector(stopLoading:) :
+                                                                                   @selector(reload:) )];
          
     }];
     
@@ -311,6 +316,40 @@
     [tabsListController putTab:tab];
     [tabsList selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
     
+}
+
+
+
+
+
+# pragma mark -
+# pragma mark IBActions
+
+//
+// If singleSelectedTab becomes nil at any point (as expected),
+// these methods will simply cease to do anything.
+//
+
+- (IBAction)goToLocation:(id)sender {
+    [singleSelectedTab goTo:[locationBox stringValue]];
+}
+
+
+- (IBAction)stopLoading:(id)sender {
+    [singleSelectedTab stopLoading:sender];
+}
+
+
+- (IBAction)reload:(id)sender {
+    [singleSelectedTab reload:sender];
+}
+     
+     
+- (IBAction)goForwardOrBack:(id)sender {
+    if ([sender selectedSegment] == 0)
+        [singleSelectedTab goBack:sender];
+    else
+        [singleSelectedTab goForward:sender];
 }
 
 

@@ -437,21 +437,36 @@
 
 
 
-- (IBAction)gotoTheBackward:(id)sender {
+- (void)goTo:(NSString *)userInput {
+    NSURL *requestURL = urlForLocation(userInput, NULL, NULL);
+    // Right now, we don't care whether those were inferred-protocol or search, hence NULLs.
+    
+    if (!requestURL) return;  // Just abort the whole thing. Act like they said nothing.
+    
+    @weakify(self)
+    dispatch_async(dispatch_get_main_queue(), ^{  // Postpone until location editing session has fully popped.
+        @strongify(self)
+        [self performStandardRequest:requestURL];
+    });
+    
+
+}
+
+- (IBAction)goBack:(id)sender {
     [pageView goBack:sender];
 }
 
-- (IBAction)goFroth:(id)sender {
+- (IBAction)goForward:(id)sender {
     [pageView goForward:sender];
 }
 
 
 
-- (void)stopLoad:(id)sender {
+- (void)stopLoading:(id)sender {
     [pageView stopLoading:sender];
 }
 
-- (void)reLoad:(id)sender {
+- (void)reload:(id)sender {
     [pageView reload:sender];
 }
 

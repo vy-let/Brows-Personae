@@ -35,11 +35,11 @@
 - (instancetype)initWithProfile:(BrowsPersona *)profile initialLocation:(NSURL *)loc;
 - (instancetype)initWithProfileNamed:(NSString *)profileName initialLocation:(NSURL *)loc;
 
-- (IBAction)submitLocation:(id)sender;
-- (IBAction)gotoTheBackward:(id)sender;
-- (IBAction)goFroth:(id)sender;
-- (IBAction)stopLoad:(id)sender;
-- (IBAction)reLoad:(id)sender;
+- (void)goTo:(NSString *)userInput;
+- (IBAction)goBack:(id)sender;
+- (IBAction)goForward:(id)sender;
+- (IBAction)stopLoading:(id)sender;
+- (IBAction)reload:(id)sender;
 
 - (IBAction)finishJSAlertPanelAffirmatively:(id)sender;
 - (IBAction)finishJSAlertPanelNegatively:(id)sender;

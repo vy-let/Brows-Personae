@@ -39,6 +39,7 @@
 - (IBAction)goToLocation:(id)sender;
 - (IBAction)stopLoading:(id)sender;
 - (IBAction)reload:(id)sender;
+- (IBAction)goForwardOrBack:(id)sender;
 
 // - (IBAction)revealPageCertificateInformation:(id)sender;  // TODO un-unimplement this.
 
