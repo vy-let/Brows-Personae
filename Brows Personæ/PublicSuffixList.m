@@ -2,7 +2,7 @@
 //  PublicSuffixList.m
 //  Brows Personæ
 //
-//  Created by Talus Baddley on 2015-2-27.
+//  Created by Violet Baddley on 2015-2-27.
 //  Copyright (c) 2015 Eightt. All rights reserved.
 //
 

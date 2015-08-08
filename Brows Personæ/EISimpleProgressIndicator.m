@@ -2,7 +2,7 @@
 //  EISimpleProgressIndicator.m
 //  Brows Personæ
 //
-//  Created by Talus Baddley on 2015-8-7.
+//  Created by Violet Baddley on 2015-8-7.
 //  Copyright © 2015 Eightt. All rights reserved.
 //
 

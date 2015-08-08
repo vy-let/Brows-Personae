@@ -2,7 +2,7 @@
 //  BrowsTabList.h
 //  Brows Personæ
 //
-//  Created by Talus Baddley on 2015-2-16.
+//  Created by Violet Baddley on 2015-2-16.
 //  Copyright (c) 2015 Eightt. All rights reserved.
 //
 

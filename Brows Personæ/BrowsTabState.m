@@ -2,7 +2,7 @@
 //  BrowsTabState.m
 //  Brows Personæ
 //
-//  Created by Talus Baddley on 2015-6-28.
+//  Created by Violet Baddley on 2015-6-28.
 //  Copyright © 2015 Eightt. All rights reserved.
 //
 
