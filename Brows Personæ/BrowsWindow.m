@@ -194,7 +194,7 @@
         
         [@[forwardBackwardButton, locationBox, goStopReloadButton, pageTitleField, personaIndicator, securityIndicator]
          applyBlock:^(NSControl *tooblarControl) {
-             [tooblarControl setEnabled:enableControls];
+             [tooblarControl setHidden:!enableControls];
              
          }];
         
