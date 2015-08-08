@@ -2,7 +2,7 @@
 //  RACStream+SlidingWindow.m
 //  Brows Personæ
 //
-//  Created by Talus Baddley on 2015-2-25.
+//  Created by Violet Baddley on 2015-2-25.
 //  Copyright (c) 2015 Eightt. All rights reserved.
 //
 

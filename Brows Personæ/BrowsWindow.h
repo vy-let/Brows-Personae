@@ -2,7 +2,7 @@
 //  BrowsWindow.h
 //  Brows Personæ
 //
-//  Created by Taldar Baddley on 2014-10-12.
+//  Created by Violet Baddley on 2014-10-12.
 //  Copyright (c) 2014 Eightt. All rights reserved.
 //
 
@@ -18,6 +18,14 @@
     IBOutlet NSView *windowBody;
     IBOutlet NSView *noTabPlaceholder;
     IBOutlet NSView *multiTabsPlaceholder;
+    
+    IBOutlet NSSegmentedControl *forwardBackwardButton;
+    IBOutlet NSTextField *locationBox;
+    IBOutlet NSButton *goStopReloadButton;
+    IBOutlet NSTextField *pageTitleField;
+    IBOutlet NSTextField *personaIndicator;
+    IBOutlet NSButton *securityIndicator;
+    
 }
 
 
@@ -26,6 +34,14 @@
 
 - (NSArray *)tabs;
 - (BrowsTabList *)tabListController;
+
+
+- (IBAction)goToLocation:(id)sender;
+- (IBAction)stopLoading:(id)sender;
+- (IBAction)reload:(id)sender;
+- (IBAction)goForwardOrBack:(id)sender;
+
+// - (IBAction)revealPageCertificateInformation:(id)sender;  // TODO un-unimplement this.
 
 
 

@@ -14,6 +14,7 @@
 		9C0D93F31AA1226200728D2E /* PublicSuffixList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0D93F21AA1226200728D2E /* PublicSuffixList.m */; };
 		9C0D93F51AA124B300728D2E /* PSL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9C0D93F41AA124B300728D2E /* PSL.txt */; };
 		9C15D2B81B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C15D2B71B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m */; };
+		9C18A7821B4110020085BA47 /* BrowsTabState.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C18A7811B4110020085BA47 /* BrowsTabState.m */; };
 		9C3071511A71D1C800AAA4F5 /* TabCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C3071501A71D1C800AAA4F5 /* TabCell.xib */; };
 		9C3071571A71DCBB00AAA4F5 /* BrowsTabTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */; };
 		9C345D351AE0E0E00010744F /* Brows.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9C345D341AE0E0E00010744F /* Brows.icns */; };
@@ -26,6 +27,8 @@
 		9C4EAADA1A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */; };
 		9C4EAAE01A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAADF1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */; };
 		9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */; };
+		9C54AE811B75636A00CB5A5D /* EISimpleProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C54AE801B75636A00CB5A5D /* EISimpleProgressIndicator.m */; };
+		9C54AE841B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C54AE831B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m */; };
 		9C68B11B1A9EA7D800F5C444 /* RACStream+SlidingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */; };
 		9CD502EC1A8AF31100AFE556 /* Helpies.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502EB1A8AF31100AFE556 /* Helpies.m */; };
 		9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */; };
@@ -82,6 +85,8 @@
 		9C0D93F41AA124B300728D2E /* PSL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PSL.txt; sourceTree = "<group>"; };
 		9C15D2B61B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EINoClickthroughVisualEffectView.h; sourceTree = "<group>"; };
 		9C15D2B71B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EINoClickthroughVisualEffectView.m; sourceTree = "<group>"; };
+		9C18A7801B4110020085BA47 /* BrowsTabState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsTabState.h; sourceTree = "<group>"; };
+		9C18A7811B4110020085BA47 /* BrowsTabState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTabState.m; sourceTree = "<group>"; };
 		9C3071501A71D1C800AAA4F5 /* TabCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabCell.xib; sourceTree = "<group>"; };
 		9C3071551A71DCBB00AAA4F5 /* BrowsTabTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsTabTableCellView.h; sourceTree = "<group>"; };
 		9C3071561A71DCBB00AAA4F5 /* BrowsTabTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTabTableCellView.m; sourceTree = "<group>"; };
@@ -97,6 +102,10 @@
 		9C4EAADF1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EIIGIsolatedCookieWebViewResourceLoadDelegate.m; sourceTree = "<group>"; };
 		9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSHTTPCookie+IGPropertyTesting.m"; sourceTree = "<group>"; };
 		9C4EAAE31A82FAED00E6CE03 /* NSHTTPCookie+IGPropertyTesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSHTTPCookie+IGPropertyTesting.h"; sourceTree = "<group>"; };
+		9C54AE7F1B75636A00CB5A5D /* EISimpleProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EISimpleProgressIndicator.h; sourceTree = "<group>"; };
+		9C54AE801B75636A00CB5A5D /* EISimpleProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EISimpleProgressIndicator.m; sourceTree = "<group>"; };
+		9C54AE821B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAnimation+AnimateOverBlock.h"; sourceTree = "<group>"; };
+		9C54AE831B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAnimation+AnimateOverBlock.m"; sourceTree = "<group>"; };
 		9C6810F01A7C6940008263A4 /* Personæ.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Personæ.pch"; sourceTree = "<group>"; };
 		9C68B1191A9EA7D800F5C444 /* RACStream+SlidingWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACStream+SlidingWindow.h"; sourceTree = "<group>"; };
 		9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACStream+SlidingWindow.m"; sourceTree = "<group>"; };
@@ -169,6 +178,8 @@
 		9CD502F41A8C41C800AFE556 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				9C54AE821B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.h */,
+				9C54AE831B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m */,
 				9CD502F11A8C41BE00AFE556 /* WebView+ScrollViewAccess.h */,
 				9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */,
 				9C68B1191A9EA7D800F5C444 /* RACStream+SlidingWindow.h */,
@@ -234,9 +245,13 @@
 			isa = PBXGroup;
 			children = (
 				9C0D93F41AA124B300728D2E /* PSL.txt */,
+				9C18A7801B4110020085BA47 /* BrowsTabState.h */,
+				9C18A7811B4110020085BA47 /* BrowsTabState.m */,
 				9CD502F41A8C41C800AFE556 /* Categories */,
 				9C15D2B61B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.h */,
 				9C15D2B71B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m */,
+				9C54AE7F1B75636A00CB5A5D /* EISimpleProgressIndicator.h */,
+				9C54AE801B75636A00CB5A5D /* EISimpleProgressIndicator.m */,
 				9C345D341AE0E0E00010744F /* Brows.icns */,
 				9C6810F01A7C6940008263A4 /* Personæ.pch */,
 				9CDF343519EB2F4C0040AA0F /* Info.plist */,
@@ -468,6 +483,7 @@
 			files = (
 				9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */,
 				9CDF345719EB30640040AA0F /* BrowsWindow.m in Sources */,
+				9C18A7821B4110020085BA47 /* BrowsTabState.m in Sources */,
 				9CD502EC1A8AF31100AFE556 /* Helpies.m in Sources */,
 				9C68B11B1A9EA7D800F5C444 /* RACStream+SlidingWindow.m in Sources */,
 				9CD502F91A901A5800AFE556 /* MktabController.m in Sources */,
@@ -481,6 +497,8 @@
 				9CD503001A927B9100AFE556 /* BrowsTabList.m in Sources */,
 				9CDF346519EB94DF0040AA0F /* BrowsPersona.m in Sources */,
 				9CDF343819EB2F4C0040AA0F /* AppDelegate.m in Sources */,
+				9C54AE841B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m in Sources */,
+				9C54AE811B75636A00CB5A5D /* EISimpleProgressIndicator.m in Sources */,
 				9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -597,14 +615,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
-				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
 				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application: TALUS BADDLEY";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Debug,
-					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Release,
 					"$(PROJECT_DIR)/WebKit/WebKitBuild/Release",
 				);
 				GCC_PREFIX_HEADER = "Brows Personæ/Personæ.pch";
@@ -626,14 +642,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
-				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
 				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application: TALUS BADDLEY";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Debug,
-					/Users/taldar/Programming/Git/WebKit/WebKitBuild/Release,
 					"$(PROJECT_DIR)/WebKit/WebKitBuild/Release",
 				);
 				GCC_PREFIX_HEADER = "Brows Personæ/Personæ.pch";

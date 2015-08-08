@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8121.20" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8121.20"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="BrowsWindow">
             <connections>
+                <outlet property="forwardBackwardButton" destination="obp-2Y-euP" id="q8o-aK-Nlt"/>
+                <outlet property="goStopReloadButton" destination="lDa-0O-yHC" id="TNg-2e-jZ7"/>
+                <outlet property="locationBox" destination="Rky-Of-RP6" id="ERY-Kj-cYq"/>
                 <outlet property="multiTabsPlaceholder" destination="Ja4-3Z-jJK" id="Oj8-4f-9tz"/>
                 <outlet property="newTabButton" destination="S1E-Cn-fV3" id="WMh-Y4-i9Y"/>
                 <outlet property="noTabPlaceholder" destination="wia-Ri-hZh" id="QJH-77-btn"/>
+                <outlet property="pageTitleField" destination="zKt-9b-Jz6" id="dir-bo-uBt"/>
+                <outlet property="personaIndicator" destination="TNt-m0-uNx" id="w7H-Bc-3uE"/>
+                <outlet property="securityIndicator" destination="TKb-dn-mko" id="zdM-Jv-zrz"/>
                 <outlet property="tabsList" destination="3wx-xm-ARL" id="BZf-R5-HLy"/>
                 <outlet property="tabsListController" destination="Q0g-zp-p63" id="OGQ-no-Jrx"/>
                 <outlet property="window" destination="jqs-u9-lwD" id="Ok0-JD-sIu"/>
@@ -35,17 +42,17 @@
                                 <rect key="frame" x="0.0" y="0.0" width="75" height="960"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                                 <subviews>
-                                    <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="Zsm-oT-TXn">
+                                    <visualEffectView blendingMode="behindWindow" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="Zsm-oT-TXn">
                                         <rect key="frame" x="0.0" y="0.0" width="75" height="960"/>
                                         <subviews>
                                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBZ-Tn-WZ0">
-                                                <rect key="frame" x="0.0" y="0.0" width="75" height="914"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="75" height="894"/>
                                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="peg-AH-hHt">
-                                                    <rect key="frame" x="1" y="0.0" width="238" height="134"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="75" height="894"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <tableView verticalHuggingPriority="750" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" viewBased="YES" id="3wx-xm-ARL">
-                                                            <rect key="frame" x="0.0" y="0.0" width="75" height="0.0"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="75" height="894"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <size key="intercellSpacing" width="3" height="2"/>
                                                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -102,9 +109,9 @@
                                                 </scroller>
                                             </scrollView>
                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="S1E-Cn-fV3">
-                                                <rect key="frame" x="0.0" y="914" width="75" height="26"/>
+                                                <rect key="frame" x="0.0" y="894" width="75" height="40"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="26" id="MxE-5S-4GW"/>
+                                                    <constraint firstAttribute="height" constant="40" id="MxE-5S-4GW"/>
                                                 </constraints>
                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="9fv-cg-rWI">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -116,7 +123,7 @@
                                             </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="S1E-Cn-fV3" firstAttribute="top" secondItem="Zsm-oT-TXn" secondAttribute="top" constant="20" id="AyK-De-Sil"/>
+                                            <constraint firstItem="S1E-Cn-fV3" firstAttribute="top" secondItem="Zsm-oT-TXn" secondAttribute="top" constant="26" id="AyK-De-Sil"/>
                                             <constraint firstItem="QBZ-Tn-WZ0" firstAttribute="leading" secondItem="Zsm-oT-TXn" secondAttribute="leading" id="CVO-QF-awI"/>
                                             <constraint firstItem="S1E-Cn-fV3" firstAttribute="leading" secondItem="Zsm-oT-TXn" secondAttribute="leading" id="LbN-YL-Tlx"/>
                                             <constraint firstAttribute="trailing" secondItem="S1E-Cn-fV3" secondAttribute="trailing" id="TDb-14-EHX"/>
@@ -152,6 +159,116 @@
                     <constraint firstAttribute="bottom" secondItem="m5q-nw-N9A" secondAttribute="bottom" id="NiK-eE-49Y"/>
                 </constraints>
             </view>
+            <toolbar key="toolbar" implicitIdentifier="60199F4F-FF97-41F4-8113-FC2441EA31FF" autosavesConfiguration="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="C61-hH-1WF">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="uo7-FF-Hay"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="17v-0g-aWc"/>
+                    <toolbarItem implicitItemIdentifier="443A86E6-1CFA-4C32-B72C-5997CE2E5DDB" label="Back/Forward" paletteLabel="Back / Forward" id="j0u-sL-tvD">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="55" height="25"/>
+                        <size key="maxSize" width="59" height="28"/>
+                        <segmentedControl key="view" toolTip="Go Back / Forward" verticalHuggingPriority="750" id="obp-2Y-euP">
+                            <rect key="frame" x="15" y="14" width="59" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="dHG-wg-Ufb">
+                                <font key="font" metaFont="system"/>
+                                <segments>
+                                    <segment toolTip="Go Back" image="NSGoLeftTemplate" width="26"/>
+                                    <segment toolTip="Go Forward" image="NSGoRightTemplate" width="26" tag="1"/>
+                                </segments>
+                            </segmentedCell>
+                            <connections>
+                                <action selector="goForwardOrBack:" target="-2" id="0s7-vd-E7H"/>
+                            </connections>
+                        </segmentedControl>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="A2C8B50E-612A-42B2-8FB7-207256BB53A2" label="Title" paletteLabel="Page Title" id="vyY-RN-jHI">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="100" height="17"/>
+                        <size key="maxSize" width="2048" height="17"/>
+                        <textField key="view" toolTip="Page Title" horizontalHuggingPriority="750" verticalHuggingPriority="750" id="zKt-9b-Jz6">
+                            <rect key="frame" x="0.0" y="14" width="113" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" alignment="center" title="Freddie’s Most Excellent Website" usesSingleLineMode="YES" id="pPy-2V-irm">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="94DC1DC7-3A1B-4DF5-BAC1-AA3BA3A4862F" label="URL/Search" paletteLabel="URL / Search Box" id="S7u-fq-vu3">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="96" height="22"/>
+                        <size key="maxSize" width="2048" height="22"/>
+                        <textField key="view" toolTip="URL or Search — Shows the current page address; you may also perform searches with your standard search engine from this box." verticalHuggingPriority="750" id="Rky-Of-RP6">
+                            <rect key="frame" x="3" y="14" width="96" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="URL or Search" drawsBackground="YES" id="u7G-vz-g1g">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <action selector="goToLocation:" target="-2" id="WzU-J4-pEq"/>
+                            </connections>
+                        </textField>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="DB330ED0-6CA9-406D-A3BD-4378AB7E0166" label="Go/Stop/Reload" paletteLabel="Go / Stop / Reload" image="NSRefreshTemplate" id="acn-QW-LDh">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="32" height="25"/>
+                        <size key="maxSize" width="32" height="25"/>
+                        <button key="view" toolTip="Go (➔), Stop Loading (×), or Re-Load (↺) the page" verticalHuggingPriority="750" id="lDa-0O-yHC">
+                            <rect key="frame" x="38" y="14" width="32" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSRefreshTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="V5S-de-Gcb">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="reload:" target="-2" id="zC9-Qu-WzL"/>
+                            </connections>
+                        </button>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="A2B31BA5-21FA-460E-BA11-8EC847BB9EF5" label="Persona" paletteLabel="Persona Indicator" id="xr6-xF-mjD">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="79" height="14"/>
+                        <size key="maxSize" width="200" height="17"/>
+                        <textField key="view" horizontalHuggingPriority="999" verticalHuggingPriority="750" id="TNt-m0-uNx">
+                            <rect key="frame" x="11" y="14" width="79" height="14"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <string key="toolTip">Current Brows Persona — This persona will be used to identify you to any sites you visit (as shown in the URL box) within this tab.</string>
+                            <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="example.com" usesSingleLineMode="YES" id="b4m-AX-e2l">
+                                <font key="font" metaFont="smallSystem"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="9CD39D69-F3A7-4489-8E8B-0B1CA238B94B" label="In/Secure" paletteLabel="Page Security Indicator" image="NSLockUnlockedTemplate" id="1Rr-JV-D9q">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="16" height="16"/>
+                        <size key="maxSize" width="16" height="21"/>
+                        <button key="view" verticalHuggingPriority="750" id="TKb-dn-mko">
+                            <rect key="frame" x="58" y="14" width="16" height="16"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSLockUnlockedTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="1fi-R7-j9m">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="uo7-FF-Hay"/>
+                    <toolbarItem reference="uo7-FF-Hay"/>
+                    <toolbarItem reference="j0u-sL-tvD"/>
+                    <toolbarItem reference="S7u-fq-vu3"/>
+                    <toolbarItem reference="acn-QW-LDh"/>
+                    <toolbarItem reference="vyY-RN-jHI"/>
+                    <toolbarItem reference="xr6-xF-mjD"/>
+                    <toolbarItem reference="1Rr-JV-D9q"/>
+                </defaultToolbarItems>
+            </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="Rd8-XT-uqw"/>
             </connections>
@@ -225,7 +342,7 @@
             <subviews>
                 <box autoresizesSubviews="NO" boxType="custom" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Ohr-Cj-q57">
                     <rect key="frame" x="279" y="584" width="243" height="76"/>
-                    <view key="contentView">
+                    <view key="contentView" id="93C-7T-qqy">
                         <rect key="frame" x="1" y="1" width="241" height="74"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
@@ -263,5 +380,9 @@
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSGoLeftTemplate" width="9" height="12"/>
+        <image name="NSGoRightTemplate" width="9" height="12"/>
+        <image name="NSLockUnlockedTemplate" width="10" height="14"/>
+        <image name="NSRefreshTemplate" width="11" height="15"/>
     </resources>
 </document>

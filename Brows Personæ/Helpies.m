@@ -2,7 +2,7 @@
 //  Helpies.m
 //  Brows Personæ
 //
-//  Created by Talus Baddley on 2015-2-10.
+//  Created by Violet Baddley on 2015-2-10.
 //  Copyright (c) 2015 Eightt. All rights reserved.
 //
 

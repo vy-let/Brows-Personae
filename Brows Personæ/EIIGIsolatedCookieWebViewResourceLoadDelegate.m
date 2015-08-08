@@ -25,7 +25,7 @@
  
  *********************************************************************************/
 
-// Class exploded by Talus Baddley out from IGIsolatedCookieWebView.m
+// Class exploded by Violet Baddley out from IGIsolatedCookieWebView.m
 // to publish the private interface and aid in customizations.
 
 #import "EIIGIsolatedCookieWebViewResourceLoadDelegate.h"

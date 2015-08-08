@@ -25,7 +25,7 @@
  
  *********************************************************************************/
 
-// Category exploded by Talus Baddley out from IGIsolatedCookieWebView.m
+// Category exploded by Violet Baddley out from IGIsolatedCookieWebView.m
 // to publish the private interface and aid in future customizations.
 
 #import <Cocoa/Cocoa.h>

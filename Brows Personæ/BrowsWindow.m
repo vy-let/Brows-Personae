@@ -2,7 +2,7 @@
 //  BrowsWindow.m
 //  Brows Personæ
 //
-//  Created by Taldar Baddley on 2014-10-12.
+//  Created by Violet Baddley on 2014-10-12.
 //  Copyright (c) 2014 Eightt. All rights reserved.
 //
 
@@ -16,6 +16,8 @@
 #import "BrowsTabList.h"
 #import "BrowsTabTableCellView.h"
 #import "MktabController.h"
+#import "BrowsTabState.h"
+#import "BrowsPersona.h"
 
 
 
@@ -27,6 +29,8 @@
     dispatch_once_t didInitNewtab;
     MktabController *newtabController;
     __weak NSPopover *newtabPopover;
+    
+    __weak BrowsTab *singleSelectedTab;
     
 }
 
@@ -162,6 +166,112 @@
     }];
     
     
+    
+    [self _bindTooblarControlsToPresentTab];
+    
+    
+}
+
+
+- (void)_bindTooblarControlsToPresentTab {
+    RACSignal *presentTab = [[tabsListController tabSelection] distinctUntilChanged];
+    @weakify(forwardBackwardButton, locationBox, goStopReloadButton, pageTitleField, personaIndicator, securityIndicator)
+    @weakify(self)
+    
+    [presentTab subscribeNext:^(NSArray *selTabs) {
+        // None of these controls should be nil unless all of them are. For succinctness, we’ll just check one.
+        @strongify(forwardBackwardButton, locationBox, goStopReloadButton, pageTitleField, personaIndicator, securityIndicator)
+        @strongify(self)
+        if (!forwardBackwardButton)
+            return;
+        
+        BrowsTab *selTab = nil;
+        if ([selTabs count] == 1)
+            selTab = [selTabs objectAtIndex:0];
+        self->singleSelectedTab = selTab;
+        
+        BOOL enableControls = !!selTab;
+        
+        [@[forwardBackwardButton, locationBox, goStopReloadButton, pageTitleField, personaIndicator, securityIndicator]
+         applyBlock:^(NSControl *tooblarControl) {
+             [tooblarControl setHidden:!enableControls];
+             
+         }];
+        
+        [personaIndicator setStringValue:selTab ? [[selTab browsProfile] name] : @""];
+        
+    }];
+    
+    RACSignal *latestTabState = [[presentTab
+                                  map:^id(NSArray *selTabs) {
+                                      return [selTabs count] == 1 ?
+                                      [(BrowsTab *)[selTabs objectAtIndex:0] tabState] :
+                                      [RACSignal return:[BrowsTabState nilState]];
+                                  }]
+                                 switchToLatest];
+    
+    //
+    // Can go back?
+    [[[latestTabState map:^id(BrowsTabState *state) {
+        return @([state canGoBackward]);
+    }] distinctUntilChanged]
+     
+     subscribeNext:^(NSNumber *canGoBack) {
+         @strongify(forwardBackwardButton)
+         [forwardBackwardButton setEnabled:[canGoBack boolValue] forSegment:0];
+     }];
+    
+    //
+    // Can go forward?
+    [[[latestTabState map:^id(BrowsTabState *state) {
+        return @([state canGoForward]);
+    }] distinctUntilChanged]
+     
+     subscribeNext:^(NSNumber *canGoForward) {
+         @strongify(forwardBackwardButton)
+         [forwardBackwardButton setEnabled:[canGoForward boolValue] forSegment:1];
+     }];
+    
+    //
+    // Location?
+    RAC(locationBox, stringValue, @"") = [[latestTabState map:^id(BrowsTabState *state) {
+        return [state location];
+    }] distinctUntilChanged];
+    
+    //
+    // Title?
+    RAC(pageTitleField, stringValue, @"") = [[latestTabState map:^id(BrowsTabState *state) {
+        return [state title];
+    }] distinctUntilChanged];
+    
+    //
+    // Is secure?
+    RAC(securityIndicator, image) = [[latestTabState map:^id(BrowsTabState *state) {
+        return [state isSecure] ? [NSImage imageNamed:@"NSLockLockedTemplate"] : [NSImage imageNamed:@"NSLockUnlockedTemplate"];
+    }] distinctUntilChanged];
+    
+    //
+    // Go? Stop? Reload?
+    [[[[latestTabState map:^id(BrowsTabState *state) {
+        return @([state isLoading]);
+    }] combineLatestWith:[latestTabState map:^id(BrowsTabState *state) {
+        return @([state isEditingLocation]);
+    }]] distinctUntilChanged]
+     
+     subscribeNext:^(RACTuple *isLoadingIsEditing) {
+         @strongify(goStopReloadButton)
+         
+         [goStopReloadButton setImage:[NSImage imageNamed:( [[isLoadingIsEditing second] boolValue] ? @"NSMenuOnStateTemplate" :
+                                                             [[isLoadingIsEditing first] boolValue] ? @"NSStopProgressTemplate" :
+                                                                                                      @"NSReloadTemplate" )]];
+         
+         [goStopReloadButton setAction:( [[isLoadingIsEditing second] boolValue] ? @selector(goToLocation:) :
+                                          [[isLoadingIsEditing first] boolValue] ? @selector(stopLoading:) :
+                                                                                   @selector(reload:) )];
+         
+    }];
+    
+    
 }
 
 
@@ -206,6 +316,40 @@
     [tabsListController putTab:tab];
     [tabsList selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
     
+}
+
+
+
+
+
+# pragma mark -
+# pragma mark IBActions
+
+//
+// If singleSelectedTab becomes nil at any point (as expected),
+// these methods will simply cease to do anything.
+//
+
+- (IBAction)goToLocation:(id)sender {
+    [singleSelectedTab goTo:[locationBox stringValue]];
+}
+
+
+- (IBAction)stopLoading:(id)sender {
+    [singleSelectedTab stopLoading:sender];
+}
+
+
+- (IBAction)reload:(id)sender {
+    [singleSelectedTab reload:sender];
+}
+     
+     
+- (IBAction)goForwardOrBack:(id)sender {
+    if ([sender selectedSegment] == 0)
+        [singleSelectedTab goBack:sender];
+    else
+        [singleSelectedTab goForward:sender];
 }
 
 
