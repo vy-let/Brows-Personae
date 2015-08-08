@@ -27,6 +27,8 @@
 		9C4EAADA1A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */; };
 		9C4EAAE01A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAADF1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */; };
 		9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */; };
+		9C54AE811B75636A00CB5A5D /* EISimpleProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C54AE801B75636A00CB5A5D /* EISimpleProgressIndicator.m */; };
+		9C54AE841B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C54AE831B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m */; };
 		9C68B11B1A9EA7D800F5C444 /* RACStream+SlidingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */; };
 		9CD502EC1A8AF31100AFE556 /* Helpies.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502EB1A8AF31100AFE556 /* Helpies.m */; };
 		9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */; };
@@ -100,6 +102,10 @@
 		9C4EAADF1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EIIGIsolatedCookieWebViewResourceLoadDelegate.m; sourceTree = "<group>"; };
 		9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSHTTPCookie+IGPropertyTesting.m"; sourceTree = "<group>"; };
 		9C4EAAE31A82FAED00E6CE03 /* NSHTTPCookie+IGPropertyTesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSHTTPCookie+IGPropertyTesting.h"; sourceTree = "<group>"; };
+		9C54AE7F1B75636A00CB5A5D /* EISimpleProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EISimpleProgressIndicator.h; sourceTree = "<group>"; };
+		9C54AE801B75636A00CB5A5D /* EISimpleProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EISimpleProgressIndicator.m; sourceTree = "<group>"; };
+		9C54AE821B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAnimation+AnimateOverBlock.h"; sourceTree = "<group>"; };
+		9C54AE831B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAnimation+AnimateOverBlock.m"; sourceTree = "<group>"; };
 		9C6810F01A7C6940008263A4 /* Personæ.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Personæ.pch"; sourceTree = "<group>"; };
 		9C68B1191A9EA7D800F5C444 /* RACStream+SlidingWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACStream+SlidingWindow.h"; sourceTree = "<group>"; };
 		9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACStream+SlidingWindow.m"; sourceTree = "<group>"; };
@@ -172,6 +178,8 @@
 		9CD502F41A8C41C800AFE556 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				9C54AE821B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.h */,
+				9C54AE831B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m */,
 				9CD502F11A8C41BE00AFE556 /* WebView+ScrollViewAccess.h */,
 				9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */,
 				9C68B1191A9EA7D800F5C444 /* RACStream+SlidingWindow.h */,
@@ -242,6 +250,8 @@
 				9CD502F41A8C41C800AFE556 /* Categories */,
 				9C15D2B61B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.h */,
 				9C15D2B71B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m */,
+				9C54AE7F1B75636A00CB5A5D /* EISimpleProgressIndicator.h */,
+				9C54AE801B75636A00CB5A5D /* EISimpleProgressIndicator.m */,
 				9C345D341AE0E0E00010744F /* Brows.icns */,
 				9C6810F01A7C6940008263A4 /* Personæ.pch */,
 				9CDF343519EB2F4C0040AA0F /* Info.plist */,
@@ -487,6 +497,8 @@
 				9CD503001A927B9100AFE556 /* BrowsTabList.m in Sources */,
 				9CDF346519EB94DF0040AA0F /* BrowsPersona.m in Sources */,
 				9CDF343819EB2F4C0040AA0F /* AppDelegate.m in Sources */,
+				9C54AE841B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m in Sources */,
+				9C54AE811B75636A00CB5A5D /* EISimpleProgressIndicator.m in Sources */,
 				9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

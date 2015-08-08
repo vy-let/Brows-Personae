@@ -159,7 +159,7 @@
                     <constraint firstAttribute="bottom" secondItem="m5q-nw-N9A" secondAttribute="bottom" id="NiK-eE-49Y"/>
                 </constraints>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="60199F4F-FF97-41F4-8113-FC2441EA31FF" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="regular" id="C61-hH-1WF">
+            <toolbar key="toolbar" implicitIdentifier="60199F4F-FF97-41F4-8113-FC2441EA31FF" autosavesConfiguration="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="C61-hH-1WF">
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="uo7-FF-Hay"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="17v-0g-aWc"/>

@@ -10,6 +10,7 @@
 #import <WebKit/WebKit.h>
 @class BrowsPersona;
 @class EIIGIsolatedCookieWebView;
+@class EISimpleProgressIndicator;
 
 
 @interface BrowsTab : NSViewController <WKNavigationDelegate, WKUIDelegate> {
@@ -28,6 +29,8 @@
     IBOutlet NSTextField *jsQueryHeader;
     IBOutlet NSTextField *jsQueryMessage;
     IBOutlet NSTextField *jsQueryResponseField;
+    
+    IBOutlet EISimpleProgressIndicator *pageLoadProgressBar;
     
 }
 

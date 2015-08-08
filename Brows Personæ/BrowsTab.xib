@@ -15,6 +15,7 @@
                 <outlet property="jsQueryMessage" destination="Gtw-ah-0q4" id="GYI-rb-iUA"/>
                 <outlet property="jsQueryPane" destination="Ibx-dq-hQO" id="9G3-gu-eOa"/>
                 <outlet property="jsQueryResponseField" destination="sme-1f-pI9" id="73e-ub-aFM"/>
+                <outlet property="pageLoadProgressBar" destination="ND0-v2-82f" id="fZs-WR-3kk"/>
                 <outlet property="tooblarBacking" destination="yQk-ri-Ojl" id="9M4-7M-xOd"/>
                 <outlet property="tooblarBackingHeightStrut" destination="jT9-fl-Pmh" id="fLd-vi-VBF"/>
                 <outlet property="view" destination="c22-O7-iKe" id="jyp-Vp-0zi"/>
@@ -26,9 +27,20 @@
             <rect key="frame" x="0.0" y="0.0" width="884" height="960"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="yQk-ri-Ojl" customClass="NSVisualEffectView">
-                    <rect key="frame" x="0.0" y="921" width="884" height="39"/>
+                    <rect key="frame" x="0.0" y="922" width="884" height="38"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="ND0-v2-82f" customClass="EISimpleProgressIndicator">
+                            <rect key="frame" x="0.0" y="0.0" width="884" height="2"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="2" id="7db-zN-2ol"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" constant="39" id="jT9-fl-Pmh"/>
+                        <constraint firstItem="ND0-v2-82f" firstAttribute="leading" secondItem="yQk-ri-Ojl" secondAttribute="leading" id="8gg-3Z-Yuy"/>
+                        <constraint firstAttribute="trailing" secondItem="ND0-v2-82f" secondAttribute="trailing" id="CQ6-LN-ty3"/>
+                        <constraint firstAttribute="bottom" secondItem="ND0-v2-82f" secondAttribute="bottom" id="K4z-Gn-Xg1"/>
+                        <constraint firstAttribute="height" constant="38" id="jT9-fl-Pmh"/>
                     </constraints>
                 </customView>
             </subviews>

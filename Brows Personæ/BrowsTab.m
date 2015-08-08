@@ -20,6 +20,13 @@
 #import <NSArray+Functional/NSArray+Functional.h>
 #import "Helpies.h"
 #import "PublicSuffixList.h"
+#import "EISimpleProgressIndicator.h"
+#import "NSAnimation+AnimateOverBlock.h"
+
+
+
+#define EI_PROGRESS_BAR_ANIMATION_DURATION ((NSTimeInterval)0.25)
+#define EI_CONVENIENT_WEBKIT_LIE (0.1)
 
 
 @interface WKWebView (WKPrivate)
@@ -36,6 +43,7 @@
     BrowsPersona *browsProfile;
     RACSubject *locationDasu;  // Into which submit events are pushed.
     RACSignal *tabState;
+    NSAnimation *latestProgressAnimation;
     
     NSImage *latestThumbnail;
     NSImage *latestFavicon;
@@ -303,22 +311,45 @@
     
     
     
-//    @weakify(pageSpinny)
-//    
-    RACSignal *pageLoadingProgress = [RACObserve(pageView, estimatedProgress) startWith:@(0.0)];
-//    [pageLoadingProgress subscribeNext:^(NSNumber *latest) {
-//        @strongify(pageSpinny)
-//        double latestValue = [latest doubleValue];
-//        
-//        [pageSpinny setDoubleValue:latestValue];
-//        [pageSpinny setIndeterminate:(  latestValue < 0.101 || latestValue >= 1  )];
-//        
-//        // When the page starts loading, it reports its progress as “0.1,” which is awful to test against.
-//        // Presumably it's always less than 0.101. So that's what I'm saying.
-//        
-//    }];
-//    
-    RACSignal *pageIsLoading = [RACObserve(pageView, loading) startWith:@NO];
+    @weakify(pageLoadProgressBar)
+    
+    RACSignal *pageIsLoading = [[RACObserve(pageView, loading) distinctUntilChanged] startWith:@NO];
+    RACSignal *pageLoadingProgress = [[RACObserve(pageView, estimatedProgress) distinctUntilChanged] startWith:@(0.0)];
+    [[pageLoadingProgress combineLatestWith:pageIsLoading]
+     subscribeNext:^(RACTuple *latest) {
+         @strongify(pageLoadProgressBar)
+         double latestValue = [[latest first] doubleValue];
+         BOOL isLoading = [[latest second] boolValue];
+         
+         CGFloat startingPageProgress = [pageLoadProgressBar proportion];
+         CGFloat startingBarOpacity = [pageLoadProgressBar opacity];
+         
+         // Upon new loads, start the bar animation from 0:
+         if (latestValue <= EI_CONVENIENT_WEBKIT_LIE)
+             startingPageProgress = 0;
+         
+         CGFloat barTravel = latestValue - startingPageProgress;  // May be negative for negative travel.
+         CGFloat opacityTravel = ((CGFloat)isLoading) - startingBarOpacity;
+         
+         if ([latestProgressAnimation isAnimating])
+             [latestProgressAnimation stopAnimation];
+         latestProgressAnimation = [NSAnimation ei_animationWithDuration:EI_PROGRESS_BAR_ANIMATION_DURATION animationCurve:NSAnimationEaseInOut overBlock:^(NSAnimationProgress animProportion) {
+             CGFloat pageProgress = startingPageProgress + animProportion * barTravel;
+             CGFloat opaqProgress = startingBarOpacity + animProportion * opacityTravel;
+             
+             [pageLoadProgressBar setProportion:pageProgress];
+             [pageLoadProgressBar setOpacity:opaqProgress];
+             
+         }];
+         
+         [latestProgressAnimation setAnimationBlockingMode:NSAnimationNonblocking];
+         [latestProgressAnimation startAnimation];
+         
+         // When the page starts loading, it reports its progress as “0.1,” which is awful to test against.
+         // Presumably it's always less than 0.101. So that's what I'm saying.
+         
+     }];
+    
 //    [pageIsLoading subscribeNext:^(NSNumber *latest) {
 //        @strongify(pageSpinny, pageView)
 //        if ([latest boolValue])
