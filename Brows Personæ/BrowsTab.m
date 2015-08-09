@@ -29,15 +29,6 @@
 #define EI_CONVENIENT_WEBKIT_LIE (0.1)
 
 
-@interface WKWebView (WKPrivate)
-@property (nonatomic, setter=_setTopContentInset:) CGFloat _topContentInset;
-@end
-
-@implementation WKWebView (WKPrivate)
-@dynamic _topContentInset;
-@end
-
-
 @interface BrowsTab () {
     NSObject *tabViewButtonThing;
     BrowsPersona *browsProfile;
@@ -412,7 +403,9 @@
     RACSignal *canForth = RACObserve(pageView, canGoForward);
     
     
-    tabState = [[RACSignal combineLatest:@[ [actualPageURL map:^id(NSURL *url) {  return [url absoluteString];  }]  // 0
+    tabState = [[RACSignal combineLatest:@[ [actualPageURL map:^id(NSURL *url) {
+        return [url absoluteString];
+    }]  // 0
                                  , pageIsLoading  // 1
                                  , pageLoadingProgress  // 2
                                  , pageTitle  // 3

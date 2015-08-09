@@ -52,7 +52,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <tableView verticalHuggingPriority="750" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" viewBased="YES" id="3wx-xm-ARL">
-                                                            <rect key="frame" x="0.0" y="0.0" width="75" height="894"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="75" height="0.0"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <size key="intercellSpacing" width="3" height="2"/>
                                                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -167,7 +167,7 @@
                         <nil key="toolTip"/>
                         <size key="minSize" width="55" height="25"/>
                         <size key="maxSize" width="59" height="28"/>
-                        <segmentedControl key="view" toolTip="Go Back / Forward" verticalHuggingPriority="750" id="obp-2Y-euP">
+                        <segmentedControl key="view" toolTip="Go Back / Forward" verticalHuggingPriority="750" misplaced="YES" id="obp-2Y-euP">
                             <rect key="frame" x="15" y="14" width="59" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="dHG-wg-Ufb">
@@ -189,7 +189,7 @@
                         <textField key="view" toolTip="Page Title" horizontalHuggingPriority="750" verticalHuggingPriority="750" id="zKt-9b-Jz6">
                             <rect key="frame" x="0.0" y="14" width="113" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" alignment="center" title="Freddie’s Most Excellent Website" usesSingleLineMode="YES" id="pPy-2V-irm">
+                            <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" alignment="center" title="Untitled Webpage" placeholderString="" usesSingleLineMode="YES" id="pPy-2V-irm">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -259,7 +259,6 @@
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="uo7-FF-Hay"/>
                     <toolbarItem reference="uo7-FF-Hay"/>
                     <toolbarItem reference="j0u-sL-tvD"/>
                     <toolbarItem reference="S7u-fq-vu3"/>
