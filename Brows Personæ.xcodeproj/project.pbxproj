@@ -24,14 +24,10 @@
 		9C3B192C1AF9737D00FA4AAB /* WebKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C3B19221AF9737500FA4AAB /* WebKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C3B192D1AF9737D00FA4AAB /* WebKit2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C3B19231AF9737500FA4AAB /* WebKit2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C3B192E1AF9737D00FA4AAB /* WebKitLegacy.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C3B19241AF9737500FA4AAB /* WebKitLegacy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9C4EAADA1A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */; };
-		9C4EAAE01A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAADF1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */; };
-		9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */; };
 		9C54AE811B75636A00CB5A5D /* EISimpleProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C54AE801B75636A00CB5A5D /* EISimpleProgressIndicator.m */; };
 		9C54AE841B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C54AE831B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m */; };
 		9C68B11B1A9EA7D800F5C444 /* RACStream+SlidingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */; };
 		9CD502EC1A8AF31100AFE556 /* Helpies.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502EB1A8AF31100AFE556 /* Helpies.m */; };
-		9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */; };
 		9CD502F91A901A5800AFE556 /* MktabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502F71A901A5800AFE556 /* MktabController.m */; };
 		9CD502FA1A901A5800AFE556 /* Mktab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CD502F81A901A5800AFE556 /* Mktab.xib */; };
 		9CD503001A927B9100AFE556 /* BrowsTabList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD502FF1A927B9100AFE556 /* BrowsTabList.m */; };
@@ -43,6 +39,9 @@
 		9CDF345819EB30640040AA0F /* BrowsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CDF345619EB30640040AA0F /* BrowsWindow.xib */; };
 		9CDF345C19EB53F40040AA0F /* BrowsTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF345B19EB53F40040AA0F /* BrowsTab.m */; };
 		9CDF346519EB94DF0040AA0F /* BrowsPersona.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF346419EB94DF0040AA0F /* BrowsPersona.m */; };
+		9CF8D1251B8B965200CE57B9 /* EIIGIsolatedCookieWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF8D1201B8B965200CE57B9 /* EIIGIsolatedCookieWebView.m */; };
+		9CF8D1261B8B965200CE57B9 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF8D1221B8B965200CE57B9 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */; };
+		9CF8D1271B8B965200CE57B9 /* NSHTTPCookie+IGPropertyTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF8D1241B8B965200CE57B9 /* NSHTTPCookie+IGPropertyTesting.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,12 +95,6 @@
 		9C3B19221AF9737500FA4AAB /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = WebKit/WebKitBuild/Release/WebKit.framework; sourceTree = "<group>"; };
 		9C3B19231AF9737500FA4AAB /* WebKit2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit2.framework; path = WebKit/WebKitBuild/Release/WebKit2.framework; sourceTree = "<group>"; };
 		9C3B19241AF9737500FA4AAB /* WebKitLegacy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKitLegacy.framework; path = WebKit/WebKitBuild/Release/WebKitLegacy.framework; sourceTree = "<group>"; };
-		9C4EAAD81A82F33800E6CE03 /* EIIGIsolatedCookieWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EIIGIsolatedCookieWebView.h; sourceTree = "<group>"; };
-		9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EIIGIsolatedCookieWebView.m; sourceTree = "<group>"; };
-		9C4EAADE1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EIIGIsolatedCookieWebViewResourceLoadDelegate.h; sourceTree = "<group>"; };
-		9C4EAADF1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EIIGIsolatedCookieWebViewResourceLoadDelegate.m; sourceTree = "<group>"; };
-		9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSHTTPCookie+IGPropertyTesting.m"; sourceTree = "<group>"; };
-		9C4EAAE31A82FAED00E6CE03 /* NSHTTPCookie+IGPropertyTesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSHTTPCookie+IGPropertyTesting.h"; sourceTree = "<group>"; };
 		9C54AE7F1B75636A00CB5A5D /* EISimpleProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EISimpleProgressIndicator.h; sourceTree = "<group>"; };
 		9C54AE801B75636A00CB5A5D /* EISimpleProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EISimpleProgressIndicator.m; sourceTree = "<group>"; };
 		9C54AE821B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAnimation+AnimateOverBlock.h"; sourceTree = "<group>"; };
@@ -111,8 +104,6 @@
 		9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACStream+SlidingWindow.m"; sourceTree = "<group>"; };
 		9CD502EB1A8AF31100AFE556 /* Helpies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helpies.m; sourceTree = "<group>"; };
 		9CD502ED1A8AF33C00AFE556 /* Helpies.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helpies.h; sourceTree = "<group>"; };
-		9CD502F11A8C41BE00AFE556 /* WebView+ScrollViewAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebView+ScrollViewAccess.h"; sourceTree = "<group>"; };
-		9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebView+ScrollViewAccess.m"; sourceTree = "<group>"; };
 		9CD502F51A8D968300AFE556 /* WebCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebCache.h; sourceTree = "<group>"; };
 		9CD502F61A901A5700AFE556 /* MktabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MktabController.h; sourceTree = "<group>"; };
 		9CD502F71A901A5800AFE556 /* MktabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MktabController.m; sourceTree = "<group>"; };
@@ -136,6 +127,12 @@
 		9CDF345B19EB53F40040AA0F /* BrowsTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsTab.m; sourceTree = "<group>"; };
 		9CDF346319EB94DF0040AA0F /* BrowsPersona.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowsPersona.h; sourceTree = "<group>"; };
 		9CDF346419EB94DF0040AA0F /* BrowsPersona.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowsPersona.m; sourceTree = "<group>"; };
+		9CF8D11F1B8B965200CE57B9 /* EIIGIsolatedCookieWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EIIGIsolatedCookieWebView.h; sourceTree = "<group>"; };
+		9CF8D1201B8B965200CE57B9 /* EIIGIsolatedCookieWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EIIGIsolatedCookieWebView.m; sourceTree = "<group>"; };
+		9CF8D1211B8B965200CE57B9 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EIIGIsolatedCookieWebViewResourceLoadDelegate.h; sourceTree = "<group>"; };
+		9CF8D1221B8B965200CE57B9 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EIIGIsolatedCookieWebViewResourceLoadDelegate.m; sourceTree = "<group>"; };
+		9CF8D1231B8B965200CE57B9 /* NSHTTPCookie+IGPropertyTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSHTTPCookie+IGPropertyTesting.h"; sourceTree = "<group>"; };
+		9CF8D1241B8B965200CE57B9 /* NSHTTPCookie+IGPropertyTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSHTTPCookie+IGPropertyTesting.m"; sourceTree = "<group>"; };
 		CA9D62F45FCF9749E0E40652 /* Pods-Brows PersonæTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brows PersonæTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Brows PersonæTests/Pods-Brows PersonæTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -165,12 +162,12 @@
 			children = (
 				9CDF346319EB94DF0040AA0F /* BrowsPersona.h */,
 				9CDF346419EB94DF0040AA0F /* BrowsPersona.m */,
-				9C4EAAD81A82F33800E6CE03 /* EIIGIsolatedCookieWebView.h */,
-				9C4EAAD91A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m */,
-				9C4EAADE1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.h */,
-				9C4EAADF1A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */,
-				9C4EAAE31A82FAED00E6CE03 /* NSHTTPCookie+IGPropertyTesting.h */,
-				9C4EAAE11A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m */,
+				9CF8D11F1B8B965200CE57B9 /* EIIGIsolatedCookieWebView.h */,
+				9CF8D1201B8B965200CE57B9 /* EIIGIsolatedCookieWebView.m */,
+				9CF8D1211B8B965200CE57B9 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.h */,
+				9CF8D1221B8B965200CE57B9 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m */,
+				9CF8D1231B8B965200CE57B9 /* NSHTTPCookie+IGPropertyTesting.h */,
+				9CF8D1241B8B965200CE57B9 /* NSHTTPCookie+IGPropertyTesting.m */,
 			);
 			name = "COOOOKIES omm nomm";
 			sourceTree = "<group>";
@@ -180,8 +177,6 @@
 			children = (
 				9C54AE821B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.h */,
 				9C54AE831B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m */,
-				9CD502F11A8C41BE00AFE556 /* WebView+ScrollViewAccess.h */,
-				9CD502F21A8C41BE00AFE556 /* WebView+ScrollViewAccess.m */,
 				9C68B1191A9EA7D800F5C444 /* RACStream+SlidingWindow.h */,
 				9C68B11A1A9EA7D800F5C444 /* RACStream+SlidingWindow.m */,
 				9CD502F51A8D968300AFE556 /* WebCache.h */,
@@ -359,7 +354,7 @@
 						DevelopmentTeam = LFE44QS95K;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -481,25 +476,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C4EAAE21A82FACD00E6CE03 /* NSHTTPCookie+IGPropertyTesting.m in Sources */,
 				9CDF345719EB30640040AA0F /* BrowsWindow.m in Sources */,
+				9CF8D1271B8B965200CE57B9 /* NSHTTPCookie+IGPropertyTesting.m in Sources */,
 				9C18A7821B4110020085BA47 /* BrowsTabState.m in Sources */,
 				9CD502EC1A8AF31100AFE556 /* Helpies.m in Sources */,
+				9CF8D1261B8B965200CE57B9 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */,
 				9C68B11B1A9EA7D800F5C444 /* RACStream+SlidingWindow.m in Sources */,
 				9CD502F91A901A5800AFE556 /* MktabController.m in Sources */,
 				9C3071571A71DCBB00AAA4F5 /* BrowsTabTableCellView.m in Sources */,
 				9CDF345C19EB53F40040AA0F /* BrowsTab.m in Sources */,
 				9C15D2B81B3D0BCF00B3640D /* EINoClickthroughVisualEffectView.m in Sources */,
-				9C4EAAE01A82F92E00E6CE03 /* EIIGIsolatedCookieWebViewResourceLoadDelegate.m in Sources */,
-				9C4EAADA1A82F33800E6CE03 /* EIIGIsolatedCookieWebView.m in Sources */,
 				9C0D93F31AA1226200728D2E /* PublicSuffixList.m in Sources */,
 				9CDF343A19EB2F4C0040AA0F /* main.m in Sources */,
 				9CD503001A927B9100AFE556 /* BrowsTabList.m in Sources */,
 				9CDF346519EB94DF0040AA0F /* BrowsPersona.m in Sources */,
+				9CF8D1251B8B965200CE57B9 /* EIIGIsolatedCookieWebView.m in Sources */,
 				9CDF343819EB2F4C0040AA0F /* AppDelegate.m in Sources */,
 				9C54AE841B756D2700CB5A5D /* NSAnimation+AnimateOverBlock.m in Sources */,
 				9C54AE811B75636A00CB5A5D /* EISimpleProgressIndicator.m in Sources */,
-				9CD502F31A8C41BE00AFE556 /* WebView+ScrollViewAccess.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,7 +610,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application: TALUS BADDLEY";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -643,7 +636,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application: TALUS BADDLEY";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (

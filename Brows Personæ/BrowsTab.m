@@ -16,7 +16,6 @@
 #import "BrowsPersona.h"
 #import "EIIGIsolatedCookieWebView.h"
 #import "EIIGIsolatedCookieWebViewResourceLoadDelegate.h"
-#import "WebView+ScrollViewAccess.h"
 #import <NSArray+Functional/NSArray+Functional.h>
 #import "Helpies.h"
 #import "PublicSuffixList.h"

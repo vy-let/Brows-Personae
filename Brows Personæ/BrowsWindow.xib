@@ -167,7 +167,7 @@
                         <nil key="toolTip"/>
                         <size key="minSize" width="55" height="25"/>
                         <size key="maxSize" width="59" height="28"/>
-                        <segmentedControl key="view" toolTip="Go Back / Forward" verticalHuggingPriority="750" misplaced="YES" id="obp-2Y-euP">
+                        <segmentedControl key="view" toolTip="Go Back / Forward" verticalHuggingPriority="750" id="obp-2Y-euP">
                             <rect key="frame" x="15" y="14" width="59" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="dHG-wg-Ufb">

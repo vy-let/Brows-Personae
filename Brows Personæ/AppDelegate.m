@@ -52,9 +52,6 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // Insert code here to initialize your application
-    [WebCache setDisabled:YES];
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         if (![browsWindows count])
             [self newBrowsWindow:nil];

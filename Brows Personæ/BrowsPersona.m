@@ -163,7 +163,8 @@ static NSMapTable *namedProfiles;
 - (WKWebsiteDataStore *)webkitDataBacking {
     dispatch_once(&webkitDataBackingSetup, ^{
         NSURL *baseURL = [[[self class] mainProfileFolder] URLByAppendingPathComponent:[self name] isDirectory:YES];
-        wkWebkitDataBacking = [WKWebsiteDataStore ei_dataStoreWithBaseURL:baseURL];
+        //wkWebkitDataBacking = [WKWebsiteDataStore ei_dataStoreWithBaseURL:baseURL];
+        wkWebkitDataBacking = [WKWebsiteDataStore nonPersistentDataStore];
     });
     
     return wkWebkitDataBacking;
