@@ -354,7 +354,7 @@
 						DevelopmentTeam = LFE44QS95K;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -610,6 +610,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application: TALUS BADDLEY";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -636,6 +637,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = "Brows Personæ/Brows Personæ.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application: TALUS BADDLEY";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
