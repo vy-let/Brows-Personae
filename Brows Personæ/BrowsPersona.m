@@ -102,9 +102,9 @@ static NSMapTable *namedProfiles;
 + (NSArray *)allLocalPersonæ {
     NSError *dirScanError = nil;
     NSArray *browspersonaFiles = [[[NSFileManager defaultManager] contentsOfDirectoryAtURL:[self mainProfileFolder]
-                                                               includingPropertiesForKeys:@[]
-                                                                                  options:0
-                                                                                    error:&dirScanError]
+                                                                includingPropertiesForKeys:@[]
+                                                                                   options:0
+                                                                                     error:&dirScanError]
                                   filterUsingBlock:^BOOL(NSURL *containedFile) {
                                       return [[containedFile pathExtension] isEqual:@"browspersona"];
                                   }];
@@ -163,8 +163,8 @@ static NSMapTable *namedProfiles;
 - (WKWebsiteDataStore *)webkitDataBacking {
     dispatch_once(&webkitDataBackingSetup, ^{
         NSURL *baseURL = [[[self class] mainProfileFolder] URLByAppendingPathComponent:[self name] isDirectory:YES];
-        //wkWebkitDataBacking = [WKWebsiteDataStore ei_dataStoreWithBaseURL:baseURL];
-        wkWebkitDataBacking = [WKWebsiteDataStore nonPersistentDataStore];
+        wkWebkitDataBacking = [WKWebsiteDataStore ei_dataStoreWithBaseURL:baseURL];
+        //wkWebkitDataBacking = [WKWebsiteDataStore nonPersistentDataStore];
     });
     
     return wkWebkitDataBacking;
