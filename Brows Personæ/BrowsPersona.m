@@ -162,6 +162,7 @@ static NSMapTable *namedProfiles;
 
 - (WKWebsiteDataStore *)webkitDataBacking {
     dispatch_once(&webkitDataBackingSetup, ^{
+        // TODO avoid path-incompatible persona name problems.
         NSURL *baseURL = [[[self class] mainProfileFolder] URLByAppendingPathComponent:[self name] isDirectory:YES];
         wkWebkitDataBacking = [WKWebsiteDataStore ei_dataStoreWithBaseURL:baseURL];
         //wkWebkitDataBacking = [WKWebsiteDataStore nonPersistentDataStore];
